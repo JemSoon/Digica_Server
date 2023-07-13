@@ -94,9 +94,10 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  player: {fileID: 0}
+  player: {fileID: 5842500580643531440}
   deckSize: 30
   handSize: 7
+  startingDeck: []
   spawnInitialCards: 1
 --- !u!114 &5842500580643531440
 MonoBehaviour:
@@ -117,6 +118,7 @@ MonoBehaviour:
   health: 0
   strength: 0
   casterType: 0
+  arrow: {fileID: 0}
   spawnOffset: {fileID: 0}
   isTargeting: 0
   arrowObject: {fileID: 0}
@@ -124,13 +126,17 @@ MonoBehaviour:
   waitTurn: 1
   taunt: 0
   username: 
-  portrait: {fileID: 0}
-  deck: {fileID: 0}
-  cardback: {fileID: 0}
+  portrait: {fileID: 21300000, guid: acee0bb065fbba74192fa1436252ad93, type: 3}
+  deck: {fileID: 3664569804120430984}
+  cardback: {fileID: 21300000, guid: 84f5b23ec5131bd468429514ca1254d7, type: 3}
   tauntCount: 0
   maxMana: 10
   currentMax: 0
   _mana: 0
+  hasEnemy: 0
+  enemyInfo:
+    player: {fileID: 0}
+  firstPlayer: 0
 --- !u!114 &6206886559147781605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,4 +152,4 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  entity: {fileID: 0}
+  entity: {fileID: 5842500580643531440}

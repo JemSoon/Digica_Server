@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 7126765212218427509}
   - component: {fileID: 1992730281086652807}
   - component: {fileID: 2392382670437048494}
+  - component: {fileID: 1392725011324624756}
   m_Layer: 5
   m_Name: EnemyField
   m_TagString: Untagged
@@ -140,3 +141,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1392725011324624756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6856852435790349273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dfb3d3e5533de54ba47da9e61155ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 5684056207364123747}

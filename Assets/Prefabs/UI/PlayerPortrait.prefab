@@ -643,6 +643,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 264518709054959409}
+  - component: {fileID: 98597280809503024}
   m_Layer: 5
   m_Name: PlayerPortrait
   m_TagString: Untagged
@@ -671,6 +672,27 @@ RectTransform:
   m_AnchoredPosition: {x: 266, y: -591}
   m_SizeDelta: {x: 450, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &98597280809503024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264518709054959410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bc402528d6ddf418411b9958bafaf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 264518708992301534}
+  portrait: {fileID: 264518709228163506}
+  username: {fileID: 264518707893377078}
+  deckAmount: {fileID: 264518708112226085}
+  graveyardAmount: {fileID: 264518709193143637}
+  handAmount: {fileID: 264518708265875460}
+  health: {fileID: 0}
+  mana: {fileID: 0}
+  playerType: 0
 --- !u!1 &264518709137700192
 GameObject:
   m_ObjectHideFlags: 0

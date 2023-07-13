@@ -56,15 +56,32 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ScriptableCard.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerField.cs" />
+    <Compile Include="Assets\Scripts\Extensions.cs" />
+    <Compile Include="Assets\Scripts\ScriptableCards\CreatureCard.cs" />
     <Compile Include="Assets\Scripts\Entity.cs" />
     <Compile Include="Assets\Scripts\ArrowHead.cs" />
     <Compile Include="Assets\Scripts\Combat.cs" />
+    <Compile Include="Assets\Scripts\UI\HandCardDragHover.cs" />
     <Compile Include="Assets\Scripts\CardInfo.cs" />
     <Compile Include="Assets\Scripts\Deck.cs" />
+    <Compile Include="Assets\Scripts\UI\HandCard.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UIUtils.cs" />
+    <Compile Include="Assets\Scripts\FieldCard.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Ability.cs" />
+    <Compile Include="Assets\Scripts\ScriptableAbilities\DrawAbility.cs" />
     <Compile Include="Assets\Scripts\NetworkManagerHUDCCG.cs" />
+    <Compile Include="Assets\Scripts\Players\PlayerInfo.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerHand.cs" />
     <Compile Include="Assets\Scripts\NetworkManagerCCG.cs" />
+    <Compile Include="Assets\Scripts\TargetingArrow.cs" />
+    <Compile Include="Assets\Scripts\ScriptableAbilities\DamageAbility.cs" />
+    <Compile Include="Assets\Scripts\ScriptableCards\SpellCard.cs" />
     <Compile Include="Assets\Scripts\Players\Player.cs" />
+    <Compile Include="Assets\Scripts\UI\FieldCardHover.cs" />
+    <Compile Include="Assets\Scripts\UI\UIPortrait.cs" />
     <Compile Include="Assets\Scripts\CardAbility.cs" />
   </ItemGroup>
   <ItemGroup>

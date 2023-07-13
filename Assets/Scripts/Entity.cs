@@ -16,7 +16,7 @@ public abstract partial class Entity : NetworkBehaviour
 
     [Header("Targeting Arrow")]
     public Target casterType;
-    //public TargetingArrow arrow;
+    public TargetingArrow arrow;
     public Transform spawnOffset;
     [HideInInspector] public bool isTargeting = false;
     [HideInInspector] public GameObject arrowObject;
@@ -29,21 +29,21 @@ public abstract partial class Entity : NetworkBehaviour
     // waitTurn is also used for stunning/freezing/etc. minions.
 
     public bool IsDead() => health <= 0;
-    //public bool CanAttack() => Player.gameManager.isOurTurn && waitTurn == 0 && casterType == Target.FRIENDLIES;
-    //public bool CantAttack() => Player.gameManager.isOurTurn && waitTurn > 0 && casterType == Target.FRIENDLIES;
+    public bool CanAttack() => Player.gameManager.isOurTurn && waitTurn == 0 && casterType == Target.FRIENDLIES;
+    public bool CantAttack() => Player.gameManager.isOurTurn && waitTurn > 0 && casterType == Target.FRIENDLIES;
 
-    //public virtual void SpawnTargetingArrow(CardInfo card, bool IsAbility = false)
-    //{
-    //    Player.localPlayer.isTargeting = true;
-    //    isTargeting = true;
-    //
-    //    Cursor.visible = false; //Hide cursor
-    //
-    //    // If we have a spawnOffset, use it. Otherwise, use transform position.
-    //    Vector3 spawnPos = spawnOffset == null ? transform.position : spawnOffset.position;
-    //    arrowObject = Instantiate(arrow.gameObject, spawnPos, Quaternion.identity);
-    //    arrowObject.GetComponent<TargetingArrow>().DrawLine(this, card, spawnPos, IsAbility);
-    //}
+    public virtual void SpawnTargetingArrow(CardInfo card, bool IsAbility = false)
+    {
+        Player.localPlayer.isTargeting = true;
+        isTargeting = true;
+
+        Cursor.visible = false; //Hide cursor
+
+        // If we have a spawnOffset, use it. Otherwise, use transform position.
+        Vector3 spawnPos = spawnOffset == null ? transform.position : spawnOffset.position;
+        arrowObject = Instantiate(arrow.gameObject, spawnPos, Quaternion.identity);
+        arrowObject.GetComponent<TargetingArrow>().DrawLine(this, card, spawnPos, IsAbility);
+    }
 
     public void DestroyTargetingArrow()
     {

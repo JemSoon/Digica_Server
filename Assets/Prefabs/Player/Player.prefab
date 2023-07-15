@@ -97,7 +97,11 @@ MonoBehaviour:
   player: {fileID: 5842500580643531440}
   deckSize: 30
   handSize: 7
-  startingDeck: []
+  startingDeck:
+  - card: {fileID: 11400000, guid: 7bf4f52d1c0df0c44a1552e3688b5585, type: 2}
+    amount: 4
+  - card: {fileID: 11400000, guid: ebde458e92050364abae130fef20f1ee, type: 2}
+    amount: 6
   spawnInitialCards: 1
 --- !u!114 &5842500580643531440
 MonoBehaviour:
@@ -118,7 +122,7 @@ MonoBehaviour:
   health: 0
   strength: 0
   casterType: 0
-  arrow: {fileID: 0}
+  arrow: {fileID: 3930160285030721038, guid: eee50554e193a9540bda7285de64c18b, type: 3}
   spawnOffset: {fileID: 0}
   isTargeting: 0
   arrowObject: {fileID: 0}

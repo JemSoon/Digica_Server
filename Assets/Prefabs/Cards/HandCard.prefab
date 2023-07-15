@@ -95,7 +95,7 @@ MonoBehaviour:
   health: {fileID: 0}
   description: {fileID: 0}
   creatureType: {fileID: 0}
-  cardDragHover: {fileID: 0}
+  cardDragHover: {fileID: 4309761622497959723}
   cardOutline: {fileID: 0}
   readyColor: {r: 0, g: 0, b: 0, a: 0}
   handIndex: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 2193288574431403673}
   canHover: 0
   canDrag: 0
-  EmptyCard: {fileID: 2563911422996650471}
+  EmptyCard: {fileID: 6898036723158406066, guid: 6c636e9c75f1d49419fda5e378c76026, type: 3}
 --- !u!1 &2563911422996650471
 GameObject:
   m_ObjectHideFlags: 0

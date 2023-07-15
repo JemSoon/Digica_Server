@@ -37,7 +37,7 @@ public class HandCard : MonoBehaviour
 
         // Enable hover on player cards. We disable it for enemy cards.
         cardDragHover.canHover = true;
-        cardOutline.gameObject.SetActive(true);
+        //cardOutline.gameObject.SetActive(true);//해당 함수 설정안함
 
         // Reveal card FRONT, hide card BACK
         cardfront.color = Color.white;
@@ -47,16 +47,17 @@ public class HandCard : MonoBehaviour
         image.sprite = newCard.image;
 
         // Assign description, name and remaining stats
-        description.text = newCard.description; // Description
-        cost.text = newCard.cost; // Cost
-        cardName.text = newCard.name;
+        // 카드설명란..난 적을게 없다
+        //description.text = newCard.description; // Description
+        //cost.text = newCard.cost; // Cost
+        //cardName.text = newCard.name;
 
         // Only set Health & Strength if CreatureCard
-        if (newCard.data is CreatureCard)
-        {
-            health.text = ((CreatureCard)newCard.data).health.ToString();
-            strength.text = ((CreatureCard)newCard.data).strength.ToString();
-        }
+        //if (newCard.data is CreatureCard)
+        //{
+        //    health.text = ((CreatureCard)newCard.data).health.ToString();
+        //    strength.text = ((CreatureCard)newCard.data).strength.ToString();
+        //}
     }
 
     public void AddCardBack()
@@ -80,14 +81,14 @@ public class HandCard : MonoBehaviour
         // Set card image
         image.sprite = card.image;
 
-        // Assign description, name and remaining stats
-        description.text = card.description; // Description
-        cost.text = card.cost; // Cost
-        cardName.text = card.name;
-
-        // Stats
-        health.text = ((CreatureCard)card.data).health.ToString();
-        strength.text = ((CreatureCard)card.data).strength.ToString();
+        //// Assign description, name and remaining stats
+        //description.text = card.description; // Description
+        //cost.text = card.cost; // Cost
+        //cardName.text = card.name;
+        //
+        //// Stats
+        //health.text = ((CreatureCard)card.data).health.ToString();
+        //strength.text = ((CreatureCard)card.data).strength.ToString();
     }
 
     private void Update()
@@ -96,7 +97,7 @@ public class HandCard : MonoBehaviour
         {
             // Only drag during our turn, if our player has enough mana.
             Player player = Player.localPlayer;
-            int manaCost = cost.text.ToInt();
+            int manaCost = 0; //cost.text.ToInt();
             if (Player.gameManager.isOurTurn)
             {
                 cardDragHover.canDrag = player.deck.CanPlayCard(manaCost);

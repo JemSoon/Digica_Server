@@ -6,8 +6,8 @@ public class Deck : NetworkBehaviour
 {
     [Header("Player")]
     public Player player;
-    [HideInInspector] public int deckSize = 30;
-    [HideInInspector] public int handSize = 7;
+    [HideInInspector] public int deckSize = 50;
+    [HideInInspector] public int handSize = 7;//나중에 수정 요망
 
     [Header("Decks")]
     public SyncListCard deckList = new SyncListCard(); // DeckList used during the match. Contains all cards in the deck. This is where we'll be drawing card froms.

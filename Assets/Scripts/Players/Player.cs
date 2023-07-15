@@ -44,7 +44,7 @@ public class Player : Entity
 
         //Get and update the player's username and stats
          CmdLoadPlayer(PlayerPrefs.GetString("Name"));
-        //CmdLoadDeck();
+        CmdLoadDeck();
     }
 
     public override void OnStartClient()
@@ -52,7 +52,7 @@ public class Player : Entity
         base.OnStartClient();
 
         deck.deckList.Callback += deck.OnDeckListChange;
-        deck.hand.Callback += deck.OnHandChange;
+        //deck.hand.Callback += deck.OnHandChange;
         deck.graveyard.Callback += deck.OnGraveyardChange;
     }
 

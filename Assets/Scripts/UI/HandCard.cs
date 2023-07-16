@@ -37,7 +37,7 @@ public class HandCard : MonoBehaviour
 
         // Enable hover on player cards. We disable it for enemy cards.
         cardDragHover.canHover = true;
-        //cardOutline.gameObject.SetActive(true);//해당 함수 설정안함
+        cardOutline.gameObject.SetActive(true);//해당 함수 설정안함
 
         // Reveal card FRONT, hide card BACK
         cardfront.color = Color.white;

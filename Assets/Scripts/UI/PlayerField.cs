@@ -10,7 +10,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
     {
         HandCard card = eventData.pointerDrag.transform.GetComponent<HandCard>();
         Player player = Player.localPlayer;
-        int manaCost = card.cost.text.ToInt();
+        int manaCost = 0; // card.cost.text.ToInt();
 
         
         if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost))

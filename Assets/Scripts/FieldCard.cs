@@ -38,8 +38,8 @@ public class FieldCard : Entity
             cardHover.UpdateFieldCardInfo(card);
         }
 
-        healthText.text = health.ToString();
-        strengthText.text = strength.ToString();
+        //healthText.text = health.ToString();
+        //strengthText.text = strength.ToString();
 
         if (CanAttack()) shine.color = readyColor;
         else if (CantAttack()) shine.color = Color.clear;

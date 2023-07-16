@@ -20,7 +20,7 @@ public class PlayerHand : MonoBehaviour
         if (playerType == PlayerType.PLAYER && Input.GetKeyDown(KeyCode.C))
         {
             Debug.Log(cardCount);
-            player.deck.DrawCard(2);
+            player.deck.DrawCard(7);
         }
 
         if (IsEnemyHand())
@@ -62,6 +62,6 @@ public class PlayerHand : MonoBehaviour
         }
     }
 
-    bool IsEnemyHand() => player && player.hasEnemy && player.deck.hand.Count == 2 && playerType == PlayerType.ENEMY && enemyInfo.handCount != cardCount;
+    bool IsEnemyHand() => player && player.hasEnemy && player.deck.hand.Count == 7 && playerType == PlayerType.ENEMY && enemyInfo.handCount != cardCount;
     bool IsPlayerHand() => player && player.deck.spawnInitialCards && playerType == PlayerType.PLAYER;
 }

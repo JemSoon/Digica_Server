@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 8515137775938009230}
+  cardPrefab: {fileID: 7377028841264132983, guid: 524ba811c6fa9024f81664375f4ad80c, type: 3}
   handContent: {fileID: 5651076218122028304}
   playerType: 1
 --- !u!1 &8515137775938009230

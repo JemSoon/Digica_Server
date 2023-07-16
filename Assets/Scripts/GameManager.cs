@@ -37,7 +37,8 @@ public class GameManager : NetworkBehaviour
 
     // Not sent from Player / Object with Authority, so we need to ignoreAuthority. 
     // We could also have this command run on the Player instead
-    [Command]
+    [Command(requiresAuthority = false)] 
+    //권한 요구 = false 원본은 ignoreAuthority(권한 무시) = true 인데 업데이트로 바뀐듯
     public void CmdOnCardHover(float moveBy, int index)
     {
         // Only move cards if there are any in our opponent's opponent's hand (our hand from our opponent's point of view).

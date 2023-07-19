@@ -117,7 +117,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 2193288574431403673}
   canHover: 0
   canDrag: 0
-  EmptyCard: {fileID: 6898036723158406066, guid: 6c636e9c75f1d49419fda5e378c76026, type: 3}
+  EmptyCard: {fileID: 2149753886398829659, guid: 8f7cf76c587b86440b7c926082225ebf, type: 3}
 --- !u!1 &2563911422996650471
 GameObject:
   m_ObjectHideFlags: 0

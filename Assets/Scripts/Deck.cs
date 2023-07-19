@@ -75,9 +75,9 @@ public class Deck : NetworkBehaviour
         GameObject boardCard = Instantiate(creature.cardPrefab.gameObject);
         FieldCard newCard = boardCard.GetComponent<FieldCard>();
         newCard.card = new CardInfo(card.data); // Save Card Info so we can re-access it later if we need to.
-        newCard.cardName.text = card.name;
-        newCard.health = creature.health;
-        newCard.strength = creature.strength;
+        //newCard.cardName.text = card.name;
+        //newCard.health = creature.health;
+        //newCard.strength = creature.strength;
         newCard.image.sprite = card.image;
         newCard.image.color = Color.white;
 

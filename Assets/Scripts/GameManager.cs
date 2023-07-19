@@ -56,7 +56,7 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdOnFieldCardHover(GameObject cardObject, bool activateShine, bool targeting)
     {
         /*

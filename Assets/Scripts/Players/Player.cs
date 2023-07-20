@@ -24,14 +24,14 @@ public class Player : Entity
     [SyncVar] public int maxMana = 10;
     [SyncVar] public int currentMax = 0;
     [SyncVar] public int _mana = 0;
-    public int mana
-    {
-        get { return Mathf.Min(_mana, maxMana); }
-        set { _mana = Mathf.Clamp(value, 0, maxMana); } // (현재 값,최소 보정값, 최대 보정값)
-    }
+    public int mana;
+    //{
+    //    get { return Mathf.Min(_mana, maxMana); }
+    //    set { _mana = Mathf.Clamp(value, 0, maxMana); } // (현재 값,최소 보정값, 최대 보정값)
+    //}
 
-   // Quicker access for UI scripts
-   [HideInInspector] public static Player localPlayer;
+    // Quicker access for UI scripts
+    [HideInInspector] public static Player localPlayer;
     [HideInInspector] public bool hasEnemy = false; // If we have set an enemy.
     [HideInInspector] public PlayerInfo enemyInfo; // We can't pass a Player class through the Network, but we can pass structs. 
     //We store all our enemy's info in a PlayerInfo struct so we can pass it through the network when needed.

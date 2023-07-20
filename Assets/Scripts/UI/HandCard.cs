@@ -14,7 +14,7 @@ public class HandCard : MonoBehaviour
 
     [Header("Properties")]
     public Text cardName;
-    public Text cost;
+    public int cost;
     public Text strength;
     public Text health;
     public Text description;
@@ -45,6 +45,7 @@ public class HandCard : MonoBehaviour
 
         // Set card image
         image.sprite = newCard.image;
+        cost = newCard.cost;
 
         // Assign description, name and remaining stats
         // 카드설명란..난 적을게 없다
@@ -97,7 +98,7 @@ public class HandCard : MonoBehaviour
         {
             // Only drag during our turn, if our player has enough mana.
             Player player = Player.localPlayer;
-            int manaCost = 0; //cost.text.ToInt();
+            int manaCost = cost;
             if (Player.gameManager.isOurTurn)
             {
                 cardDragHover.canDrag = player.deck.CanPlayCard(manaCost);

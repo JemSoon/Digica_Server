@@ -13,7 +13,7 @@ public class Combat : NetworkBehaviour
         if (entity is Player) 
         { 
             entity.GetComponent<Player>().mana += amount;
-            MemoryChecker.Inst.memoryCheckerPos(); // 카드를 냄에 따른 메모리 변화
+            //MemoryChecker.Inst.memoryCheckerPos(); // 카드를 냄에 따른 메모리 변화
         }
     }
 
@@ -29,7 +29,7 @@ public class Combat : NetworkBehaviour
     {
         // Increase health by amount. If 3, increase by 3. If -3, reduce by 3.
         entity.health += amount;
-        //if (entity.health <= 0) Destroy(entity.gameObject);
+        if (entity.health <= 0) Destroy(entity.gameObject);
     }
 
     [Command]

@@ -43,7 +43,7 @@ public class Player : Entity
         localPlayer = this;
 
         //Get and update the player's username and stats
-         CmdLoadPlayer(PlayerPrefs.GetString("Name"));
+        CmdLoadPlayer(PlayerPrefs.GetString("Name"));
         CmdLoadDeck();
     }
 

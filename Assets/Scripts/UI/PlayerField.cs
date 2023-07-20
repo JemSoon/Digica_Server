@@ -18,13 +18,14 @@ public class PlayerField : MonoBehaviour, IDropHandler
         {
             int index = card.handIndex;
             CardInfo cardInfo = player.deck.hand[index];
-            // Debug.LogError(index + " / " + cardInfo.name);
+            //Debug.LogError(index + " / " + cardInfo.name);
             
             Player.gameManager.isSpawning = true;
             Player.gameManager.isHovering = false;
             Player.gameManager.CmdOnCardHover(0, index);
             player.deck.CmdPlayCard(cardInfo, index); // Summon card onto the board
             player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
+            //MemoryChecker.Inst.memoryCheckerPos();
         }
     }
 

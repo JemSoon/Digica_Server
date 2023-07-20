@@ -79,6 +79,5 @@ public class MemoryChecker : MonoBehaviour
                 rectTransform.anchoredPosition = Vector2.zero;
                 break;
         }
-        Debug.Log(Player.localPlayer.mana);
     }
 }

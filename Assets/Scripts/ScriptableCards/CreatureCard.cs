@@ -11,7 +11,7 @@ public partial class CreatureCard : ScriptableCard
 {
     [Header("Stats")]
     public int strength;
-    public int health;
+    public int health = 1;
 
     [Header("Targets")]
     public List<Target> acceptableTargets = new List<Target>();

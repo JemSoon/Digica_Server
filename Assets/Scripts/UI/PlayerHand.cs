@@ -10,7 +10,7 @@ public class PlayerHand : MonoBehaviour
     public PlayerType playerType;
     private Player player;
     private PlayerInfo enemyInfo;
-    private int cardCount = 50; // Amount of cards in hand
+    private int cardCount = 0; // Amount of cards in hand
 
     void Update()
     {
@@ -27,7 +27,6 @@ public class PlayerHand : MonoBehaviour
         {
             // instantiate/destroy enough slots
             UIUtils.BalancePrefabs(cardPrefab.gameObject, enemyInfo.handCount, handContent);
-
             // refresh all members
             for (int i = 0; i < enemyInfo.handCount; ++i)
             {
@@ -62,6 +61,7 @@ public class PlayerHand : MonoBehaviour
         }
     }
 
-    bool IsEnemyHand() => player && player.hasEnemy && player.deck.hand.Count == 7 && playerType == PlayerType.ENEMY && enemyInfo.handCount != cardCount;
+    //IsEnemyHand()의 마지막 조건문이 핸드카드 하나 더 삭제되게 하는 문제있는듯..?
+    bool IsEnemyHand() => player && player.hasEnemy && player.deck.hand.Count == 7 && playerType == PlayerType.ENEMY /*&& enemyInfo.handCount != cardCount*/;
     bool IsPlayerHand() => player && player.deck.spawnInitialCards && playerType == PlayerType.PLAYER;
 }

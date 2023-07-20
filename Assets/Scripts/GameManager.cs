@@ -78,7 +78,7 @@ public class GameManager : NetworkBehaviour
     }
 
     // Ends our turn and starts our opponent's turn.
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdEndTurn()
     {
         RpcSetTurn();

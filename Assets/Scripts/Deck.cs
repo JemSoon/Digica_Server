@@ -1,6 +1,5 @@
 using UnityEngine;
 using Mirror;
-using static UnityEngine.GraphicsBuffer;
 
 public class Deck : NetworkBehaviour
 {
@@ -54,7 +53,10 @@ public class Deck : NetworkBehaviour
     ///////////////
     public bool CanPlayCard(int manaCost)
     {
-        return true;// player.mana >= manaCost && player.health > 0;
+        if (player.mana - manaCost > -10 && player.health > 0)
+        { return true; }// player.mana >= manaCost && player.health > 0;
+        else
+        { return false; }
     }
 
     public void DrawCard(int amount)

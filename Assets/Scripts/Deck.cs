@@ -54,7 +54,7 @@ public class Deck : NetworkBehaviour
     ///////////////
     public bool CanPlayCard(int manaCost)
     {
-        return true;// player.mana >= manaCost && player.health > 0;
+        return player.mana >= manaCost && player.health > 0;
     }
 
     public void DrawCard(int amount)
@@ -123,7 +123,6 @@ public class Deck : NetworkBehaviour
             boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
             Player.gameManager.enemyHand.RemoveCard(index);
-            Debug.Log(index);
         }
     }
 }

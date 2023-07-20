@@ -30,7 +30,7 @@ public partial struct CardInfo
 
     public Sprite image => data.image;
     public string name => data.name; // Scriptable Card name (name of the file)
-    public int cost => data.cost;
+    public string cost => data.cost.ToString();
     public string description => data.description;
 
     public List<Target> acceptableTargets => ((CreatureCard)data).acceptableTargets;

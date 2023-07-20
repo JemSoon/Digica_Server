@@ -103,8 +103,6 @@ public class GameManager : NetworkBehaviour
     {
         endTurnButton.SetActive(true);
         Player player = Player.localPlayer;
-        player.mana++;
-        player.currentMax++;
         isOurTurn = true;
     }
 }

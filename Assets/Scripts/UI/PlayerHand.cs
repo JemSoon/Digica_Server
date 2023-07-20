@@ -19,6 +19,7 @@ public class PlayerHand : MonoBehaviour
 
         if (playerType == PlayerType.PLAYER && Input.GetKeyDown(KeyCode.C))
         {
+            Debug.Log(cardCount);
             player.deck.DrawCard(7);
         }
 
@@ -56,10 +57,8 @@ public class PlayerHand : MonoBehaviour
         {
             HandCard slot = handContent.GetChild(i).GetComponent<HandCard>();
             int count = i;
-            if (count == index)
-            { slot.RemoveCard(); }
-            else if (slot.handIndex > index) 
-            { slot.handIndex--; }
+            if (count == index) slot.RemoveCard();
+            else if (slot.handIndex > index) slot.handIndex--;
         }
     }
 

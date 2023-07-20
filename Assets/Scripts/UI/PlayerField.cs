@@ -25,6 +25,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
             Player.gameManager.CmdOnCardHover(0, index);
             player.deck.CmdPlayCard(cardInfo, index); // Summon card onto the board
             player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
+            MemoryChecker.Inst.memoryCheckerPos(); // 카드를 냄에 따른 메모리 변화
         }
     }
 

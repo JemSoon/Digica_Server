@@ -13,7 +13,7 @@ public class Combat : NetworkBehaviour
         if (entity is Player) 
         { 
             entity.GetComponent<Player>().mana += amount;
-            MemoryChecker.Inst.memoryCheckerPos(); // 카드를 냄에 따른 메모리 변화
+            
         }
     }
 

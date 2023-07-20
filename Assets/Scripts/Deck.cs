@@ -101,12 +101,13 @@ public class Deck : NetworkBehaviour
     [Command]
     public void CmdStartNewTurn()
     {
-        if (player.mana < player.maxMana)
-        {
-            player.currentMax++;
-            player.mana = player.currentMax;
-            Debug.LogError("Here");
-        }
+        //if (player.mana < player.maxMana)
+        //{
+        //    player.currentMax++;
+        //    player.mana = player.currentMax;
+        //    Debug.LogError("Here");
+        //}
+        //현재의 나로선 필요가 없는 부분인듯?
     }
 
     [ClientRpc]

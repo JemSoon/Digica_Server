@@ -4,7 +4,7 @@ using Mirror;
 
 public class FieldCard : Entity
 {
-    [SyncVar, HideInInspector] public CardInfo card; // Get card info
+    [SyncVar/*, HideInInspector*/] public CardInfo card; // Get card info
 
     [Header("Card Properties")]
     public Image image; // card image on field
@@ -32,7 +32,7 @@ public class FieldCard : Entity
             // Update Stats
             image.color = Color.white;
             image.sprite = card.image;
-            cardName.text = card.name;
+            //cardName.text = card.name; //ลอม๘ดู~
 
             // Update card hover info
             cardHover.UpdateFieldCardInfo(card);

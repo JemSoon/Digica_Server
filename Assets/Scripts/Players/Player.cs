@@ -27,7 +27,7 @@ public class Player : Entity
     public int mana
     {
         get { return Mathf.Min(_mana, maxMana); }
-        set { _mana = Mathf.Clamp(value, 0, maxMana); }
+        set { _mana = Mathf.Clamp(value, 0, maxMana); } // (현재 값,최소 보정값, 최대 보정값)
     }
 
    // Quicker access for UI scripts

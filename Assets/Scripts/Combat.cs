@@ -12,8 +12,17 @@ public class Combat : NetworkBehaviour
         // Increase mana by amount. If 3, increase by 3. If -3, reduce by 3.
         if (entity is Player) 
         { 
+            entity.GetComponent<Player>().mana += amount;   
+        }
+    }
+
+    public void ChangeMana(int amount)
+    {
+        // Increase mana by amount. If 3, increase by 3. If -3, reduce by 3.
+        if (entity is Player)
+        {
             entity.GetComponent<Player>().mana += amount;
-            
+
         }
     }
 

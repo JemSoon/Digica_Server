@@ -24,7 +24,7 @@ public class Player : Entity
     [SyncVar] public int maxMana = 10;
     [SyncVar] public int currentMax = 0;
     [SyncVar] public int _mana = 0;
-    public int mana;
+    [SyncVar] public int mana;
     //{
     //    get { return Mathf.Min(_mana, maxMana); }
     //    set { _mana = Mathf.Clamp(value, 0, maxMana); } // (현재 값,최소 보정값, 최대 보정값)
@@ -37,6 +37,10 @@ public class Player : Entity
     //We store all our enemy's info in a PlayerInfo struct so we can pass it through the network when needed.
      [HideInInspector] public static GameManager gameManager;
     [SyncVar, HideInInspector] public bool firstPlayer = false; // Is it player 1, player 2, etc.
+
+    //메모리 체커
+    //[Header("MemoryChecker")]
+    //public RectTransform memoryChecker;
 
     public override void OnStartLocalPlayer()
     {
@@ -95,6 +99,7 @@ public class Player : Entity
 
     private void Start()
     {
+        //memoryChecker = GameObject.Find("MemoryChecker").GetComponent<RectTransform>();
         gameManager = FindObjectOfType<GameManager>();
         health = gameManager.maxHealth;
         maxMana = gameManager.maxMana;
@@ -143,6 +148,80 @@ public class Player : Entity
             }
         }
     }
+
+    //void MemoryChecker()
+    //{
+    //    switch(mana)
+    //    {
+    //         case 0:
+    //            memoryChecker.anchoredPosition = new Vector2(0, 32);
+    //            break;
+    //        case 1:
+    //            memoryChecker.anchoredPosition = new Vector2(-91, 32);
+    //            break;
+    //        case 2:
+    //            memoryChecker.anchoredPosition = new Vector2(-91 * 2, 32);
+    //            break;
+    //        case 3:
+    //            memoryChecker.anchoredPosition = new Vector2(-91 * 3, 32);
+    //            break;
+    //        case 4:
+    //            memoryChecker.anchoredPosition = new Vector2(-91 * 4, 32);
+    //            break;
+    //        case 5:
+    //            memoryChecker.anchoredPosition = new Vector2(-91 * 5, 32);
+    //            break;
+    //        case 6:
+    //            memoryChecker.anchoredPosition = new Vector2(-91 * 6, 32);
+    //            break;
+    //        case 7:
+    //            memoryChecker.anchoredPosition = new Vector2(-91 * 7, 32);
+    //            break;
+    //        case 8:
+    //            memoryChecker.anchoredPosition = new Vector2(-91 * 8, 32);
+    //            break;
+    //        case 9:
+    //            memoryChecker.anchoredPosition = new Vector2(-91 * 9, 32);
+    //            break;
+    //        case 10:
+    //            memoryChecker.anchoredPosition = new Vector2(-91 * 10, 32);
+    //            break;
+    //        case -1:
+    //            memoryChecker.anchoredPosition = new Vector2(91, 32);
+    //            break;
+    //        case -2:
+    //            memoryChecker.anchoredPosition = new Vector2(91 * 2, 32);
+    //            break;
+    //        case -3:
+    //            memoryChecker.anchoredPosition = new Vector2(91 * 3, 32);
+    //            break;
+    //        case -4:
+    //            memoryChecker.anchoredPosition = new Vector2(91 * 4, 32);
+    //            break;
+    //        case -5:
+    //            memoryChecker.anchoredPosition = new Vector2(91 * 5, 32);
+    //            break;
+    //        case -6:
+    //            memoryChecker.anchoredPosition = new Vector2(91 * 6, 32);
+    //            break;
+    //        case -7:
+    //            memoryChecker.anchoredPosition = new Vector2(91 * 7, 32);
+    //            break;
+    //        case -8:
+    //            memoryChecker.anchoredPosition = new Vector2(91 * 8, 32);
+    //            break;
+    //        case -9:
+    //            memoryChecker.anchoredPosition = new Vector2(91 * 9, 32);
+    //            break;
+    //        case -10:
+    //            memoryChecker.anchoredPosition = new Vector2(91 * 10, 32);
+    //            break;
+    //        default:
+    //            memoryChecker.anchoredPosition = Vector2.zero;
+    //            break;
+    //    }
+        
+    //}
 
     public bool IsOurTurn() => gameManager.isOurTurn;
 }

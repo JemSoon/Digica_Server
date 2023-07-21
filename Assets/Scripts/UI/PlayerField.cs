@@ -1,7 +1,6 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
-using TMPro;
-using System.Collections;
+
 
 public class PlayerField : MonoBehaviour, IDropHandler
 {
@@ -25,7 +24,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
             Player.gameManager.CmdOnCardHover(0, index);
             player.deck.CmdPlayCard(cardInfo, index); // Summon card onto the board
             player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
-            MemoryChecker.Inst.memoryCheckerPos(); // 카드를 냄에 따른 메모리 변화
+            
         }
     }
 
@@ -37,5 +36,11 @@ public class PlayerField : MonoBehaviour, IDropHandler
             FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
             card.CmdUpdateWaitTurn();
         }
+    }
+
+    void LateUpdate()
+    {
+        if(Player.localPlayer!= null)
+        MemoryChecker.Inst.memoryCheckerPos(); // 카드를 냄에 따른 메모리 변화
     }
 }

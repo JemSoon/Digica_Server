@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\ArrowHead.cs" />
     <Compile Include="Assets\Scripts\Combat.cs" />
     <Compile Include="Assets\Scripts\UI\HandCardDragHover.cs" />
+    <Compile Include="Assets\Scripts\UI\MemoryChecker.cs" />
     <Compile Include="Assets\Scripts\CardInfo.cs" />
     <Compile Include="Assets\Scripts\Deck.cs" />
     <Compile Include="Assets\Scripts\UI\HandCard.cs" />
@@ -83,7 +84,6 @@
     <Compile Include="Assets\Scripts\UI\FieldCardHover.cs" />
     <Compile Include="Assets\Scripts\UI\UIPortrait.cs" />
     <Compile Include="Assets\Scripts\CardAbility.cs" />
-    <Compile Include="Assets\Scripts\UI\MemoryChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

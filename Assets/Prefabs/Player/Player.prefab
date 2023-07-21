@@ -137,10 +137,12 @@ MonoBehaviour:
   maxMana: 10
   currentMax: 0
   _mana: 0
+  mana: 0
   hasEnemy: 0
   enemyInfo:
     player: {fileID: 0}
   firstPlayer: 0
+  memoryChecker: {fileID: 0}
 --- !u!114 &6206886559147781605
 MonoBehaviour:
   m_ObjectHideFlags: 0

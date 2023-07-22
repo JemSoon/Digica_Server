@@ -45,7 +45,7 @@ public class Player : Entity
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
-        firstPlayer = isServer;
+        firstPlayer = isServer;//서버겸 방장이면 firstPlayer
 
         //Get and update the player's username and stats
          CmdLoadPlayer(PlayerPrefs.GetString("Name"));

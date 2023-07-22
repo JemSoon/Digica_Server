@@ -11,8 +11,12 @@ public class Combat : NetworkBehaviour
     {
         // Increase mana by amount. If 3, increase by 3. If -3, reduce by 3.
         if (entity is Player) 
-        { 
-            entity.GetComponent<Player>().mana += amount;   
+        {
+            //entity.GetComponent<Player>().mana += amount;
+            if (entity.GetComponent<Player>().firstPlayer)
+            { MemoryChecker.Inst.memory += amount; }
+            else
+            { MemoryChecker.Inst.memory -= amount;}
         }
     }
 

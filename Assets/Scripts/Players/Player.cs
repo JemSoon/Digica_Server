@@ -36,7 +36,7 @@ public class Player : Entity
     [HideInInspector] public PlayerInfo enemyInfo; // We can't pass a Player class through the Network, but we can pass structs. 
     //We store all our enemy's info in a PlayerInfo struct so we can pass it through the network when needed.
      [HideInInspector] public static GameManager gameManager;
-    [SyncVar, HideInInspector] public bool firstPlayer = false; // Is it player 1, player 2, etc.
+    [SyncVar] public bool firstPlayer = false; // Is it player 1, player 2, etc.
 
     //메모리 체커
     //[Header("MemoryChecker")]
@@ -45,6 +45,7 @@ public class Player : Entity
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
+        firstPlayer = isServer;
 
         //Get and update the player's username and stats
          CmdLoadPlayer(PlayerPrefs.GetString("Name"));

@@ -17,7 +17,7 @@ public class TargetingArrow : MonoBehaviour
     {
         if (isDragging)
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(30,-30);
             arrowHead.transform.position = mousePos;
             arrowHead.FindTargets(caster, mousePos, isAbility);
         }

@@ -45,10 +45,10 @@ public class FieldCard : Entity
         else if (CantAttack()) shine.color = Color.clear;
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdUpdateWaitTurn()
     {
-        Debug.LogError("Here");
+        //Debug.LogError("Here");
         if (waitTurn > 0) waitTurn--;
     }
 }

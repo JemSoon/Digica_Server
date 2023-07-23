@@ -20,7 +20,7 @@ MonoBehaviour:
   hasInitiative: 0
   description: 
   strength: 4000
-  health: 0
+  health: 1
   acceptableTargets: 0301
   creatureType: 
   hasCharge: 0

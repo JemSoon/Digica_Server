@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7395318965001567974}
   - component: {fileID: 3930160285030721038}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204d5932a3c32b14d816273cfd0a002c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headPrefab: {fileID: 0}
+  headPrefab: {fileID: 8399859775769468279, guid: f1c4475d00cf3c24e8eb2a3eb7865e97, type: 3}
   caster: {fileID: 0}

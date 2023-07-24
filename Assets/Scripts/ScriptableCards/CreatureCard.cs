@@ -33,8 +33,11 @@ public partial class CreatureCard : ScriptableCard
     public virtual void Attack(Entity attacker, Entity target)
     {
         // Reduce the target's health by damage dealt.
-        target.combat.CmdChangeHealth(-attacker.strength);
-        attacker.combat.CmdChangeHealth(-target.strength);
+        //target.combat.CmdChangeHealth(-attacker.strength);
+        //attacker.combat.CmdChangeHealth(-target.strength);
+
+        attacker.combat.CmdBattle(attacker, target);
+        
         attacker.DestroyTargetingArrow();
         attacker.combat.CmdIncreaseWaitTurn();
     }

@@ -50,4 +50,22 @@ public class Combat : NetworkBehaviour
     {
         entity.waitTurn++;
     }
+
+    [Command(requiresAuthority = false)]
+    public void CmdBattle(Entity attacker, Entity target)
+    {
+        if(attacker.strength <target.strength) 
+        {
+            Destroy(attacker.gameObject);
+        }
+        else if(attacker.strength >target.strength) 
+        {
+            Destroy(target.gameObject);
+        }
+        else//둘다 공격력이 같을때
+        {
+            Destroy(attacker.gameObject);
+            Destroy(target.gameObject);
+        }
+    }
 }

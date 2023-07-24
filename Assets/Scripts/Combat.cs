@@ -37,15 +37,15 @@ public class Combat : NetworkBehaviour
         entity.strength += amount;
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdChangeHealth(int amount)
     {
         // Increase health by amount. If 3, increase by 3. If -3, reduce by 3.
         entity.health += amount;
-        //if (entity.health <= 0) Destroy(entity.gameObject);
+        if (entity.health <= 0) Destroy(entity.gameObject);//현재는 체력기반으로 죽음 처리하는데 나중엔 공격력이 낮은놈 파괴로 바꿔야함
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdIncreaseWaitTurn()
     {
         entity.waitTurn++;

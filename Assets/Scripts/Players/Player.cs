@@ -119,7 +119,7 @@ public class Player : Entity
             UpdateEnemyInfo();
         }
 
-        if (Input.GetKeyDown(KeyCode.G) && isLocalPlayer)
+        if (hasEnemy && isLocalPlayer && gameManager.isGameStart==false)
         {
             gameManager.StartGame();
         }

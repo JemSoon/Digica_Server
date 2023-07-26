@@ -56,7 +56,6 @@ public class Combat : NetworkBehaviour
     {
          if (attacker.strength <target.strength) 
         {
-
             //죽은 공격카드 무덤 리스트 정보에 저장
             attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
 
@@ -65,10 +64,13 @@ public class Combat : NetworkBehaviour
         }
         else if(attacker.strength >target.strength) 
         {
+            target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
             Destroy(target.gameObject);
         }
         else//둘다 공격력이 같을때
         {
+            attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+            target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
             Destroy(attacker.gameObject);
             Destroy(target.gameObject);
         }

@@ -43,7 +43,8 @@ public class GameManager : NetworkBehaviour
     public void CmdOnCardHover(float moveBy, int index)
     {
         // Only move cards if there are any in our opponent's opponent's hand (our hand from our opponent's point of view).
-        if (enemyHand.handContent.transform.childCount > 0 && isServer) RpcCardHover(moveBy, index);
+        if (enemyHand.handContent.transform.childCount > 0 && isServer) 
+        { RpcCardHover(moveBy, index); }
     }
 
     [ClientRpc]

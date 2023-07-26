@@ -139,6 +139,8 @@ MonoBehaviour:
   _mana: 0
   mana: 0
   hasEnemy: 0
+  myInfo:
+    player: {fileID: 1558563431315729131}
   enemyInfo:
     player: {fileID: 0}
   firstPlayer: 0

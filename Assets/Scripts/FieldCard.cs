@@ -21,6 +21,10 @@ public class FieldCard : Entity
     [Header("Card Hover")]
     public HandCard cardHover;
 
+    [Header("Owner")]
+    [SyncVar]
+    public Player player;
+
     // Update is called once per frame
     public override void Update()
     {
@@ -32,6 +36,7 @@ public class FieldCard : Entity
             // Update Stats
             image.color = Color.white;
             image.sprite = card.image;
+
             //cardName.text = card.name; //ลอม๘ดู~
 
             // Update card hover info

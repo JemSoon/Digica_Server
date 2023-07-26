@@ -31,7 +31,10 @@ public class ArrowHead : MonoBehaviour
                 spriteRenderer.sprite = targetHead;
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (!IsAbility) ((CreatureCard)card.data).Attack(caster, target);
+                    if (!IsAbility) 
+                    { 
+                        ((CreatureCard)card.data).Attack(caster, target);
+                    }
                     //else card.data.Cast(caster, target);
                 }
             }

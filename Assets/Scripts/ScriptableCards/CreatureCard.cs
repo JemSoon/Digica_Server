@@ -35,7 +35,7 @@ public partial class CreatureCard : ScriptableCard
         // Reduce the target's health by damage dealt.
         //target.combat.CmdChangeHealth(-attacker.strength);
         //attacker.combat.CmdChangeHealth(-target.strength);
-
+        //attacker.combat.Battle(attacker,target);
         attacker.combat.CmdBattle(attacker, target);
         
         attacker.DestroyTargetingArrow();

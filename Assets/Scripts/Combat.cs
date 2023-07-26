@@ -54,8 +54,13 @@ public class Combat : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdBattle(Entity attacker, Entity target)
     {
-        if(attacker.strength <target.strength) 
+         if (attacker.strength <target.strength) 
         {
+
+            //죽은 공격카드 무덤 리스트 정보에 저장
+            attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+
+            //Battle(attacker, target);
             Destroy(attacker.gameObject);
         }
         else if(attacker.strength >target.strength) 

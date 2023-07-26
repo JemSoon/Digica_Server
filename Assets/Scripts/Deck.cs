@@ -71,7 +71,7 @@ public class Deck : NetworkBehaviour
     }
 
     [Command]
-    public void CmdPlayCard(CardInfo card, int index)
+    public void CmdPlayCard(CardInfo card, int index, Player owner)
     {
         CreatureCard creature = (CreatureCard)card.data;
         GameObject boardCard = Instantiate(creature.cardPrefab.gameObject);
@@ -82,6 +82,7 @@ public class Deck : NetworkBehaviour
         newCard.strength = creature.strength;
         newCard.image.sprite = card.image;
         newCard.image.color = Color.white;
+        newCard.player = owner;
 
         // If creature has charge, reduce waitTurn to 0 so they can attack right away.
         if (creature.hasCharge) newCard.waitTurn = 0;
@@ -126,7 +127,6 @@ public class Deck : NetworkBehaviour
             boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
             Player.gameManager.enemyHand.RemoveCard(index);
-            Debug.Log(index);
         }
     }
 }

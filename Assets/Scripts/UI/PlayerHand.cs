@@ -33,8 +33,6 @@ public class PlayerHand : MonoBehaviour
                 slot.AddCardBack();
 
                 cardCount = enemyInfo.handCount;
-                Debug.Log("CardCount "+cardCount);
-                Debug.Log("handContent " + handContent.transform.childCount);
             }
         }
     }
@@ -59,8 +57,6 @@ public class PlayerHand : MonoBehaviour
             if (count == index)
             { 
                 slot.RemoveCard();
-                Debug.Log("제거 직후 "+Player.gameManager.enemyHand.handContent.transform.childCount);
-                Debug.Log(handContent.GetChild(handContent.transform.childCount-1).gameObject.name);
             }
             else if (slot.handIndex > index) 
             { slot.handIndex--; }

@@ -21,7 +21,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
             
             Player.gameManager.isSpawning = true;
             Player.gameManager.isHovering = false;
-            Player.gameManager.CmdOnCardHover(0, index);
+            //Player.gameManager.CmdOnCardHover(0, index);
             player.deck.CmdPlayCard(cardInfo, index, player); // Summon card onto the board
             player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
             

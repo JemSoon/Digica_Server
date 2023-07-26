@@ -12,7 +12,7 @@ public class PlayerHand : MonoBehaviour
     private PlayerInfo enemyInfo;
     private int cardCount = 0; // Amount of cards in hand
 
-    void Update()
+    void LateUpdate()
     {
         player = Player.localPlayer;
         if (player && player.hasEnemy) enemyInfo = player.enemyInfo;
@@ -21,7 +21,6 @@ public class PlayerHand : MonoBehaviour
         {
             player.deck.DrawCard(7);
         }
-
         if (IsEnemyHand())
         {
             // instantiate/destroy enough slots
@@ -34,6 +33,8 @@ public class PlayerHand : MonoBehaviour
                 slot.AddCardBack();
 
                 cardCount = enemyInfo.handCount;
+                Debug.Log("CardCount "+cardCount);
+                Debug.Log("handContent " + handContent.transform.childCount);
             }
         }
     }
@@ -55,8 +56,14 @@ public class PlayerHand : MonoBehaviour
         {
             HandCard slot = handContent.GetChild(i).GetComponent<HandCard>();
             int count = i;
-            if (count == index) slot.RemoveCard();
-            else if (slot.handIndex > index) slot.handIndex--;
+            if (count == index)
+            { 
+                slot.RemoveCard();
+                Debug.Log("제거 직후 "+Player.gameManager.enemyHand.handContent.transform.childCount);
+                Debug.Log(handContent.GetChild(handContent.transform.childCount-1).gameObject.name);
+            }
+            else if (slot.handIndex > index) 
+            { slot.handIndex--; }
         }
     }
 

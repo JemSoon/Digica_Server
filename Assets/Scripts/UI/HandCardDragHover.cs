@@ -28,7 +28,7 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         // Move corresponding card on opponent's screen
         Player.gameManager.isHovering = true;
-        Player.gameManager.CmdOnCardHover(-25, index);
+        //Player.gameManager.CmdOnCardHover(-25, index);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -41,7 +41,7 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
         int index = card.handIndex;
 
         // Move corresponding card back to normal on opponent's screen
-        Player.gameManager.CmdOnCardHover(0, index);
+        //Player.gameManager.CmdOnCardHover(0, index);
         Player.gameManager.isHovering = false;
     }
 

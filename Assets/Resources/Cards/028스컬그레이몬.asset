@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f097efa2e35641748a216f0607c197fb, type: 3}
   m_Name: "028\uC2A4\uCEEC\uADF8\uB808\uC774\uBAAC"
   m_EditorClassIdentifier: 
-  id: 
-  image: {fileID: 0}
+  id: 28
+  image: {fileID: 21300000, guid: 7ff1c518354c05f4c887e32d0212e286, type: 3}
   color1: 0
   color2: 0
-  cardName: 
-  cost: 0
+  cardName: "\uC2A4\uCEEC\uADF8\uB808\uC774\uBAAC"
+  cost: 7
   category: 
   intiatives: []
   hasInitiative: 0
   description: 
-  strength: 0
-  health: 0
-  Ecost: 0
-  level: 0
-  acceptableTargets: 
+  strength: 7000
+  health: 1
+  Ecost: 3
+  level: 5
+  acceptableTargets: 0301
   creatureType: 
   hasCharge: 0
   hasTaunt: 0
   deathcrys: []
   hasDeathCry: 0
-  cardPrefab: {fileID: 0}
+  cardPrefab: {fileID: 7582166961649262295, guid: 27801e35bdc329143b17b015777515b9, type: 3}

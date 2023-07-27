@@ -68,6 +68,8 @@
     <Compile Include="Assets\Scripts\CardInfo.cs" />
     <Compile Include="Assets\Scripts\Deck.cs" />
     <Compile Include="Assets\Scripts\UI\HandCard.cs" />
+    <Compile Include="Assets\Scripts\Scene_BuildingDeck\CardBook.cs" />
+    <Compile Include="Assets\Scripts\Scene_BuildingDeck\Tile.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\UI\UIUtils.cs" />
     <Compile Include="Assets\Scripts\FieldCard.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Assets\Scripts\Players\PlayerInfo.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHand.cs" />
     <Compile Include="Assets\Scripts\NetworkManagerCCG.cs" />
+    <Compile Include="Assets\Scripts\Scene_BuildingDeck\Row.cs" />
     <Compile Include="Assets\Scripts\TargetingArrow.cs" />
     <Compile Include="Assets\Scripts\ScriptableAbilities\DamageAbility.cs" />
     <Compile Include="Assets\Scripts\ScriptableCards\SpellCard.cs" />
@@ -84,6 +87,7 @@
     <Compile Include="Assets\Scripts\UI\FieldCardHover.cs" />
     <Compile Include="Assets\Scripts\UI\UIPortrait.cs" />
     <Compile Include="Assets\Scripts\CardAbility.cs" />
+    <Compile Include="Assets\Scripts\Scene_BuildingDeck\DeckData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

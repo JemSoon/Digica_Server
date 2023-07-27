@@ -3,6 +3,9 @@ using Mirror;
 
 public class Deck : NetworkBehaviour
 {
+    public static Deck Inst { get; private set; }
+    void Awake() => Inst = this;
+
     [Header("Player")]
     public Player player;
     [HideInInspector] public int deckSize = 50;

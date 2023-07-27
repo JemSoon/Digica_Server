@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using Mirror;
+using UnityEditor;
+using System.IO;
 
 //Useful for UI. Whether the player is, well, a player or an enemy.
 public enum PlayerType { PLAYER, ENEMY };
@@ -37,7 +39,7 @@ public class Player : Entity
     //We store all our enemy's info in a PlayerInfo struct so we can pass it through the network when needed.
      [HideInInspector] public static GameManager gameManager;
     [SyncVar] public bool firstPlayer = false; // Is it player 1, player 2, etc.
-
+    public DeckData deckData;
     //메모리 체커
     //[Header("MemoryChecker")]
     //public RectTransform memoryChecker;
@@ -48,8 +50,28 @@ public class Player : Entity
         firstPlayer = isServer;//서버겸 방장이면 firstPlayer
 
         //Get and update the player's username and stats
-         CmdLoadPlayer(PlayerPrefs.GetString("Name"));
+        CmdLoadPlayer(PlayerPrefs.GetString("Name"));
+        LoadBuildingDeck();//짠 덱을 가져옴
         CmdLoadDeck();
+    }
+
+    public void LoadBuildingDeck()
+    {
+        string path = "Assets/NewDeckData.asset";
+        // 파일을 로드하여 DeckData 스크립트 오브젝트의 인스턴스를 얻습니다.
+        deckData = AssetDatabase.LoadAssetAtPath<DeckData>(path);
+
+        if (deckData != null)
+        {
+            // 로드한 DeckData의 deck 배열에 접근하여 덱 정보를 사용합니다.
+            deck.startingDeck = deckData.deck;
+            // 이제 deck 배열에 저장된 덱 정보를 사용할 수 있습니다.
+            // 예를 들어, 덱 정보를 콘솔에 출력해보겠습니다.
+            foreach (CardAndAmount card in deck.startingDeck)
+            {
+                Debug.Log("Card Name: " + card.card.name + ", Amount: " + card.amount);
+            }
+        }
     }
 
     public override void OnStartClient()
@@ -221,8 +243,7 @@ public class Player : Entity
     //            memoryChecker.anchoredPosition = Vector2.zero;
     //            break;
     //    }
-        
-    //}
 
+    //}
     public bool IsOurTurn() => gameManager.isOurTurn;
 }

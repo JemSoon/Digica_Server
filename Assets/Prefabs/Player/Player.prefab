@@ -99,31 +99,31 @@ MonoBehaviour:
   handSize: 7
   startingDeck:
   - card: {fileID: 11400000, guid: c5252931bb137f54daf71910ee61dc53, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: 7bf4f52d1c0df0c44a1552e3688b5585, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: 87f2360005731854a8ee625c00990b9a, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: 8ff200235bc16294aba48722956870e9, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: 28c7a6c0303d66e42ab98a1b868254ce, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: 87db68b43c621c0459abb70b943ec960, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: ebde458e92050364abae130fef20f1ee, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: 095f77e24e237c84587339448dbe6606, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: ea89934364566a8458b28312bc2afdc4, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: b0e37832851ce034c8d5ce1839e70bd7, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: fba37e5966783024781cfb6092dc11e4, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: 1b3194db55559d343901ff4cc589e339, type: 2}
-    amount: 4
+    amount: 0
   - card: {fileID: 11400000, guid: 66ab4b01df859434bba3107a5d9def1c, type: 2}
-    amount: 2
+    amount: 0
   - card: {fileID: 11400000, guid: 95df5c4a457d1b0459e388b2c3e25cf0, type: 2}
     amount: 0
   - card: {fileID: 11400000, guid: 54eb86ccd46fb1d46bea93167452c1b2, type: 2}

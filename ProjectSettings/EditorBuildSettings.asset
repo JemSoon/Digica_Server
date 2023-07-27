@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Building Deck.unity
+    guid: 4c54110f0a5cb904a99a8ae7fe36ef61
+  - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: fc7082f3e0cb5d44088c634836bf67cb
   m_configObjects: {}

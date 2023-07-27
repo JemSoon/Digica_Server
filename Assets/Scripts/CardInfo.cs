@@ -34,6 +34,29 @@ public partial struct CardInfo
     public string description => data.description;
 
     public List<Target> acceptableTargets => ((CreatureCard)data).acceptableTargets;
+
+    #region Equals
+    //=========== "=="연산자 용 추가 함수 ===========//
+    public bool Equals(CardInfo other)
+    {
+        return name == other.name && image == other.image;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is CardInfo other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hashCode = name != null ? name.GetHashCode() : 0;
+            hashCode = (hashCode * 397) ^ (image != null ? image.GetHashCode() : 0);
+            return hashCode;
+        }
+    }
+    #endregion
 }
 
 // Card List

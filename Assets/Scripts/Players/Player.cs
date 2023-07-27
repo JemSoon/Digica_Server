@@ -57,9 +57,9 @@ public class Player : Entity
 
     public void LoadBuildingDeck()
     {
-        string path = "Assets/NewDeckData.asset";
+        string path = "NewDeckData"; //리소스 하위 경로부터 파일이름(.확장자 빼고)
         // 파일을 로드하여 DeckData 스크립트 오브젝트의 인스턴스를 얻습니다.
-        deckData = AssetDatabase.LoadAssetAtPath<DeckData>(path);
+        deckData = Resources.Load<DeckData>(path);
 
         if (deckData != null)
         {

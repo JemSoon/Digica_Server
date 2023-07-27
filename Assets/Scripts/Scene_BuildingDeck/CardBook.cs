@@ -104,7 +104,7 @@ public class CardBook : MonoBehaviour
     {
         DeckData deckData = ScriptableObject.CreateInstance<DeckData>();
         deckData.deck = buildingDeck;
-        string path = "Assets/NewDeckData.asset";
+        string path = "Assets/Resources/NewDeckData.asset";
         AssetDatabase.CreateAsset(deckData, path);
         AssetDatabase.SaveAssets();
         SceneManager.LoadScene("Battle");

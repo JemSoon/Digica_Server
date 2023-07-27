@@ -12,6 +12,8 @@ public partial class CreatureCard : ScriptableCard
     [Header("Stats")]
     public int strength;
     public int health;
+    public int Ecost;
+    public int level;
 
     [Header("Targets")]
     public List<Target> acceptableTargets = new List<Target>();
@@ -32,10 +34,6 @@ public partial class CreatureCard : ScriptableCard
 
     public virtual void Attack(Entity attacker, Entity target)
     {
-        // Reduce the target's health by damage dealt.
-        //target.combat.CmdChangeHealth(-attacker.strength);
-        //attacker.combat.CmdChangeHealth(-target.strength);
-        //attacker.combat.Battle(attacker,target);
         attacker.combat.CmdBattle(attacker, target);
         
         attacker.DestroyTargetingArrow();

@@ -12,6 +12,11 @@ public struct CardAndAmount
     public int amount;
 }
 
+public enum CardColor1
+{ Red, Green, Blue, Yellow, Purple, Black, }
+public enum CardColor2
+{ None, Red, Green, Blue, Yellow, Purple, Black, }
+
 // Struct for cards in your deck. Card + amount (ex : Sinister Strike x3). Used for Deck Building. Probably won't use it, just add amount to Card struct instead.
 public partial class ScriptableCard : ScriptableObject
 {
@@ -21,7 +26,12 @@ public partial class ScriptableCard : ScriptableObject
     [Header("Image")]
     public Sprite image; // Card image
 
+    [Header("Card Color")]
+    public CardColor1 color1;
+    public CardColor2 color2;
+
     [Header("Properties")]
+    public string cardName;
     public int cost;
     public string category;
 

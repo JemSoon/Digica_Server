@@ -10,17 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f097efa2e35641748a216f0607c197fb, type: 3}
-  m_Name: Greymon
+  m_Name: "025\uADF8\uB77C\uC6B4\uB4DC\uB77C\uBAAC"
   m_EditorClassIdentifier: 
-  id: 20
-  image: {fileID: 21300000, guid: caded3eb39b55944cbde5a34d5406e40, type: 3}
-  cost: 4
+  id: 25
+  image: {fileID: 21300000, guid: 995ae02f2e83694409470ea4b74b31f2, type: 3}
+  color1: 0
+  color2: 0
+  cardName: "\uADF8\uB77C\uC6B4\uB4DC\uB77C\uBAAC"
+  cost: 5
   category: 
   intiatives: []
   hasInitiative: 0
   description: 
-  strength: 4000
+  strength: 6000
   health: 1
+  Ecost: 2
+  level: 5
   acceptableTargets: 0301
   creatureType: 
   hasCharge: 0

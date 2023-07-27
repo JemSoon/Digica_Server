@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f097efa2e35641748a216f0607c197fb, type: 3}
-  m_Name: Agumon
+  m_Name: "014\uC544\uAD6C\uBAAC"
   m_EditorClassIdentifier: 
   id: 14
   image: {fileID: 21300000, guid: 5249e41a0561cfa4a84ea2616d7fd4fd, type: 3}
+  color1: 0
+  color2: 0
+  cardName: "\uC544\uAD6C\uBAAC"
   cost: 3
   category: 
   intiatives: []
@@ -21,6 +24,8 @@ MonoBehaviour:
   description: 
   strength: 2000
   health: 1
+  Ecost: 0
+  level: 3
   acceptableTargets: 0301
   creatureType: 
   hasCharge: 0

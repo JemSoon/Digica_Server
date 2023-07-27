@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f097efa2e35641748a216f0607c197fb, type: 3}
+  m_Name: "018\uB808\uB4DC\uD3AD\uADC4\uBAAC"
+  m_EditorClassIdentifier: 
+  id: 18
+  image: {fileID: 21300000, guid: b46672c92f597994db916d5ddd51f24c, type: 3}
+  color1: 0
+  color2: 0
+  cardName: "\uB808\uB4DC\uD3AD\uADC4\uBAAC"
+  cost: 3
+  category: 
+  intiatives: []
+  hasInitiative: 0
+  description: 
+  strength: 5000
+  health: 1
+  Ecost: 1
+  level: 3
+  acceptableTargets: 0301
+  creatureType: 
+  hasCharge: 0
+  hasTaunt: 0
+  deathcrys: []
+  hasDeathCry: 0
+  cardPrefab: {fileID: 7582166961649262295, guid: 27801e35bdc329143b17b015777515b9, type: 3}

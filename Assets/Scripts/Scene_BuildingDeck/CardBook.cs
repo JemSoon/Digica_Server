@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -102,11 +103,28 @@ public class CardBook : MonoBehaviour
 
     public void GotoBattle()
     {
-        DeckData deckData = ScriptableObject.CreateInstance<DeckData>();
-        deckData.deck = buildingDeck;
-        string path = "Assets/Resources/NewDeckData.asset";
-        AssetDatabase.CreateAsset(deckData, path);
-        AssetDatabase.SaveAssets();
+        //DeckData deckData = ScriptableObject.CreateInstance<DeckData>();
+        //deckData.deck = buildingDeck;
+        //string path = "Assets/Resources/NewDeckData.asset";
+        //AssetDatabase.CreateAsset(deckData, path);
+        //AssetDatabase.SaveAssets();
+        SaveDeckData(buildingDeck);
+
         SceneManager.LoadScene("Battle");
     }
+
+
+    // CardAndAmount 구조체를 리스트로 변환하여 저장하는 함수
+    public void SaveDeckData(CardAndAmount[] deckData)
+    {
+        // 리스트로 변환
+        List<CardAndAmount> deckList = new List<CardAndAmount>(deckData);
+
+        // 리스트를 Json으로 직렬화하여 저장
+        string jsonData = JsonUtility.ToJson(new CardAndAmountListWrapper { deckList = deckList });
+        PlayerPrefs.SetString("DeckData", jsonData);
+        PlayerPrefs.Save();
+    
+    }
+
 }

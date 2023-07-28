@@ -12,6 +12,12 @@ public struct CardAndAmount
     public int amount;
 }
 
+[System.Serializable]
+public class CardAndAmountListWrapper
+{
+    public List<CardAndAmount> deckList;
+}
+
 public enum CardColor1
 { Red, Green, Blue, Yellow, Purple, Black, }
 public enum CardColor2

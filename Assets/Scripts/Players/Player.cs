@@ -57,21 +57,14 @@ public class Player : Entity
 
     public void LoadBuildingDeck()
     {
-        string path = "NewDeckData"; //리소스 하위 경로부터 파일이름(.확장자 빼고)
-        // 파일을 로드하여 DeckData 스크립트 오브젝트의 인스턴스를 얻습니다.
-        deckData = Resources.Load<DeckData>(path);
+        // '덱빌딩' 씬에서 저장된 Json 데이터를 로드
+        string jsonData = PlayerPrefs.GetString("DeckData");
 
-        if (deckData != null)
-        {
-            // 로드한 DeckData의 deck 배열에 접근하여 덱 정보를 사용합니다.
-            deck.startingDeck = deckData.deck;
-            // 이제 deck 배열에 저장된 덱 정보를 사용할 수 있습니다.
-            // 예를 들어, 덱 정보를 콘솔에 출력해보겠습니다.
-            foreach (CardAndAmount card in deck.startingDeck)
-            {
-                Debug.Log("Card Name: " + card.card.name + ", Amount: " + card.amount);
-            }
-        }
+        // Json을 리스트로 역직렬화
+        CardAndAmountListWrapper wrapper = JsonUtility.FromJson<CardAndAmountListWrapper>(jsonData);
+
+        // 리스트를 배열로 변환하여 Deck에 저장
+        deck.startingDeck = wrapper.deckList.ToArray();
     }
 
     public override void OnStartClient()

@@ -39,10 +39,7 @@ public class Player : Entity
     //We store all our enemy's info in a PlayerInfo struct so we can pass it through the network when needed.
      [HideInInspector] public static GameManager gameManager;
     [SyncVar] public bool firstPlayer = false; // Is it player 1, player 2, etc.
-    public DeckData deckData;
-    //메모리 체커
-    //[Header("MemoryChecker")]
-    //public RectTransform memoryChecker;
+
 
     public override void OnStartLocalPlayer()
     {

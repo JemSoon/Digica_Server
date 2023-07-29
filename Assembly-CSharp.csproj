@@ -60,7 +60,6 @@
     <Compile Include="Assets\Scripts\UI\PlayerField.cs" />
     <Compile Include="Assets\Scripts\Extensions.cs" />
     <Compile Include="Assets\Scripts\ScriptableCards\CreatureCard.cs" />
-    <Compile Include="Assets\Scripts\Scene_BuildingDeck\DeckData.cs" />
     <Compile Include="Assets\Scripts\Entity.cs" />
     <Compile Include="Assets\Scripts\ArrowHead.cs" />
     <Compile Include="Assets\Scripts\Combat.cs" />

@@ -40,7 +40,6 @@ public class Player : Entity
      [HideInInspector] public static GameManager gameManager;
     [SyncVar] public bool firstPlayer = false; // Is it player 1, player 2, etc.
 
-
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
@@ -49,7 +48,7 @@ public class Player : Entity
         //Get and update the player's username and stats
         CmdLoadPlayer(PlayerPrefs.GetString("Name"));
         LoadBuildingDeck();//짠 덱을 가져옴
-        CmdLoadDeck();
+        //CmdLoadDeck();
     }
 
     public void LoadBuildingDeck()
@@ -62,6 +61,9 @@ public class Player : Entity
 
         // 리스트를 배열로 변환하여 Deck에 저장
         deck.startingDeck = wrapper.deckList.ToArray();
+
+        CmdLoadDeck();
+
     }
 
     public override void OnStartClient()
@@ -162,78 +164,6 @@ public class Player : Entity
         }
     }
 
-    //void MemoryChecker()
-    //{
-    //    switch(mana)
-    //    {
-    //         case 0:
-    //            memoryChecker.anchoredPosition = new Vector2(0, 32);
-    //            break;
-    //        case 1:
-    //            memoryChecker.anchoredPosition = new Vector2(-91, 32);
-    //            break;
-    //        case 2:
-    //            memoryChecker.anchoredPosition = new Vector2(-91 * 2, 32);
-    //            break;
-    //        case 3:
-    //            memoryChecker.anchoredPosition = new Vector2(-91 * 3, 32);
-    //            break;
-    //        case 4:
-    //            memoryChecker.anchoredPosition = new Vector2(-91 * 4, 32);
-    //            break;
-    //        case 5:
-    //            memoryChecker.anchoredPosition = new Vector2(-91 * 5, 32);
-    //            break;
-    //        case 6:
-    //            memoryChecker.anchoredPosition = new Vector2(-91 * 6, 32);
-    //            break;
-    //        case 7:
-    //            memoryChecker.anchoredPosition = new Vector2(-91 * 7, 32);
-    //            break;
-    //        case 8:
-    //            memoryChecker.anchoredPosition = new Vector2(-91 * 8, 32);
-    //            break;
-    //        case 9:
-    //            memoryChecker.anchoredPosition = new Vector2(-91 * 9, 32);
-    //            break;
-    //        case 10:
-    //            memoryChecker.anchoredPosition = new Vector2(-91 * 10, 32);
-    //            break;
-    //        case -1:
-    //            memoryChecker.anchoredPosition = new Vector2(91, 32);
-    //            break;
-    //        case -2:
-    //            memoryChecker.anchoredPosition = new Vector2(91 * 2, 32);
-    //            break;
-    //        case -3:
-    //            memoryChecker.anchoredPosition = new Vector2(91 * 3, 32);
-    //            break;
-    //        case -4:
-    //            memoryChecker.anchoredPosition = new Vector2(91 * 4, 32);
-    //            break;
-    //        case -5:
-    //            memoryChecker.anchoredPosition = new Vector2(91 * 5, 32);
-    //            break;
-    //        case -6:
-    //            memoryChecker.anchoredPosition = new Vector2(91 * 6, 32);
-    //            break;
-    //        case -7:
-    //            memoryChecker.anchoredPosition = new Vector2(91 * 7, 32);
-    //            break;
-    //        case -8:
-    //            memoryChecker.anchoredPosition = new Vector2(91 * 8, 32);
-    //            break;
-    //        case -9:
-    //            memoryChecker.anchoredPosition = new Vector2(91 * 9, 32);
-    //            break;
-    //        case -10:
-    //            memoryChecker.anchoredPosition = new Vector2(91 * 10, 32);
-    //            break;
-    //        default:
-    //            memoryChecker.anchoredPosition = Vector2.zero;
-    //            break;
-    //    }
-
-    //}
+    
     public bool IsOurTurn() => gameManager.isOurTurn;
 }

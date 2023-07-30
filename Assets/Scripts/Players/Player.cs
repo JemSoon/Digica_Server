@@ -18,7 +18,7 @@ public class Player : Entity
     public Sprite portrait; // For the player's icon at the top left of the screen & in the PartyHUD.
 
     [Header("Deck")]
-    public Deck deck;
+    [SyncVar] public Deck deck;
     public Sprite cardback;
     [SyncVar, HideInInspector] public int tauntCount = 0; // Amount of taunt creatures on your side of the board.
 
@@ -37,7 +37,7 @@ public class Player : Entity
     [HideInInspector] public bool hasEnemy = false; // If we have set an enemy.
     [HideInInspector] public PlayerInfo enemyInfo; // We can't pass a Player class through the Network, but we can pass structs. 
     //We store all our enemy's info in a PlayerInfo struct so we can pass it through the network when needed.
-     [HideInInspector] public static GameManager gameManager;
+    [HideInInspector] public static GameManager gameManager;
     [SyncVar] public bool firstPlayer = false; // Is it player 1, player 2, etc.
 
     public override void OnStartLocalPlayer()
@@ -97,7 +97,7 @@ public class Player : Entity
     public void CmdLoadDeck()
     {
         //Fill deck from startingDeck array
-         for (int i = 0; i < deck.startingDeck.Length; ++i)
+        for (int i = 0; i < deck.startingDeck.Length; ++i)
         {
             CardAndAmount card = deck.startingDeck[i];
             for (int v = 0; v < card.amount; ++v)
@@ -128,33 +128,35 @@ public class Player : Entity
         base.Update();
 
         //Get EnemyInfo as soon as another player connects. Only start updating once our Player has been loaded in properly(username will be set if loaded in).
-         if (!hasEnemy && username != "")
+        if (!hasEnemy && username != "")
         {
             UpdateEnemyInfo();
         }
 
-        if (hasEnemy && isLocalPlayer && gameManager.isGameStart==false)
+        if (hasEnemy && isLocalPlayer && gameManager.isGameStart == false)
         {
+            Debug.Log(enemyInfo.data.username);
+            //CmdLoadEnemyDeck();            
             gameManager.StartGame();
         }
     }
 
-     public void UpdateEnemyInfo()
+    public void UpdateEnemyInfo()
     {
         //Find all Players and add them to the list.
-       Player[] onlinePlayers = FindObjectsOfType<Player>();
+        Player[] onlinePlayers = FindObjectsOfType<Player>();
 
         //Loop through all online Players(should just be one other Player)
-         foreach (Player players in onlinePlayers)
+        foreach (Player players in onlinePlayers)
         {
             //Make sure the players are loaded properly(we load the usernames first)
-             if (players.username != "")
+            if (players.username != "")
             {
                 //There should only be one other Player online, so if it's not us then it's the enemy.
-                 if (players != this)
+                if (players != this)
                 {
                     //Get & Set PlayerInfo from our Enemy's gameObject
-                     PlayerInfo currentPlayer = new PlayerInfo(players.gameObject);
+                    PlayerInfo currentPlayer = new PlayerInfo(players.gameObject);
                     enemyInfo = currentPlayer;
                     hasEnemy = true;
                     enemyInfo.data.casterType = Target.OPPONENT;
@@ -163,7 +165,6 @@ public class Player : Entity
             }
         }
     }
-
     
     public bool IsOurTurn() => gameManager.isOurTurn;
 }

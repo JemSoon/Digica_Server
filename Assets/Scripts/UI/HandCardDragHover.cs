@@ -21,6 +21,8 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
         // If we can't hover, return.
         if (!canHover) return;
 
+        Debug.Log(card.cardName);
+        Debug.Log(card.strength);
         // Move card locally
         card.transform.localScale = new Vector2(1.5f, 1.5f);
         card.transform.localPosition = new Vector2(card.transform.localPosition.x, 190);

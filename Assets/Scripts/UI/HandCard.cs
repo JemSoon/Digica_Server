@@ -50,7 +50,7 @@ public class HandCard : MonoBehaviour
         // Assign description, name and remaining stats
         // 카드설명란..난 적을게 없다
         //description.text = newCard.description; // Description
-        //cost.text = newCard.cost; // Cost
+        //cost.text = newCard.cost.ToString(); // Cost
         //cardName.text = newCard.name;
 
         // Only set Health & Strength if CreatureCard

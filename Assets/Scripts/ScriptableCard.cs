@@ -18,16 +18,14 @@ public static class CustomReadWriteFunctions //CardAndAmount 스트럭트안의 Script
 {
     public static void WriteScriptableCard(this NetworkWriter writer, ScriptableCard value)
     {
-        NetworkIdentity networkIdentity = value.GetComponent<NetworkIdentity>();
-        writer.WriteNetworkIdentity(networkIdentity);
+        writer.WriteString(value == null ? "" : value.CardID);
     }
 
     public static ScriptableCard ReadScriptableCard(this NetworkReader reader)
     {
-        NetworkIdentity networkIdentity = reader.ReadNetworkIdentity();
-        ScriptableCard card = networkIdentity != null ? networkIdentity.GetComponent<ScriptableCard>() : null;
-
-        return card;
+        var value = reader.ReadString();
+        if (value == "") return null;
+        return ScriptableCard.Cache[value];
     }
 }
 

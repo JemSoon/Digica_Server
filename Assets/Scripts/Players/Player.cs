@@ -111,9 +111,9 @@ public class Player : Entity
         //        }
         //    }
         //}
-        for (int i = 0; i < deck.startingDeck.Length; ++i)
+        for (int i = 0; i < startingDeck.Length; ++i)
         {
-            CardAndAmount card = deck.startingDeck[i];
+            CardAndAmount card = startingDeck[i];
             for (int v = 0; v < card.amount; ++v)
             {
                 deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());

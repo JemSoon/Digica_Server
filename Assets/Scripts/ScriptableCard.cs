@@ -10,47 +10,26 @@ using UnityEngine;
 [Serializable]
 public struct CardAndAmount
 {
-    public string cardID;
+    public ScriptableCard card;
     public int amount;
 }
 
-//public static class CustomReadWriteFunctions //CardAndAmount 스트럭트안의 ScriptableCard안의 Sprite가 직렬화 안되기땜에 만든 클래스(연산자 재정의 같은 클래스)
-//{
-//    public static void WriteCardAndAmount(this NetworkWriter writer, CardAndAmount value)
-//    {
-//        writer.WriteString(value.cardID);
-//        writer.WriteInt(value.amount);
-//    }
+public static class CustomReadWriteFunctions //CardAndAmount 스트럭트안의 ScriptableCard안의 Sprite가 직렬화 안되기땜에 만든 클래스(연산자 재정의 같은 클래스)
+{
+    public static void WriteScriptableCard(this NetworkWriter writer, ScriptableCard value)
+    {
+        NetworkIdentity networkIdentity = value.GetComponent<NetworkIdentity>();
+        writer.WriteNetworkIdentity(networkIdentity);
+    }
 
-//    public static CardAndAmount ReadCardAndAmount(this NetworkReader reader)
-//    {
-//        CardAndAmount result = new CardAndAmount();
-//        result.cardID = reader.ReadString();
-//        result.amount = reader.ReadInt();
-//        return result;
-//    }
+    public static ScriptableCard ReadScriptableCard(this NetworkReader reader)
+    {
+        NetworkIdentity networkIdentity = reader.ReadNetworkIdentity();
+        ScriptableCard card = networkIdentity != null ? networkIdentity.GetComponent<ScriptableCard>() : null;
 
-//    public static void WriteScriptableCard(this NetworkWriter writer, ScriptableCard value)
-//    {
-//        // ScriptableCard의 고유 ID를 쓰도록 변경합니다.
-//        writer.WriteString(value.CardID);
-//    }
-
-//    public static ScriptableCard ReadScriptableCard(this NetworkReader reader)
-//    {
-//        // ScriptableCard의 고유 ID를 읽어와서 해당 ID에 해당하는 ScriptableCard를 찾아 반환합니다.
-//        string cardID = reader.ReadString();
-//        if (ScriptableCard.Cache.TryGetValue(cardID, out ScriptableCard card))
-//        {
-//            return card;
-//        }
-//        else
-//        {
-//            Debug.LogError("ScriptableCard not found in cache for ID: " + cardID);
-//            return null;
-//        }
-//    }
-//}
+        return card;
+    }
+}
 
 [System.Serializable]
 public class CardAndAmountListWrapper

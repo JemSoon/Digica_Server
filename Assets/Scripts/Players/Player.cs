@@ -96,19 +96,29 @@ public class Player : Entity
     {
         Debug.Log("µ¦ ·Îµå µÊ");
         //Fill deck from startingDeck array
-        for (int i = 0; i < startingDeck.Length; ++i)
+        //for (int i = 0; i < startingDeck.Length; ++i)
+        //{
+        //    CardAndAmount cardandamount = startingDeck[i];
+        //    string cardID = cardandamount.cardID;
+        //    ScriptableCard scriptableCard = ScriptableCard.Cache.TryGetValue(cardID, out ScriptableCard card) ? card : null;
+
+        //    if(scriptableCard != null)
+        //    {
+        //        for (int v = 0; v < cardandamount.amount; ++v)
+        //        {
+        //            deck.deckList.Add(cardandamount.amount > 0 ? new CardInfo(scriptableCard, 1) : new CardInfo());
+        //            if (deck.hand.Count < 7) deck.hand.Add(new CardInfo(scriptableCard, 1));
+        //        }
+        //    }
+        //}
+        for (int i = 0; i < deck.startingDeck.Length; ++i)
         {
-            CardAndAmount cardandamount = startingDeck[i];
-            string cardID = cardandamount.cardID;
-            ScriptableCard scriptableCard = ScriptableCard.Cache.TryGetValue(cardID, out ScriptableCard card) ? card : null;
-            
-            if(scriptableCard != null)
+            CardAndAmount card = deck.startingDeck[i];
+            for (int v = 0; v < card.amount; ++v)
             {
-                for (int v = 0; v < cardandamount.amount; ++v)
-                {
-                    deck.deckList.Add(cardandamount.amount > 0 ? new CardInfo(scriptableCard, 1) : new CardInfo());
-                    if (deck.hand.Count < 7) deck.hand.Add(new CardInfo(scriptableCard, 1));
-                }
+                deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
+                if (deck.hand.Count < 7) deck.hand.Add(new CardInfo(card.card, 1));
+
             }
         }
         if (deck.hand.Count == 7)
@@ -116,6 +126,7 @@ public class Player : Entity
             deck.hand.Shuffle();
         }
     }
+    
 
     private void Start()
     {

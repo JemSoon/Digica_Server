@@ -182,9 +182,9 @@ MonoBehaviour:
   myDigitamaCount: 0
   bookPage: 1
   buildingDeck:
-  - card: {fileID: 11400000, guid: c5252931bb137f54daf71910ee61dc53, type: 2}
+  - cardID: 13
     amount: 0
-  - card: {fileID: 11400000, guid: 7bf4f52d1c0df0c44a1552e3688b5585, type: 2}
+  - cardID: 14
     amount: 0
 --- !u!114 &334985981
 MonoBehaviour:

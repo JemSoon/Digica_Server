@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 using Mirror;
-using UnityEditor;
-using System.IO;
 
 //Useful for UI. Whether the player is, well, a player or an enemy.
 public enum PlayerType { PLAYER, ENEMY };
@@ -18,7 +16,7 @@ public class Player : Entity
     public Sprite portrait; // For the player's icon at the top left of the screen & in the PartyHUD.
 
     [Header("Deck")]
-    [SyncVar] public Deck deck;
+    public Deck deck;
     public Sprite cardback;
     [SyncVar, HideInInspector] public int tauntCount = 0; // Amount of taunt creatures on your side of the board.
 
@@ -62,7 +60,7 @@ public class Player : Entity
         // 리스트를 배열로 변환하여 Deck에 저장
         deck.startingDeck = wrapper.deckList.ToArray();
 
-        CmdLoadDeck();
+        CmdLoadDeck(deck.startingDeck);
 
     }
 
@@ -94,16 +92,23 @@ public class Player : Entity
     }
 
     [Command]
-    public void CmdLoadDeck()
+    public void CmdLoadDeck(CardAndAmount[] startingDeck)
     {
+        Debug.Log("덱 로드 됨");
         //Fill deck from startingDeck array
-        for (int i = 0; i < deck.startingDeck.Length; ++i)
+        for (int i = 0; i < startingDeck.Length; ++i)
         {
-            CardAndAmount card = deck.startingDeck[i];
-            for (int v = 0; v < card.amount; ++v)
+            CardAndAmount cardandamount = startingDeck[i];
+            string cardID = cardandamount.cardID;
+            ScriptableCard scriptableCard = ScriptableCard.Cache.TryGetValue(cardID, out ScriptableCard card) ? card : null;
+            
+            if(scriptableCard != null)
             {
-                deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
-                if (deck.hand.Count < 7) deck.hand.Add(new CardInfo(card.card, 1));
+                for (int v = 0; v < cardandamount.amount; ++v)
+                {
+                    deck.deckList.Add(cardandamount.amount > 0 ? new CardInfo(scriptableCard, 1) : new CardInfo());
+                    if (deck.hand.Count < 7) deck.hand.Add(new CardInfo(scriptableCard, 1));
+                }
             }
         }
         if (deck.hand.Count == 7)
@@ -135,7 +140,7 @@ public class Player : Entity
 
         if (hasEnemy && isLocalPlayer && gameManager.isGameStart == false)
         {
-            Debug.Log(enemyInfo.data.username);
+
             //CmdLoadEnemyDeck();            
             gameManager.StartGame();
         }

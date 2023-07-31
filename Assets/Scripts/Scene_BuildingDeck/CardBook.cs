@@ -39,8 +39,10 @@ public class CardBook : MonoBehaviour
         var tile0 = rows[0].tiles[0];
         var tile1 = rows[0].tiles[1];
 
-        tile0.card.sprite = buildingDeck[0].card.image;
-        tile1.card.sprite = buildingDeck[1].card.image;
+        ScriptableCard scriptableCard0 = ScriptableCard.Cache.TryGetValue(buildingDeck[0].cardID, out ScriptableCard card0) ? card0 : null;
+        ScriptableCard scriptableCard1 = ScriptableCard.Cache.TryGetValue(buildingDeck[1].cardID, out ScriptableCard card1) ? card1 : null;
+        tile0.card.sprite = scriptableCard0.image;
+        tile1.card.sprite = scriptableCard1.image;
 
         //for (var y = 0; y < Height; y++)
         //{

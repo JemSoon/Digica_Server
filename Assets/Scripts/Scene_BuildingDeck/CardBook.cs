@@ -1,7 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
+using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +9,10 @@ using UnityEngine.SceneManagement;
 public class CardBook : MonoBehaviour
 {
     public static CardBook Inst { get; private set; }
+
+    [SerializeField] Text text;
+    [SerializeField] Button next;
+    [SerializeField] Button front;
 
     public Row[] rows;
     public Tile[,] Tiles { get; private set; }
@@ -39,8 +43,6 @@ public class CardBook : MonoBehaviour
         var tile0 = rows[0].tiles[0];
         var tile1 = rows[0].tiles[1];
 
-        //ScriptableCard scriptableCard0 = ScriptableCard.Cache.TryGetValue(buildingDeck[0].cardID, out ScriptableCard card0) ? card0 : null;
-        //ScriptableCard scriptableCard1 = ScriptableCard.Cache.TryGetValue(buildingDeck[1].cardID, out ScriptableCard card1) ? card1 : null;
         tile0.card.sprite = buildingDeck[0].card.image;
         tile1.card.sprite = buildingDeck[1].card.image;
 
@@ -84,24 +86,24 @@ public class CardBook : MonoBehaviour
     //    myDigitamaDeck.RemoveAt(myDigitamaDeck.Count - 1);
     //}
 
-    //public void ClickNext()
-    //{
-    //    if (bookPage >= 11)
-    //    { return; }
+    public void ClickNext()
+    {
+        if (bookPage >= 11)
+        { return; }
 
-    //    bookPage++;
-    //    textMesh.text = "페이지 " + bookPage;
-    //    TileImageSetting();
-    //}
-    //public void ClickFront()
-    //{
-    //    if (bookPage <= 1)
-    //    { return; }
+        bookPage++;
+        text.text = "페이지 " + bookPage;
+        TileImageSetting();
+    }
+    public void ClickFront()
+    {
+        if (bookPage <= 1)
+        { return; }
 
-    //    bookPage--;
-    //    textMesh.text = "페이지 " + bookPage;
-    //    TileImageSetting();
-    //}
+        bookPage--;
+        text.text = "페이지 " + bookPage;
+        TileImageSetting();
+    }
 
     public void GotoBattle()
     {

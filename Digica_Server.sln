@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirror.Authenticators", "Mi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Mirror.CodeGen", "Unity.Mirror.CodeGen.csproj", "{A79D3082-4E72-DCD6-2A62-C14F87F8A2AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParrelSync", "ParrelSync.csproj", "{5D650C11-7418-3659-913B-23BBC45D77BC}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirror.Editor", "Mirror.Editor.csproj", "{4C7CA6DC-E235-2951-1239-63B8967D4664}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirror.CompilerSymbols", "Mirror.CompilerSymbols.csproj", "{19C796BC-3D60-E5E3-8A2D-175F575830E4}"
@@ -71,6 +73,10 @@ Global
 		{A79D3082-4E72-DCD6-2A62-C14F87F8A2AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A79D3082-4E72-DCD6-2A62-C14F87F8A2AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A79D3082-4E72-DCD6-2A62-C14F87F8A2AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D650C11-7418-3659-913B-23BBC45D77BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D650C11-7418-3659-913B-23BBC45D77BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D650C11-7418-3659-913B-23BBC45D77BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D650C11-7418-3659-913B-23BBC45D77BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C7CA6DC-E235-2951-1239-63B8967D4664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C7CA6DC-E235-2951-1239-63B8967D4664}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C7CA6DC-E235-2951-1239-63B8967D4664}.Release|Any CPU.ActiveCfg = Release|Any CPU

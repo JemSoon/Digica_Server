@@ -922,6 +922,10 @@
       <Project>{4434F392-4446-B7D2-AF7B-D59C39EFB5B0}</Project>
       <Name>Mirror.Examples</Name>
     </ProjectReference>
+    <ProjectReference Include="ParrelSync.csproj">
+      <Project>{5D650C11-7418-3659-913B-23BBC45D77BC}</Project>
+      <Name>ParrelSync</Name>
+    </ProjectReference>
     <ProjectReference Include="SimpleWebTransport.csproj">
       <Project>{8F683EF4-3585-6082-B71D-C525F6ED1119}</Project>
       <Name>SimpleWebTransport</Name>

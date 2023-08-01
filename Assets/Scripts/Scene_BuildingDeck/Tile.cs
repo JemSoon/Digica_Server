@@ -21,9 +21,11 @@ public class Tile : MonoBehaviour
         //    Debug.Log("중복4개 넘으려 함");
         //    return;
         //}
-        //++CardBook.Inst.buildingDeck[0].amount;
-        ++CardBook.Inst.buildingDeck[x].amount;
+        int index = x + (y * CardBook.Inst.Width) + (CardBook.Inst.bookPage - 1) * 20;
         CardBook.Inst.myCardCount++;
-        Debug.Log(CardBook.Inst.myCardCount);
+        Debug.Log("디지몬 카드 개수 : " + CardBook.Inst.myCardCount);
+        ++CardBook.Inst.buildingDeck[index].amount;
+        //this._item.amount++;
+        //MyCardDeck.Inst.SetActiveButton(CardBook.Inst.myCardCount);
     }
 }

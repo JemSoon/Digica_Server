@@ -13,6 +13,7 @@ public class CardBook : MonoBehaviour
     [SerializeField] Text text;
     [SerializeField] Button next;
     [SerializeField] Button front;
+    [SerializeField] Sprite cardback;
 
     public Row[] rows;
     public Tile[,] Tiles { get; private set; }
@@ -40,26 +41,32 @@ public class CardBook : MonoBehaviour
     {
         Tiles = new Tile[rows.Max(row => row.tiles.Length), rows.Length];
 
-        var tile0 = rows[0].tiles[0];
-        var tile1 = rows[0].tiles[1];
+        for (var y = 0; y < Height; y++)
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                var tile = rows[y].tiles[x];
 
-        tile0.card.sprite = buildingDeck[0].card.image;
-        tile1.card.sprite = buildingDeck[1].card.image;
+                tile.x = x;
+                tile.y = y;
 
-        //for (var y = 0; y < Height; y++)
-        //{
-        //    for (var x = 0; x < Width; x++)
-        //    {
-        //        var tile = rows[y].tiles[x];
+                int index = x + (y * Width) + (bookPage - 1) * 20;
 
-        //        tile.x = x;
-        //        tile.y = y;
+                if (index >= buildingDeck.Length)
+                {
+                    //buildingDeck의 인덱스를 넘으면 카드 뒷면이미지로
+                    tile._item.card = null;
+                    tile.card.sprite = cardback;
+                }
 
-        //        tile._item.data = buildingDeck[x + (y * Width) + (bookPage - 1) * 20];//각 인덱스에 맞게 배치
+                else
+                {
+                    tile._item = buildingDeck[x + (y * Width) + (bookPage - 1) * 20];//각 인덱스에 맞게 배치
 
-        //        tile.card.sprite = tile._item.image;
-        //    }
-        //}
+                    tile.card.sprite = tile._item.card.image;
+                }
+            }
+        }
     }
 
     //public void myDeckShift()
@@ -107,11 +114,6 @@ public class CardBook : MonoBehaviour
 
     public void GotoBattle()
     {
-        //DeckData deckData = ScriptableObject.CreateInstance<DeckData>();
-        //deckData.deck = buildingDeck;
-        //string path = "Assets/Resources/NewDeckData.asset";
-        //AssetDatabase.CreateAsset(deckData, path);
-        //AssetDatabase.SaveAssets();
         SaveDeckData(buildingDeck);
 
         SceneManager.LoadScene("Battle");

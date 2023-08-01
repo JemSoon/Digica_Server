@@ -16,12 +16,14 @@ public class Tile : MonoBehaviour
         if (CardBook.Inst.myCardCount >= 50)
         { return; }
 
-        //if (CardBook.Inst.buildingDeck[0].amount >= 4)
-        //{
-        //    Debug.Log("중복4개 넘으려 함");
-        //    return;
-        //}
         int index = x + (y * CardBook.Inst.Width) + (CardBook.Inst.bookPage - 1) * 20;
+
+        if (CardBook.Inst.buildingDeck[index].amount >= 4)
+        {
+            Debug.Log("중복4개 넘으려 함");
+            return;
+        }
+     
         CardBook.Inst.myCardCount++;
         Debug.Log("디지몬 카드 개수 : " + CardBook.Inst.myCardCount);
         ++CardBook.Inst.buildingDeck[index].amount;

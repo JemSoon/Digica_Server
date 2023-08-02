@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d78962efea4d8e4a951449e1f4eaa98, type: 3}
+  m_Name: "201\uB098\uC774\uD2B8 \uB808\uC774\uB4DC"
+  m_EditorClassIdentifier: 
+  id: 201
+  image: {fileID: 21300000, guid: 492b757a6633070429ae860d77b5fdae, type: 3}
+  color1: 4
+  color2: 0
+  cardName: "\uB098\uC774\uD2B8 \uB808\uC774\uB4DC"
+  cost: 2
+  category: 
+  intiatives: []
+  hasInitiative: 0
+  description: 
+  targeted: 0
+  healthChange: 0
+  strengthChange: 0
+  cardDraw: 0
+  untilEndOfTurn: 0

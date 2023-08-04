@@ -5,5 +5,5 @@ using UnityEngine;
 public class Row : MonoBehaviour
 {
     public Tile[] tiles;
-    //public DeckTile[] deckTiles;
+    public DeckTile[] deckTiles;
 }

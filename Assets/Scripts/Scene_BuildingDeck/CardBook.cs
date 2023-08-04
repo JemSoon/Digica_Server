@@ -69,17 +69,22 @@ public class CardBook : MonoBehaviour
         }
     }
 
-    //public void myDeckShift()
-    //{
-    //    for (int i = MyCardDeck.Inst.deleteIndex; i < myDeck.Count - 1; i++)
-    //    {
-    //        if (myDeck[i + 1] == null)
-    //        { break; }
+    public void myDeckShift()
+    {
+        for (int i = MyCardBook.Inst.deleteIndex; i < buildingDeck.Length - 1; i++)
+        {
+            if (buildingDeck[i + 1].card == null)
+            { break; }
 
-    //        myDeck[i] = myDeck[i + 1];
-    //    }
-    //    myDeck.RemoveAt(myDeck.Count - 1);
-    //}
+            buildingDeck[i] = buildingDeck[i + 1];
+        }
+        //buildingDeck.RemoveAt(myDeck.Count - 1);
+        CardAndAmountListWrapper wrapper = new CardAndAmountListWrapper();
+        int index = buildingDeck.Length - 1;
+        wrapper.deckList.RemoveAt(index);
+        //빌딩 덱이 리스트가 아니라 배열이다보니 복잡해지는 서순..
+        buildingDeck = wrapper.deckList.ToArray();
+    }
 
     //public void myTamaShift()
     //{

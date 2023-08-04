@@ -27,6 +27,6 @@ public class Tile : MonoBehaviour
         CardBook.Inst.myCardCount++;
         Debug.Log("디지몬 카드 개수 : " + CardBook.Inst.myCardCount);
         ++CardBook.Inst.buildingDeck[index].amount;
-        //MyCardDeck.Inst.SetActiveButton(CardBook.Inst.myCardCount);
+        MyCardBook.Inst.SetActiveButton(CardBook.Inst.myCardCount);
     }
 }

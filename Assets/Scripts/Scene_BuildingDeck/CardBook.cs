@@ -24,8 +24,8 @@ public class CardBook : MonoBehaviour
     public int myDigitamaCount;
     public int bookPage = 1;
 
-    public CardAndAmount[] buildingDeck;
-
+    public CardAndAmount[] buildingDeck;//나의 카드리스트와 해당 카드의 총 갯수
+    public List<ScriptableCard> viewDeckList;//나의 덱 시각화용 리스트
     private void Awake()
     {
         Inst = this;
@@ -71,6 +71,7 @@ public class CardBook : MonoBehaviour
 
     public void myDeckShift()
     {
+        //서버로 바뀌면서 이 함수 필요가 음슴
         for (int i = MyCardBook.Inst.deleteIndex; i < buildingDeck.Length - 1; i++)
         {
             if (buildingDeck[i + 1].card == null)
@@ -78,12 +79,6 @@ public class CardBook : MonoBehaviour
 
             buildingDeck[i] = buildingDeck[i + 1];
         }
-        //buildingDeck.RemoveAt(myDeck.Count - 1);
-        CardAndAmountListWrapper wrapper = new CardAndAmountListWrapper();
-        int index = buildingDeck.Length - 1;
-        wrapper.deckList.RemoveAt(index);
-        //빌딩 덱이 리스트가 아니라 배열이다보니 복잡해지는 서순..
-        buildingDeck = wrapper.deckList.ToArray();
     }
 
     //public void myTamaShift()
@@ -136,6 +131,25 @@ public class CardBook : MonoBehaviour
         PlayerPrefs.SetString("DeckData", jsonData);
         PlayerPrefs.Save();
     
+    }
+
+    public void DecreaseCardAmount(string cardID)
+    {
+        // buildingDeck 배열에서 CardID와 일치하는 카드의 인덱스를 찾습니다.
+        int index = System.Array.FindIndex(buildingDeck, cardData => cardData.card.CardID == cardID);
+
+        // 만약 배열 내에서 카드를 찾았을 경우
+        if (index != -1)
+        {
+            // 찾은 인덱스에 해당하는 카드의 amount를 감소시킵니다.
+            buildingDeck[index].amount--;
+
+            // 만약 amount가 음수가 되는 경우에 대한 처리를 여기서 수행할 수 있습니다.
+        }
+        else
+        {
+            Debug.LogWarning("덱에서 카드를 찾지 못했습니다.");
+        }
     }
 
 }

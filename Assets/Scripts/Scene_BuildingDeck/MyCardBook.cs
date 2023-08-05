@@ -41,8 +41,8 @@ public class MyCardBook : MonoBehaviour
     public void SetActiveButton(int value)
     {
         Tiles[(value - 1) % 10, (value - 1) / 10].button.gameObject.SetActive(true);
-        Tiles[(value - 1) % 10, (value - 1) / 10]._item = CardBook.Inst.buildingDeck[value - 1];
-        Tiles[(value - 1) % 10, (value - 1) / 10].card.sprite = CardBook.Inst.buildingDeck[value - 1].card.image;
+        Tiles[(value - 1) % 10, (value - 1) / 10]._item = CardBook.Inst.viewDeckList[value - 1];
+        Tiles[(value - 1) % 10, (value - 1) / 10].card.sprite = CardBook.Inst.viewDeckList[value - 1].image;
     }
 
     public void DeckReSetting()
@@ -62,13 +62,13 @@ public class MyCardBook : MonoBehaviour
 
                 if (index < CardBook.Inst.myCardCount)
                 {
-                    Tiles[x, y]._item = CardBook.Inst.buildingDeck[index];
-                    Tiles[x, y].card.sprite = CardBook.Inst.buildingDeck[index].card.image;
+                    Tiles[x, y]._item = CardBook.Inst.viewDeckList[index];
+                    Tiles[x, y].card.sprite = CardBook.Inst.viewDeckList[index].image;
                 }
                 else
                 {
-                    Tiles[x, y]._item.card = null;
-                    Tiles[x, y].card.sprite = null;
+                    Tiles[x, y]._item = null;
+                    Tiles[x, y]._item.image = null;
                 }
             }
         }

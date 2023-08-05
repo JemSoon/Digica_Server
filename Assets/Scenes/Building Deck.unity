@@ -331,9 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 23776931}
   card: {fileID: 23776932}
 --- !u!114 &23776931
@@ -472,9 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 38209026}
   card: {fileID: 38209027}
 --- !u!114 &38209026
@@ -613,9 +609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 54250814}
   card: {fileID: 54250815}
 --- !u!114 &54250814
@@ -754,9 +748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 85816185}
   card: {fileID: 85816186}
 --- !u!114 &85816185
@@ -895,9 +887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 116103392}
   card: {fileID: 116103393}
 --- !u!114 &116103392
@@ -1190,9 +1180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 162499483}
   card: {fileID: 162499484}
 --- !u!114 &162499483
@@ -1464,9 +1452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 198229484}
   card: {fileID: 198229485}
 --- !u!114 &198229484
@@ -1605,9 +1591,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 215203681}
   card: {fileID: 215203682}
 --- !u!114 &215203681
@@ -1976,9 +1960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 289350387}
   card: {fileID: 289350388}
 --- !u!114 &289350387
@@ -2117,9 +2099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 303282215}
   card: {fileID: 303282216}
 --- !u!114 &303282215
@@ -2258,9 +2238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 321133854}
   card: {fileID: 321133855}
 --- !u!114 &321133854
@@ -2766,6 +2744,7 @@ MonoBehaviour:
     amount: 0
   - card: {fileID: 11400000, guid: 78e257e9573ad824ababaa43b8a84ce8, type: 2}
     amount: 0
+  viewDeckList: []
 --- !u!114 &334985981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2884,9 +2863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 341974277}
   card: {fileID: 341974278}
 --- !u!114 &341974277
@@ -3101,9 +3078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 379399532}
   card: {fileID: 379399533}
 --- !u!114 &379399532
@@ -3242,9 +3217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 414476568}
   card: {fileID: 414476569}
 --- !u!114 &414476568
@@ -3383,9 +3356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 421944347}
   card: {fileID: 421944348}
 --- !u!114 &421944347
@@ -3524,9 +3495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 459370731}
   card: {fileID: 459370732}
 --- !u!114 &459370731
@@ -3975,9 +3944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 519344581}
   card: {fileID: 519344582}
 --- !u!114 &519344581
@@ -4921,9 +4888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 726495183}
   card: {fileID: 726495184}
 --- !u!114 &726495183
@@ -5138,9 +5103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 792089640}
   card: {fileID: 792089641}
 --- !u!114 &792089640
@@ -5318,9 +5281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 819110677}
   card: {fileID: 819110678}
 --- !u!114 &819110677
@@ -5535,9 +5496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 886971359}
   card: {fileID: 886971360}
 --- !u!114 &886971359
@@ -5916,9 +5875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 902006786}
   card: {fileID: 902006787}
 --- !u!114 &902006786
@@ -6211,9 +6168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 925323717}
   card: {fileID: 925323718}
 --- !u!114 &925323717
@@ -6352,9 +6307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 954693731}
   card: {fileID: 954693732}
 --- !u!114 &954693731
@@ -6647,9 +6600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 992622033}
   card: {fileID: 992622034}
 --- !u!114 &992622033
@@ -6940,9 +6891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1096680569}
   card: {fileID: 1096680570}
 --- !u!114 &1096680569
@@ -7081,9 +7030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1110718839}
   card: {fileID: 1110718840}
 --- !u!114 &1110718839
@@ -7376,9 +7323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1140370959}
   card: {fileID: 1140370960}
 --- !u!114 &1140370959
@@ -7517,9 +7462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1143193348}
   card: {fileID: 1143193349}
 --- !u!114 &1143193348
@@ -7658,9 +7601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1149944730}
   card: {fileID: 1149944731}
 --- !u!114 &1149944730
@@ -7953,9 +7894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1196444322}
   card: {fileID: 1196444323}
 --- !u!114 &1196444322
@@ -8178,9 +8117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1246848123}
   card: {fileID: 1246848124}
 --- !u!114 &1246848123
@@ -8319,9 +8256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1251110300}
   card: {fileID: 1251110301}
 --- !u!114 &1251110300
@@ -8460,9 +8395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1254677287}
   card: {fileID: 1254677288}
 --- !u!114 &1254677287
@@ -8601,9 +8534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1264030141}
   card: {fileID: 1264030142}
 --- !u!114 &1264030141
@@ -8975,9 +8906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1296385205}
   card: {fileID: 1296385206}
 --- !u!114 &1296385205
@@ -9116,9 +9045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1298163739}
   card: {fileID: 1298163740}
 --- !u!114 &1298163739
@@ -9333,9 +9260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1386105167}
   card: {fileID: 1386105168}
 --- !u!114 &1386105167
@@ -9712,9 +9637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1470134540}
   card: {fileID: 1470134541}
 --- !u!114 &1470134540
@@ -9853,9 +9776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1477590877}
   card: {fileID: 1477590878}
 --- !u!114 &1477590877
@@ -9994,9 +9915,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1485645491}
   card: {fileID: 1485645492}
 --- !u!114 &1485645491
@@ -10345,9 +10264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1560099598}
   card: {fileID: 1560099599}
 --- !u!114 &1560099598
@@ -10742,9 +10659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1653619106}
   card: {fileID: 1653619107}
 --- !u!114 &1653619106
@@ -11141,9 +11056,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1758250528}
   card: {fileID: 1758250529}
 --- !u!114 &1758250528
@@ -11686,9 +11599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1802646658}
   card: {fileID: 1802646659}
 --- !u!114 &1802646658
@@ -12749,9 +12660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1919349006}
   card: {fileID: 1919349007}
 --- !u!114 &1919349006
@@ -12890,9 +12799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1925003494}
   card: {fileID: 1925003495}
 --- !u!114 &1925003494
@@ -13185,9 +13092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 1956005546}
   card: {fileID: 1956005547}
 --- !u!114 &1956005546
@@ -13864,9 +13769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 2037583081}
   card: {fileID: 2037583082}
 --- !u!114 &2037583081
@@ -14005,9 +13908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
-  _item:
-    card: {fileID: 0}
-    amount: 0
+  _item: {fileID: 0}
   button: {fileID: 2076302446}
   card: {fileID: 2076302447}
 --- !u!114 &2076302446

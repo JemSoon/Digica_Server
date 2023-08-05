@@ -8,7 +8,7 @@ public class DeckTile : MonoBehaviour
     public int x;
     public int y;
 
-    public CardAndAmount _item;
+    public ScriptableCard _item;
     public Button button;
     public Image card;
 
@@ -21,8 +21,9 @@ public class DeckTile : MonoBehaviour
     {
         MyCardBook.Inst.deleteIndex = x % 10 + y * 10;
         CardBook.Inst.myCardCount--;
-        this._item.amount--;
-        CardBook.Inst.myDeckShift();
+
+        CardBook.Inst.viewDeckList.Remove(this._item);
+        CardBook.Inst.DecreaseCardAmount(_item.CardID);
         MyCardBook.Inst.DeckReSetting();
     }
 }

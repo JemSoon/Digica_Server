@@ -95,35 +95,56 @@ public class Player : Entity
     public void CmdLoadDeck(CardAndAmount[] startingDeck)
     {
         Debug.Log("µ¦ ·Îµå µÊ");
-        //Fill deck from startingDeck array
-        //for (int i = 0; i < startingDeck.Length; ++i)
-        //{
-        //    CardAndAmount cardandamount = startingDeck[i];
-        //    string cardID = cardandamount.cardID;
-        //    ScriptableCard scriptableCard = ScriptableCard.Cache.TryGetValue(cardID, out ScriptableCard card) ? card : null;
 
-        //    if(scriptableCard != null)
-        //    {
-        //        for (int v = 0; v < cardandamount.amount; ++v)
-        //        {
-        //            deck.deckList.Add(cardandamount.amount > 0 ? new CardInfo(scriptableCard, 1) : new CardInfo());
-        //            if (deck.hand.Count < 7) deck.hand.Add(new CardInfo(scriptableCard, 1));
-        //        }
-        //    }
-        //}
         for (int i = 0; i < startingDeck.Length; ++i)
         {
             CardAndAmount card = startingDeck[i];
             for (int v = 0; v < card.amount; ++v)
             {
                 deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
-                if (deck.hand.Count < 7) deck.hand.Add(new CardInfo(card.card, 1));
+                
+                //if (deck.hand.Count < 7) 
+                //{ 
+                //    deck.hand.Add(new CardInfo(card.card, 1)); 
+                //}
 
             }
         }
+
+        //¼¯±â
+        for (int j = 0; j < deck.deckList.Count; ++j)
+        {
+            int rand = UnityEngine.Random.Range(j, deck.deckList.Count);
+            CardInfo temp = deck.deckList[j];
+            deck.deckList[j] = deck.deckList[rand];
+            deck.deckList[rand] = temp;
+        }
+
+        
+        {
+            
+            for(int i =0; i<deck.deckList.Count; ++i) 
+            {
+                CardInfo card = deck.deckList[i];
+                if (deck.hand.Count < 7)
+                { deck.hand.Add(new CardInfo(card.data, 1)); }
+            }
+        }
+
         if (deck.hand.Count == 7)
         {
             deck.hand.Shuffle();
+            for(int i =0; i < deck.deckList.Count; ++i) 
+            {
+                Debug.Log(deck.deckList[i].name);
+            }
+            Debug.Log("±âº» µ¦ ¸ñ·Ï ¿Ï·á ÀÌ ´ÙÀ½ºÎÅÏ ¼¯ÀÓ Å×½ºÆ®ÀÔ´Ï´Ù");
+
+            
+            for (int i = 0; i < deck.deckList.Count; ++i)
+            {
+                Debug.Log(deck.deckList[i].name);
+            }
         }
     }
     

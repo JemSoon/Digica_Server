@@ -126,11 +126,19 @@ public class CardBook : MonoBehaviour
         // 리스트로 변환
         List<CardAndAmount> deckList = new List<CardAndAmount>(deckData);
 
-        // 리스트를 Json으로 직렬화하여 저장
-        string jsonData = JsonUtility.ToJson(new CardAndAmountListWrapper { deckList = deckList });
-        PlayerPrefs.SetString("DeckData", jsonData);
-        PlayerPrefs.Save();
-    
+        {
+            //이 코드들은 PlayerPrefs를 이용해 덱 저장,로드를 하였으나
+            //선생님께서 PlayerPrefs는 세이브/로드 기능이라 게임을 끄고 켜는 세션들 사이에서 저장되는 데이터 저장소라고 바꾸는걸 추천함
+
+            // 리스트를 Json으로 직렬화하여 저장
+         
+            //string jsonData = JsonUtility.ToJson(new CardAndAmountListWrapper { deckList = deckList });
+         
+            //PlayerPrefs.SetString("DeckData", jsonData);
+         
+            //PlayerPrefs.Save();
+        }
+        GameManager.localPlayerDeck = JsonUtility.ToJson(new CardAndAmountListWrapper { deckList = deckList });
     }
 
     public void DecreaseCardAmount(string cardID)

@@ -17,6 +17,7 @@ public class GameManager : NetworkBehaviour
     [Header("Deck")]
     public int deckSize = 50; // Maximum deck size
     public int identicalCardCount = 4; // How many identical cards we allow to have in a deck
+    public static string localPlayerDeck; //µ¦ ºôµù¿¡¼­ Â§ µ¦ ÀúÀå¿ë º¯¼ö
 
     [Header("Battlefield")]
     public PlayerField playerField;

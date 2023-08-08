@@ -22,20 +22,20 @@ public class Deck : NetworkBehaviour
 
     [HideInInspector] public bool spawnInitialCards = true;
 
-    public void OnDeckListChange(SyncListCard.Operation op, int index, CardInfo oldCard, CardInfo newCard)
-    {
-        UpdateDeck(index, 1, newCard);
-    }
+    //public void OnDeckListChange(SyncListCard.Operation op, int index, CardInfo oldCard, CardInfo newCard)
+    //{
+    //    UpdateDeck(index, 1, newCard);
+    //}
 
-    public void OnHandChange(SyncListCard.Operation op, int index, CardInfo oldCard, CardInfo newCard)
-    {
-        UpdateDeck(index, 2, newCard);
-    }
+    //public void OnHandChange(SyncListCard.Operation op, int index, CardInfo oldCard, CardInfo newCard)
+    //{
+    //    UpdateDeck(index, 2, newCard);
+    //}
 
-    public void OnGraveyardChange(SyncListCard.Operation op, int index, CardInfo oldCard, CardInfo newCard)
-    {
-        UpdateDeck(index, 3, newCard);
-    }
+    //public void OnGraveyardChange(SyncListCard.Operation op, int index, CardInfo oldCard, CardInfo newCard)
+    //{
+    //    UpdateDeck(index, 3, newCard);
+    //}
 
     public void UpdateDeck(int index, int type, CardInfo newCard)
     {

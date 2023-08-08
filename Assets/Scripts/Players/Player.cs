@@ -52,7 +52,7 @@ public class Player : Entity
     public void LoadBuildingDeck()
     {
         // '덱빌딩' 씬에서 저장된 Json 데이터를 로드
-        string jsonData = PlayerPrefs.GetString("DeckData");
+        string jsonData = GameManager.localPlayerDeck;
 
         // Json을 리스트로 역직렬화
         CardAndAmountListWrapper wrapper = JsonUtility.FromJson<CardAndAmountListWrapper>(jsonData);
@@ -68,9 +68,9 @@ public class Player : Entity
     {
         base.OnStartClient();
 
-        deck.deckList.Callback += deck.OnDeckListChange;
+        //deck.deckList.Callback += deck.OnDeckListChange;
         //deck.hand.Callback += deck.OnHandChange;
-        deck.graveyard.Callback += deck.OnGraveyardChange;
+        //deck.graveyard.Callback += deck.OnGraveyardChange;
     }
 
     [Command]
@@ -121,16 +121,17 @@ public class Player : Entity
         }
 
         
+        //손에 섞은카드 차례로 배분
+        for(int i =0; i<deck.deckList.Count; ++i) 
         {
-            
-            for(int i =0; i<deck.deckList.Count; ++i) 
-            {
-                CardInfo card = deck.deckList[i];
-                if (deck.hand.Count < 7)
-                { deck.hand.Add(new CardInfo(card.data, 1)); }
+            CardInfo card = deck.deckList[i];
+            if (deck.hand.Count < 7)
+            { 
+                deck.hand.Add(new CardInfo(card.data, 1));//손으로 카드 보내고
+                //deck.deckList.Remove(card);//덱 리스트에선 제거
             }
         }
-
+        
         if (deck.hand.Count == 7)
         {
             deck.hand.Shuffle();
@@ -143,7 +144,12 @@ public class Player : Entity
             
             for (int i = 0; i < deck.deckList.Count; ++i)
             {
-                Debug.Log(deck.deckList[i].name);
+                Debug.Log("전체 덱 "+i.ToString() + deck.deckList[i].name);
+                
+            }
+            for(int i =0; i<deck.hand.Count; ++i)
+            {
+                Debug.Log("손 카드 "+i.ToString() + deck.hand[i].name);
             }
         }
     }

@@ -124,23 +124,17 @@ public class Player : Entity
         //손에 섞은카드 차례로 배분
         for(int i =0; i<deck.deckList.Count; ++i) 
         {
-            CardInfo card = deck.deckList[i];
+            CardInfo card = deck.deckList[0];//기억하십시오 0번째를 빼면 1번이 다시 0번으로 당겨진다
             if (deck.hand.Count < 7)
             { 
                 deck.hand.Add(new CardInfo(card.data, 1));//손으로 카드 보내고
-                //deck.deckList.Remove(card);//덱 리스트에선 제거
+                deck.deckList.Remove(card);//덱 리스트에선 제거
             }
         }
         
         if (deck.hand.Count == 7)
         {
-            deck.hand.Shuffle();
-            for(int i =0; i < deck.deckList.Count; ++i) 
-            {
-                Debug.Log(deck.deckList[i].name);
-            }
-            Debug.Log("기본 덱 목록 완료 이 다음부턴 섞임 테스트입니다");
-
+            //deck.hand.Shuffle();
             
             for (int i = 0; i < deck.deckList.Count; ++i)
             {
@@ -157,7 +151,6 @@ public class Player : Entity
 
     private void Start()
     {
-        //memoryChecker = GameObject.Find("MemoryChecker").GetComponent<RectTransform>();
         gameManager = FindObjectOfType<GameManager>();
         health = gameManager.maxHealth;
         maxMana = gameManager.maxMana;

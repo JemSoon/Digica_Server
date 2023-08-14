@@ -202,5 +202,23 @@ public class Player : Entity
         }
     }
     
+    public void PlayerDraw(int Count)
+    {
+        PlayerHand playerHand = Player.gameManager.playerHand;
+        
+        CmdDrawDeck(Count);
+        playerHand.AddCard(deck.hand.Count - 1);
+    }
+
+    [Command]
+    public void CmdDrawDeck(int Count)
+    {
+        for (int i = 0; i < Count; ++i)
+        {
+            deck.hand.Add(deck.deckList[0]);
+            deck.deckList.RemoveAt(0);
+        }
+    }
+
     public bool IsOurTurn() => gameManager.isOurTurn;
 }

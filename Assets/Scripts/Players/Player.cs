@@ -207,7 +207,10 @@ public class Player : Entity
         PlayerHand playerHand = Player.gameManager.playerHand;
         
         CmdDrawDeck(Count);
-        playerHand.AddCard(deck.hand.Count - 1);
+        for(int i =0; i<Count; i++)
+        {
+            playerHand.AddCard(deck.hand.Count - 1);
+        }
     }
 
     [Command]

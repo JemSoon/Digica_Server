@@ -71,28 +71,6 @@ public class Deck : NetworkBehaviour
         spawnInitialCards = false;
     }
 
-    //public void DrawToHand(int Count)//test
-    //{
-    //    PlayerHand playerHand = Player.gameManager.playerHand;
-    //    //for (int i = 0; i < Count; ++i)
-    //    //{
-    //    //    player.deck.hand.Add(player.deck.deckList[0]);
-    //    //    playerHand.AddCard(player.deck.hand.Count - 1);
-    //    //    player.deck.deckList.RemoveAt(0);
-    //    //}
-    //    CmdDrawDeck(Count);
-    //    playerHand.AddCard(player.deck.hand.Count - 1);
-    //}
-    //[Command]
-    //public void CmdDrawDeck(int Count)
-    //{
-    //    for (int i = 0; i < Count; ++i)
-    //    {
-    //        player.deck.hand.Add(player.deck.deckList[0]);
-    //        player.deck.deckList.RemoveAt(0);
-    //    }
-    //}
-
     [Command]
     public void CmdPlayCard(CardInfo card, int index, Player owner)
     {

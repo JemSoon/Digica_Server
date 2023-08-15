@@ -26,6 +26,7 @@ public class GameManager : NetworkBehaviour
     [Header("Turn Management")]
     public GameObject endTurnButton;
     [HideInInspector] public bool isOurTurn = false;
+    [HideInInspector] public bool isDraw = false;//test
     [SyncVar, HideInInspector] public int turnCount = 1; // Start at 1
     [SyncVar] public bool isGameStart;
 
@@ -93,6 +94,7 @@ public class GameManager : NetworkBehaviour
         // If isOurTurn was true, set it false. If it was false, set it true.
         isOurTurn = !isOurTurn;
         endTurnButton.SetActive(isOurTurn);
+        ++turnCount;
 
         // If isOurTurn (after updating the bool above)
         if (isOurTurn)

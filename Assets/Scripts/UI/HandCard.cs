@@ -13,12 +13,13 @@ public class HandCard : MonoBehaviour
     public Image cardback;
 
     [Header("Properties")]
-    public Text cardName;
+    public string cardName;
     public int cost;
-    public Text strength;
-    public Text health;
+    public int strength;
+    public int health;
+    public int level = 0;
     public Text description;
-    public Text creatureType;
+    public string creatureType;
 
     [Header("Card Drag & Hover")]
     public HandCardDragHover cardDragHover;
@@ -46,6 +47,13 @@ public class HandCard : MonoBehaviour
         // Set card image
         image.sprite = newCard.image;
         cost = newCard.cost;
+
+        if (newCard.data is CreatureCard creatureCard)
+        {
+            //만약 ScriptableCard의 종류가 Creature카드라면 레벨 정보를 가져온다
+            level = creatureCard.level;
+            Debug.Log("CreatureCard level: " + level);
+        }
 
         // Assign description, name and remaining stats
         // 카드설명란..난 적을게 없다

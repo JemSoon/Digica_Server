@@ -295,6 +295,7 @@ MonoBehaviour:
   readyColor: {r: 0, g: 1, b: 0.11764706, a: 0.39215687}
   targetColor: {r: 0.98039216, g: 0.019607844, b: 0, a: 0.39215687}
   cardHover: {fileID: 1985316879504580021}
+  player: {fileID: 0}
 --- !u!114 &7582166961649262294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,7 +359,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

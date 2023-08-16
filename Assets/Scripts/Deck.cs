@@ -56,14 +56,14 @@ public class Deck : NetworkBehaviour
     {
         if(player.isServer)
         {
-            if (MemoryChecker.Inst.memory - manaCost > -10 && player.health > 0)
+            if (MemoryChecker.Inst.memory - manaCost >= -10 && player.health > 0)
             { return true; }
             else
             { return false; }
         }
         else
         {
-            if (MemoryChecker.Inst.memory + manaCost < 10 && player.health > 0)
+            if (MemoryChecker.Inst.memory + manaCost <= 10 && player.health > 0)
             { return true; }
             else
             { return false; }

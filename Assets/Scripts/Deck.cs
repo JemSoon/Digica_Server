@@ -54,10 +54,20 @@ public class Deck : NetworkBehaviour
     ///////////////
     public bool CanPlayCard(int manaCost)
     {
-        if (player.mana - manaCost > -10 && player.health > 0)
-        { return true; }// player.mana >= manaCost && player.health > 0;
+        if(player.isServer)
+        {
+            if (MemoryChecker.Inst.memory - manaCost > -10 && player.health > 0)
+            { return true; }
+            else
+            { return false; }
+        }
         else
-        { return false; }
+        {
+            if (MemoryChecker.Inst.memory + manaCost < 10 && player.health > 0)
+            { return true; }
+            else
+            { return false; }
+        }
     }
 
     public void DrawCard(int amount)

@@ -37,7 +37,7 @@ public class PlayerHand : MonoBehaviour
         }
 
         //test
-        if (playerType == PlayerType.PLAYER && Input.GetKeyDown(KeyCode.F))
+        if (playerType == PlayerType.PLAYER && Input.GetKeyDown(KeyCode.F) && Player.gameManager.turnCount!=1)
         {
             //player.deck.DrawToHand(1);
             player.PlayerDraw(1);

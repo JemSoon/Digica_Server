@@ -16,6 +16,9 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public GameObject EmptyCard; // Used for creating an empty placeholder card where our current card used to be.
     private GameObject temp;
 
+    [Header("Test")]
+    private bool isDragging = false; // 카드를 드래그 중입니까?
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         // If we can't hover, return.
@@ -59,6 +62,8 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
         transform.SetParent(this.transform.parent.parent, false);
 
         canvasGroup.blocksRaycasts = false;
+
+        isDragging = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -79,5 +84,27 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
         transform.SetSiblingIndex(temp.transform.GetSiblingIndex());
         canvasGroup.blocksRaycasts = true;
         Destroy(temp);
+
+        isDragging = false;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.GetComponent<FieldCard>() == null) return;
+
+        if (card.cardInfo.data is CreatureCard handCard && // hand카드가 CreatureCard이고
+            collision.GetComponent<FieldCard>().card.data is CreatureCard fieldCard && // field카드가 CreatureCard이고
+            isDragging==true) // 드래그 중이라면
+        {
+            //만약 ScriptableCard의 종류가 Creature카드라면 레벨 정보를 가져온다
+            if (handCard.level == fieldCard.level+1)
+            {
+                Debug.Log("진화 가능");
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log("나가짐");
     }
 }

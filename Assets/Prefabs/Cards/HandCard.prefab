@@ -92,17 +92,21 @@ MonoBehaviour:
   image: {fileID: 6216703734039124831}
   cardfront: {fileID: 6216703734039124831}
   cardback: {fileID: 4253421766218843962}
-  cardName: {fileID: 0}
+  cardName: 
   cost: 0
-  strength: {fileID: 0}
-  health: {fileID: 0}
+  strength: 0
+  health: 0
+  level: 0
   description: {fileID: 0}
-  creatureType: {fileID: 0}
+  creatureType: 
   cardDragHover: {fileID: 4309761622497959723}
   cardOutline: {fileID: 8382975946909200948}
   readyColor: {r: 0.13568628, g: 1, b: 0, a: 0.39215687}
   handIndex: 0
   playerType: 0
+  cardInfo:
+    cardID: 
+    amount: 0
 --- !u!114 &4309761622497959723
 MonoBehaviour:
   m_ObjectHideFlags: 0

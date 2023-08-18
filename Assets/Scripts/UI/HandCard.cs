@@ -30,6 +30,9 @@ public class HandCard : MonoBehaviour
     [HideInInspector] public int handIndex;
     [HideInInspector] public PlayerType playerType;
 
+    [Header("Test")]
+    [HideInInspector] public CardInfo cardInfo;
+
     // Called from PlayerHand to instantiate the cards in the player's hand
     public void AddCard(CardInfo newCard, int index, PlayerType playerT)
     {
@@ -54,7 +57,7 @@ public class HandCard : MonoBehaviour
             level = creatureCard.level;
             Debug.Log("CreatureCard level: " + level);
         }
-
+        cardInfo = newCard;
         // Assign description, name and remaining stats
         // 카드설명란..난 적을게 없다
         //description.text = newCard.description; // Description

@@ -97,7 +97,8 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
             isDragging==true) // 드래그 중이라면
         {
             //만약 ScriptableCard의 종류가 Creature카드라면 레벨 정보를 가져온다
-            if (handCard.level == fieldCard.level+1)
+            if (handCard.level == fieldCard.level+1 && 
+                handCard.isSameColor(handCard, fieldCard)==true)
             {
                 Debug.Log("진화 가능");
             }

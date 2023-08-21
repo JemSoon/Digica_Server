@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 64
   image: {fileID: 21300000, guid: 894acb4be30f8814abb2bd904ff0811f, type: 3}
   color1: 3
-  color2: 0
+  color2: 3
   cardName: "\uD53C\uD130\uBAAC"
   cost: 5
   category: 

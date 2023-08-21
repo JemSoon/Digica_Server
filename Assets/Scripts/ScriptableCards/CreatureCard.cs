@@ -40,6 +40,19 @@ public partial class CreatureCard : ScriptableCard
         attacker.combat.CmdIncreaseWaitTurn();
     }
 
+    public bool isSameColor(CreatureCard card1, CreatureCard card2)
+    {
+        if(card1.color1 == card2.color1 ||
+           card1.color2 == card2.color2 ||
+           card1.color2 == card2.color1 ||
+           card1.color2 == card2.color1)
+        {
+            return true;
+        }
+        else
+        { return false; }
+    }
+
     private void OnValidate()
     {
         if (deathcrys.Count > 0) hasDeathCry = true;

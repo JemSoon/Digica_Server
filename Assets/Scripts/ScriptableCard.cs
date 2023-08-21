@@ -35,10 +35,8 @@ public class CardAndAmountListWrapper
     public List<CardAndAmount> deckList;
 }
 
-public enum CardColor1
-{ Red, Green, Blue, Yellow, Purple, Black, }
-public enum CardColor2
-{ None, Red, Green, Blue, Yellow, Purple, Black, }
+public enum CardColor
+{ Red, Green, Blue, Yellow, Purple, Black, White, }
 
 // Struct for cards in your deck. Card + amount (ex : Sinister Strike x3). Used for Deck Building. Probably won't use it, just add amount to Card struct instead.
 public partial class ScriptableCard : ScriptableObject
@@ -50,8 +48,8 @@ public partial class ScriptableCard : ScriptableObject
     public Sprite image; // Card image
 
     [Header("Card Color")]
-    public CardColor1 color1;
-    public CardColor2 color2;
+    public CardColor color1;
+    public CardColor color2;
 
     [Header("Properties")]
     public string cardName;

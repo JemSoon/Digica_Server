@@ -15,11 +15,13 @@ public class HandCard : MonoBehaviour
     [Header("Properties")]
     public string cardName;
     public int cost;
+    public int Ecost;
     public int strength;
     public int health;
     public int level = 0;
     public Text description;
     public string creatureType;
+    public bool isEvoCard;
 
     [Header("Card Drag & Hover")]
     public HandCardDragHover cardDragHover;
@@ -32,6 +34,7 @@ public class HandCard : MonoBehaviour
 
     [Header("Test")]
     [HideInInspector] public CardInfo cardInfo;
+    public FieldCard underCard;
 
     // Called from PlayerHand to instantiate the cards in the player's hand
     public void AddCard(CardInfo newCard, int index, PlayerType playerT)
@@ -50,6 +53,7 @@ public class HandCard : MonoBehaviour
         // Set card image
         image.sprite = newCard.image;
         cost = newCard.cost;
+        SetECost(newCard);
 
         if (newCard.data is CreatureCard creatureCard)
         {
@@ -116,5 +120,22 @@ public class HandCard : MonoBehaviour
                 cardOutline.color = cardDragHover.canDrag ? readyColor : Color.clear;
             }
         }
+    }
+
+    public int SetECost(CardInfo Info)
+    {
+        if (Info.data != null)
+        {
+            if (Info.data is CreatureCard creatureCard)
+            {
+                return Ecost = creatureCard.Ecost;
+            }
+            else
+            {
+                return Ecost = 0;
+            }
+        }
+        else
+        { return Ecost = 0; }
     }
 }

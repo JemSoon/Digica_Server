@@ -25,6 +25,11 @@ public class FieldCard : Entity
     [SyncVar]
     public Player player;
 
+    [Header("Evo Route")]
+    public FieldCard upperCard;
+    public FieldCard underCard;
+    public bool isUpperMostCard => upperCard == null; // 최상단 카드인가?
+
     // Update is called once per frame
     public override void Update()
     {

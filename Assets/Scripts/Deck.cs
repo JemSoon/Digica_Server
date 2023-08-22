@@ -111,6 +111,38 @@ public class Deck : NetworkBehaviour
     }
 
     [Command]
+    public void CmdPlayEvoCard(CardInfo card, int index, Player owner, FieldCard underCard)
+    {
+        CreatureCard creature = (CreatureCard)card.data;
+        GameObject boardCard = Instantiate(creature.cardPrefab.gameObject);
+        FieldCard newCard = boardCard.GetComponent<FieldCard>();
+        newCard.card = new CardInfo(card.data); // Save Card Info so we can re-access it later if we need to.
+        //newCard.cardName.text = card.name;
+        newCard.health = creature.health;
+        newCard.strength = creature.strength;
+        newCard.image.sprite = card.image;
+        newCard.image.color = Color.white;
+        newCard.player = owner;
+
+        newCard.underCard = underCard;
+        underCard.upperCard = newCard;
+
+        // If creature has charge, reduce waitTurn to 0 so they can attack right away.
+        if (creature.hasCharge) newCard.waitTurn = 0;
+
+        // Update the Card Info that appears when hovering
+        newCard.cardHover.UpdateFieldCardInfo(card);
+
+        // Spawn it
+        NetworkServer.Spawn(boardCard);
+
+        // Remove card from hand
+        hand.RemoveAt(index);
+
+        if (isServer) RpcPlayEvoCard(boardCard, index, underCard);
+    }
+
+    [Command]
     public void CmdStartNewTurn()
     {
         
@@ -129,6 +161,31 @@ public class Deck : NetworkBehaviour
         }
         else if (player.hasEnemy)
         {
+            boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
+            boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
+            Player.gameManager.enemyHand.RemoveCard(index);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcPlayEvoCard(GameObject boardCard, int index, FieldCard underCard)
+    {
+        if (Player.gameManager.isSpawning)
+        {
+            FieldCard newCard = boardCard.GetComponent<FieldCard>();
+            newCard.underCard = underCard;
+            underCard.upperCard = newCard;
+            // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
+            boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
+            boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
+            Player.gameManager.playerHand.RemoveCard(index); // Update player's hand
+            Player.gameManager.isSpawning = false;
+        }
+        else if (player.hasEnemy)
+        {
+            FieldCard newCard = boardCard.GetComponent<FieldCard>();
+            newCard.underCard = underCard;
+            underCard.upperCard = newCard;
             boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
             Player.gameManager.enemyHand.RemoveCard(index);

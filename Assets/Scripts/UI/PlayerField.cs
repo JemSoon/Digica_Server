@@ -10,10 +10,25 @@ public class PlayerField : MonoBehaviour, IDropHandler
     {
         HandCard card = eventData.pointerDrag.transform.GetComponent<HandCard>();
         Player player = Player.localPlayer;
-        int manaCost = card.cost;
+        int manaCost;
+        if (card.isEvoCard)
+        { manaCost = card.Ecost; }
+        else
+        { manaCost = card.cost; }
 
-        
-        if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost))
+        if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost) && card.isEvoCard)
+        {
+            int index = card.handIndex;
+            CardInfo cardInfo = player.deck.hand[index];
+
+            Player.gameManager.isSpawning = true;
+            Player.gameManager.isHovering = false;
+            //Player.gameManager.CmdOnCardHover(0, index);
+            player.deck.CmdPlayEvoCard(cardInfo, index, player, card.underCard); // Summon card onto the board
+            player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
+        }
+
+        else if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost) && !card.isEvoCard)
         {
             int index = card.handIndex;
             CardInfo cardInfo = player.deck.hand[index];

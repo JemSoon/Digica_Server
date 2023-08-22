@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -90,22 +91,36 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.GetComponent<FieldCard>() == null) return;
-
-        if (card.cardInfo.data is CreatureCard handCard && // hand카드가 CreatureCard이고
-            collision.GetComponent<FieldCard>().card.data is CreatureCard fieldCard && // field카드가 CreatureCard이고
-            isDragging==true) // 드래그 중이라면
-        {
-            //만약 ScriptableCard의 종류가 Creature카드라면 레벨 정보를 가져온다
-            if (handCard.level == fieldCard.level+1 && 
-                handCard.isSameColor(handCard, fieldCard)==true)
-            {
-                Debug.Log("진화 가능");
-            }
-        }
+        CanEvolution(collision);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        card.underCard = null;
+        card.isEvoCard = false;
         Debug.Log("나가짐");
+    }
+
+    public void CanEvolution(Collider2D collision)
+    {
+        if (collision.GetComponent<FieldCard>() == null) return;
+
+        if (card.cardInfo.data is CreatureCard handCard && // hand카드가 CreatureCard이고
+            collision.GetComponent<FieldCard>().card.data is CreatureCard fieldCard && // field카드가 CreatureCard이고
+            isDragging == true) // 드래그 중이라면
+        {
+            //만약 ScriptableCard의 종류가 Creature카드라면 레벨 정보 + 색상을 가져온다
+            if (handCard.level == fieldCard.level + 1 &&
+                handCard.isSameColor(handCard, fieldCard) == true)
+            {
+                card.isEvoCard = true;
+                card.underCard = collision.GetComponent<FieldCard>();
+                Debug.Log("진화 가능");
+            }
+            else
+            {
+                card.underCard = null;
+                card.isEvoCard = false;
+            }
+        }
     }
 }

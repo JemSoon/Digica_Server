@@ -54,7 +54,19 @@ public class Combat : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdBattle(Entity attacker, Entity target)
     {
-         if (attacker.strength <target.strength) 
+        #region 최상단 카드 가져오기
+        while (attacker.GetComponent<FieldCard>().isUpperMostCard==false)
+        {
+            attacker = attacker.GetComponent<FieldCard>().upperCard;
+        }
+
+        while(target.GetComponent<FieldCard>().isUpperMostCard == false)
+        {
+            target = target.GetComponent<FieldCard>().upperCard;
+        }
+        #endregion
+
+        if (attacker.strength <target.strength) 
         {
             //죽은 공격카드 무덤 리스트 정보에 저장
             attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);

@@ -56,6 +56,10 @@ public class FieldCard : Entity
         else if (CantAttack()) shine.color = Color.clear;
 
         ChaseUpperCard();
+
+        //최상단 카드가 아니면 콜리전끄기test
+        //if(isUpperMostCard==false) { GetComponent<BoxCollider2D>().enabled = false; }
+        //else { GetComponent<BoxCollider2D>().enabled = true; }
     }
 
     [Command(requiresAuthority = false)]

@@ -116,11 +116,6 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
                 card.underCard = collision.GetComponent<FieldCard>();
                 Debug.Log("진화 가능");
             }
-            else
-            {
-                card.underCard = null;
-                card.isEvoCard = false;
-            }
         }
     }
 }

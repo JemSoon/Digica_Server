@@ -54,6 +54,8 @@ public class FieldCard : Entity
 
         if (CanAttack()) shine.color = readyColor;
         else if (CantAttack()) shine.color = Color.clear;
+
+        ChaseUpperCard();
     }
 
     [Command(requiresAuthority = false)]
@@ -61,5 +63,15 @@ public class FieldCard : Entity
     {
         //Debug.LogError("Here");
         if (waitTurn > 0) waitTurn--;
+    }
+
+    public void ChaseUpperCard()
+    {
+        if(isUpperMostCard==false && upperCard!=null)//맨 위 카드가 아니고 위 카드 정보가 null이 아니라면
+        {
+            // 상대편에서 내 카드 볼때 메모리체커에 가려짐 반대로 해야할듯
+            //GetComponent<RectTransform>().anchoredPosition = upperCard.GetComponent<RectTransform>().anchoredPosition + new Vector2(0, -47); 
+            upperCard.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition + new Vector2(0, 47);
+        }
     }
 }

@@ -191,7 +191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 194.22119, y: 266.3487}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 343, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8859878143145910909
@@ -217,17 +217,24 @@ MonoBehaviour:
   image: {fileID: 7336404440339324924}
   cardfront: {fileID: 7336404440339324924}
   cardback: {fileID: 311373398589718952}
-  cardName: {fileID: 0}
-  cost: {fileID: 0}
-  strength: {fileID: 0}
-  health: {fileID: 0}
+  cardName: 
+  cost: 0
+  Ecost: 0
+  strength: 0
+  health: 0
+  level: 0
   description: {fileID: 0}
-  creatureType: {fileID: 0}
+  creatureType: 
+  isEvoCard: 0
   cardDragHover: {fileID: 0}
   cardOutline: {fileID: 0}
   readyColor: {r: 0, g: 0, b: 0, a: 0}
   handIndex: 0
   playerType: 0
+  cardInfo:
+    cardID: 
+    amount: 0
+  underCard: {fileID: 0}
 --- !u!225 &2191246529805738209
 CanvasGroup:
   m_ObjectHideFlags: 0

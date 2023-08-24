@@ -89,15 +89,53 @@ public class Combat : NetworkBehaviour
 
         else if (attacker.strength >target.strength) 
         {
+            while (target.GetComponent<FieldCard>().isUnderMostCard == false)
+            {
+                //죽은 공격카드 무덤 리스트 정보에 저장
+                target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
+
+                //Battle(attacker, target);
+                Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                Destroy(target.gameObject);
+
+                target = target.GetComponent<FieldCard>().underCard;
+                Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+            }
+
             target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
             Destroy(target.gameObject);
         }
 
         else//둘다 공격력이 같을때
         {
+            while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
+            {
+                //죽은 공격카드 무덤 리스트 정보에 저장
+                attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+
+                //Battle(attacker, target);
+                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                Destroy(attacker.gameObject);
+
+                attacker = attacker.GetComponent<FieldCard>().underCard;
+                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+            }
             attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
-            target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
             Destroy(attacker.gameObject);
+
+            while (target.GetComponent<FieldCard>().isUnderMostCard == false)
+            {
+                //죽은 공격카드 무덤 리스트 정보에 저장
+                target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
+
+                //Battle(attacker, target);
+                Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                Destroy(target.gameObject);
+
+                target = target.GetComponent<FieldCard>().underCard;
+                Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+            }
+            target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
             Destroy(target.gameObject);
         }
     }

@@ -16,6 +16,9 @@ public class PlayerField : MonoBehaviour, IDropHandler
         else
         { manaCost = card.cost; }
 
+        if(Player.localPlayer.isServer && MemoryChecker.Inst.memory - manaCost < -10) { return; } //총 코스트량 오버하면 return
+        else if(!Player.localPlayer.isServer && MemoryChecker.Inst.memory + manaCost > 10) { return; }
+
         if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost) && card.isEvoCard)
         {
             int index = card.handIndex;
@@ -39,7 +42,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
             //Player.gameManager.CmdOnCardHover(0, index);
             player.deck.CmdPlayCard(cardInfo, index, player); // Summon card onto the board
             player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
-            
+
         }
     }
 
@@ -51,6 +54,21 @@ public class PlayerField : MonoBehaviour, IDropHandler
             FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
             card.CmdUpdateWaitTurn();
         }
+    }
+
+    public int GetFieldCardCount()
+    {
+        int Count = 0;
+
+        for (int i = 0; i < content.childCount; ++i)
+        {
+            Transform child = content.GetChild(i);
+            FieldCard card = child.GetComponent<FieldCard>();
+
+            if (card != null && card.isUnderMostCard)
+            { Count++; }
+        }
+        return Count;
     }
 
     void LateUpdate()

@@ -116,7 +116,9 @@ public class HandCard : MonoBehaviour
             int manaCost = cost;
             if (Player.gameManager.isOurTurn)
             {
-                cardDragHover.canDrag = player.deck.CanPlayCard(manaCost);
+                //모든 카드는 드래그 할 수 있되, 필드 출전시 총 마나의 양이 -10보다 작거나 10보다 크면 반환시켜둠
+                //나중에 옵션카드나 테이머카드는 필드에 자신의 컬러 카드가 있는지 확인하고 낼 수 있게끔..
+                cardDragHover.canDrag = true; //player.deck.CanPlayCard(manaCost); //원래는 마나 총량 넘으면 못내게 했는데 ECost라는 다른 루트땜에 일단 낼 수 있게함
                 cardOutline.color = cardDragHover.canDrag ? readyColor : Color.clear;
             }
         }

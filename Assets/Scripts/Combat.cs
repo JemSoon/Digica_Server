@@ -68,17 +68,31 @@ public class Combat : NetworkBehaviour
 
         if (attacker.strength <target.strength) 
         {
-            //죽은 공격카드 무덤 리스트 정보에 저장
-            attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+            // 마지막 카드 전까지 모든 카드 삭제
+            while(attacker.GetComponent<FieldCard>().isUnderMostCard == false)
+            {
+                //죽은 공격카드 무덤 리스트 정보에 저장
+                attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
 
-            //Battle(attacker, target);
+                //Battle(attacker, target);
+                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                Destroy(attacker.gameObject);
+
+                attacker = attacker.GetComponent<FieldCard>().underCard;
+                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+            }
+
+            // 마지막 맨 밑 카드도 삭제
+            attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
             Destroy(attacker.gameObject);
         }
-        else if(attacker.strength >target.strength) 
+
+        else if (attacker.strength >target.strength) 
         {
             target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
             Destroy(target.gameObject);
         }
+
         else//둘다 공격력이 같을때
         {
             attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);

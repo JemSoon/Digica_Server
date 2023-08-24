@@ -127,6 +127,8 @@ public class Deck : NetworkBehaviour
         newCard.underCard = underCard;
         underCard.upperCard = newCard;
 
+        newCard.waitTurn = underCard.waitTurn;
+
         // If creature has charge, reduce waitTurn to 0 so they can attack right away.
         if (creature.hasCharge) newCard.waitTurn = 0;
 

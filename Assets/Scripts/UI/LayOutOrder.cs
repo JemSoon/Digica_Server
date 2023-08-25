@@ -5,9 +5,12 @@ using System.Linq;
 
 public class LayOutOrder : MonoBehaviour
 {
+    //public static LayOutOrder Inst { get; private set; }
+    //private void Awake() => Inst = this;
+
     private List<Transform> sortedChildren;
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         // FieldCard 컴포넌트가 있는 자식들 중 isUnderMostCard가 true인 것들만 필터링하여 정렬
         sortedChildren = transform.Cast<Transform>()
@@ -20,13 +23,13 @@ public class LayOutOrder : MonoBehaviour
             return;
         }
 
-        // 미들센터 정렬을 위해 x 포지션을 개수 * 50만큼의 위치로 배정
+        // 미들센터 정렬을 위해 x 포지션을 개수 * 172만큼의 위치로 배정
         float totalWidth = sortedChildren.Count * 172f;
-        //float startX = -totalWidth / 2f;
+        float startX = -totalWidth / 2f;
         for (int i = 0; i < sortedChildren.Count; i++)
         {
             Transform child = sortedChildren[i];
-            Vector3 newPosition = new Vector3(0f + i * 172f, child.localPosition.y, child.localPosition.z);
+            Vector3 newPosition = new Vector3(startX + i * 172f, child.localPosition.y, child.localPosition.z);
             child.localPosition = newPosition;
         }
     }

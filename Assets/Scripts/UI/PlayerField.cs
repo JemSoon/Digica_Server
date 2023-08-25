@@ -33,6 +33,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
 
         else if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost) && !card.isEvoCard)
         {
+            //if (GetFieldCardCount() > 0) { return; } //필드에 한장만 낼 때
             int index = card.handIndex;
             CardInfo cardInfo = player.deck.hand[index];
             // Debug.LogError(index + " / " + cardInfo.name);
@@ -42,7 +43,6 @@ public class PlayerField : MonoBehaviour, IDropHandler
             //Player.gameManager.CmdOnCardHover(0, index);
             player.deck.CmdPlayCard(cardInfo, index, player); // Summon card onto the board
             player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
-
         }
     }
 

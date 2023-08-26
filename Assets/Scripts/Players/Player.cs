@@ -201,16 +201,17 @@ public class Player : Entity
             }
         }
     }
-    
+
     public void PlayerDraw(int Count)
     {
-        PlayerHand playerHand = Player.gameManager.playerHand;
-        
-        CmdDrawDeck(Count);
-        for(int i =0; i<Count; i++)
-        {
-            playerHand.AddCard(deck.hand.Count - 1);
-        }
+        //PlayerHand playerHand = Player.gameManager.playerHand;
+
+        CmdDrawDeck(Count); //문제 있음 CmdDrawDeck이 끝나기전에 밑에 for문에 들어감(네트워크 동기화 타이밍 문제)
+
+        //for (int i = 0; i < Count; i++)
+        //{
+        //    playerHand.AddCard(deck.hand.Count - 1); // 네트워크 동기화 문제로 새로 추가된 카드가아니라 이전 손 목록중 마지막 카드가 중복 생성됨
+        //}
     }
 
     [Command]
@@ -220,6 +221,20 @@ public class Player : Entity
         {
             deck.hand.Add(deck.deckList[0]);
             deck.deckList.RemoveAt(0);
+        }
+        RpcDrawDeckForTurn(Count);
+    }
+
+    [ClientRpc]
+    private void RpcDrawDeckForTurn(int Count)
+    {
+        if (gameManager.isOurTurn)
+        {
+            PlayerHand playerHand = Player.gameManager.playerHand;
+            for (int i = 0; i < Count; i++)
+            {
+                playerHand.AddCard(deck.hand.Count - 1); // 네트워크 동기화 문제로 새로 추가된 카드가아니라 이전 손 목록중 마지막 카드가 중복 생성됨
+            }
         }
     }
 

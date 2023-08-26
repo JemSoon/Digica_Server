@@ -29,7 +29,7 @@ public class HandCard : MonoBehaviour
     [Header("Outline")]
     public Image cardOutline;
     public Color readyColor;
-    [HideInInspector] public int handIndex;
+    /*[HideInInspector]*/ public int handIndex;
     [HideInInspector] public PlayerType playerType;
 
     [Header("Test")]

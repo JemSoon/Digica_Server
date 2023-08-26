@@ -70,6 +70,6 @@ public class PlayerHand : MonoBehaviour
     }
 
     //IsEnemyHand()의 마지막 조건문이 핸드카드 하나 더 삭제되게 하는 문제있는듯..?
-    bool IsEnemyHand() => player && player.hasEnemy && player.deck.hand.Count == 7 && playerType == PlayerType.ENEMY && enemyInfo.handCount != cardCount;
+    bool IsEnemyHand() => player && player.hasEnemy /*&& player.deck.hand.Count == 7*/ && playerType == PlayerType.ENEMY; /*&& enemyInfo.handCount != cardCount;*/
     bool IsPlayerHand() => player && player.deck.spawnInitialCards && playerType == PlayerType.PLAYER;
 }

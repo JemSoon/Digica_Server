@@ -233,7 +233,7 @@ public class Player : Entity
             PlayerHand playerHand = Player.gameManager.playerHand;
             for (int i = 0; i < Count; i++)
             {
-                playerHand.AddCard(deck.hand.Count - 1); // 네트워크 동기화 문제로 새로 추가된 카드가아니라 이전 손 목록중 마지막 카드가 중복 생성됨
+                playerHand.AddCard(deck.hand.Count - 1);
             }
         }
     }

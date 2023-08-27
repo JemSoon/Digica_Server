@@ -75,7 +75,7 @@ public class GameManager : NetworkBehaviour
         if (!isHoveringField)
         {
             FieldCard card = cardObject.GetComponent<FieldCard>();
-            if(card==null) return; // 혹시나 싶은 안전코드
+            if(card==null) return; // 혹시나 싶은 안전코드 cardObject==null이 맞나?
             Color shine = activateShine ? card.hoverColor : Color.clear;
             card.shine.color = targeting ? card.targetColor : shine;
             card.shine.gameObject.SetActive(activateShine);

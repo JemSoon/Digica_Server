@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.9783, y: 22.6256}
-  m_SizeDelta: {x: 162.1111, y: 208.1882}
+  m_AnchoredPosition: {x: -0.276, y: 0.3214}
+  m_SizeDelta: {x: 150.5614, y: 205.5011}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6968127212508648485
 CanvasRenderer:
@@ -110,7 +110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 275.7, y: 118.4}
+  m_AnchoredPosition: {x: 268, y: 82}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7582166961387128113
@@ -148,8 +148,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.9783, y: 22.6256}
-  m_SizeDelta: {x: 149.8547, y: 205.3629}
+  m_AnchoredPosition: {x: -0.45279, y: 0.15355}
+  m_SizeDelta: {x: 137.6, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7582166961387128524
 CanvasRenderer:
@@ -233,7 +233,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 172, y: 250}
+  m_SizeDelta: {x: 137.6, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7582166961649262289
 CanvasRenderer:
@@ -296,6 +296,8 @@ MonoBehaviour:
   targetColor: {r: 0.98039216, g: 0.019607844, b: 0, a: 0.39215687}
   cardHover: {fileID: 1985316879504580021}
   player: {fileID: 0}
+  upperCard: {fileID: 0}
+  underCard: {fileID: 0}
 --- !u!114 &7582166961649262294
 MonoBehaviour:
   m_ObjectHideFlags: 0

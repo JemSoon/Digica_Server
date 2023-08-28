@@ -23,64 +23,64 @@ public class MemoryChecker : NetworkBehaviour
                         rectTransform.anchoredPosition = new Vector2(0, 32);
                         break;
                     case 1:
-                        rectTransform.anchoredPosition = new Vector2(-91, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92, 32);
                         break;
                     case 2:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 2, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 2, 32);
                         break;
                     case 3:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 3, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 3, 32);
                         break;
                     case 4:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 4, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 4, 32);
                         break;
                     case 5:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 5, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 5, 32);
                         break;
                     case 6:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 6, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 6, 32);
                         break;
                     case 7:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 7, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 7, 32);
                         break;
                     case 8:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 8, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 8, 32);
                         break;
                     case 9:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 9, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 9, 32);
                         break;
                     case 10:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 10, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 10, 32);
                         break;
                     case -1:
-                        rectTransform.anchoredPosition = new Vector2(91, 32);
+                        rectTransform.anchoredPosition = new Vector2(92, 32);
                         break;
                     case -2:
-                        rectTransform.anchoredPosition = new Vector2(91 * 2, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 2, 32);
                         break;
                     case -3:
-                        rectTransform.anchoredPosition = new Vector2(91 * 3, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 3, 32);
                         break;
                     case -4:
-                        rectTransform.anchoredPosition = new Vector2(91 * 4, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 4, 32);
                         break;
                     case -5:
-                        rectTransform.anchoredPosition = new Vector2(91 * 5, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 5, 32);
                         break;
                     case -6:
-                        rectTransform.anchoredPosition = new Vector2(91 * 6, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 6, 32);
                         break;
                     case -7:
-                        rectTransform.anchoredPosition = new Vector2(91 * 7, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 7, 32);
                         break;
                     case -8:
-                        rectTransform.anchoredPosition = new Vector2(91 * 8, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 8, 32);
                         break;
                     case -9:
-                        rectTransform.anchoredPosition = new Vector2(91 * 9, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 9, 32);
                         break;
                     case -10:
-                        rectTransform.anchoredPosition = new Vector2(91 * 10, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 10, 32);
                         break;
                     default:
                         rectTransform.anchoredPosition = Vector2.zero;
@@ -96,64 +96,64 @@ public class MemoryChecker : NetworkBehaviour
                         rectTransform.anchoredPosition = new Vector2(0, 32);
                         break;
                     case 1:
-                        rectTransform.anchoredPosition = new Vector2(-91, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92, 32);
                         break;
                     case 2:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 2, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 2, 32);
                         break;
                     case 3:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 3, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 3, 32);
                         break;
                     case 4:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 4, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 4, 32);
                         break;
                     case 5:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 5, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 5, 32);
                         break;
                     case 6:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 6, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 6, 32);
                         break;
                     case 7:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 7, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 7, 32);
                         break;
                     case 8:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 8, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 8, 32);
                         break;
                     case 9:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 9, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 9, 32);
                         break;
                     case 10:
-                        rectTransform.anchoredPosition = new Vector2(-91 * 10, 32);
+                        rectTransform.anchoredPosition = new Vector2(-92 * 10, 32);
                         break;
                     case -1:
-                        rectTransform.anchoredPosition = new Vector2(91, 32);
+                        rectTransform.anchoredPosition = new Vector2(92, 32);
                         break;
                     case -2:
-                        rectTransform.anchoredPosition = new Vector2(91 * 2, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 2, 32);
                         break;
                     case -3:
-                        rectTransform.anchoredPosition = new Vector2(91 * 3, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 3, 32);
                         break;
                     case -4:
-                        rectTransform.anchoredPosition = new Vector2(91 * 4, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 4, 32);
                         break;
                     case -5:
-                        rectTransform.anchoredPosition = new Vector2(91 * 5, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 5, 32);
                         break;
                     case -6:
-                        rectTransform.anchoredPosition = new Vector2(91 * 6, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 6, 32);
                         break;
                     case -7:
-                        rectTransform.anchoredPosition = new Vector2(91 * 7, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 7, 32);
                         break;
                     case -8:
-                        rectTransform.anchoredPosition = new Vector2(91 * 8, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 8, 32);
                         break;
                     case -9:
-                        rectTransform.anchoredPosition = new Vector2(91 * 9, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 9, 32);
                         break;
                     case -10:
-                        rectTransform.anchoredPosition = new Vector2(91 * 10, 32);
+                        rectTransform.anchoredPosition = new Vector2(92 * 10, 32);
                         break;
                     default:
                         rectTransform.anchoredPosition = Vector2.zero;

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,6 +18,7 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     [Header("Test")]
     private bool isDragging = false; // 카드를 드래그 중입니까?
+
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -106,7 +106,8 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
         if (card.cardInfo.data is CreatureCard handCard && // hand카드가 CreatureCard이고
             collision.GetComponent<FieldCard>().card.data is CreatureCard fieldCard && // field카드가 CreatureCard이고
-            isDragging == true) // 드래그 중이라면
+            isDragging == true && // 드래그 중이고
+            collision.GetComponent<FieldCard>().upperCard==null) //아직 upperCard가 없다면
         {
             //만약 ScriptableCard의 종류가 Creature카드라면 레벨 정보 + 색상을 가져온다
             if (handCard.level == fieldCard.level + 1 &&

@@ -1,9 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 
-public class LayOutOrder : MonoBehaviour
+//적 카드 정렬을 위한 최하단 카드 가운데 정렬 클래스
+public class EnemyFieldCardSort : MonoBehaviour
 {
     private List<Transform> sortedChildren;
 
@@ -21,12 +21,12 @@ public class LayOutOrder : MonoBehaviour
         }
 
         // 미들센터 정렬을 위해 x 포지션을 개수 * 50만큼의 위치로 배정
-        float totalWidth = sortedChildren.Count * 172f;
-        //float startX = -totalWidth / 2f;
+        float totalWidth = sortedChildren.Count * 138;
+        float startX = -totalWidth / 2f;
         for (int i = 0; i < sortedChildren.Count; i++)
         {
             Transform child = sortedChildren[i];
-            Vector3 newPosition = new Vector3(0f + i * 172f, child.localPosition.y, child.localPosition.z);
+            Vector3 newPosition = new Vector3(startX + i * 172f, child.localPosition.y, child.localPosition.z);
             child.localPosition = newPosition;
         }
     }

@@ -83,7 +83,7 @@
     <Compile Include="Assets\Scripts\NetworkManagerCCG.cs" />
     <Compile Include="Assets\Scripts\Scene_BuildingDeck\Row.cs" />
     <Compile Include="Assets\Scripts\TargetingArrow.cs" />
-    <Compile Include="Assets\Scripts\UI\LayOutOrder.cs" />
+    <Compile Include="Assets\Scripts\UI\EnemyFieldCardSort.cs" />
     <Compile Include="Assets\Scripts\ScriptableAbilities\DamageAbility.cs" />
     <Compile Include="Assets\Scripts\ScriptableCards\SpellCard.cs" />
     <Compile Include="Assets\Scripts\Players\Player.cs" />

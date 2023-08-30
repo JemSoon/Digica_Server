@@ -26,6 +26,7 @@ public class CardBook : MonoBehaviour
 
     public CardAndAmount[] buildingDeck;//나의 카드리스트와 해당 카드의 총 갯수
     public List<ScriptableCard> viewDeckList;//나의 덱 시각화용 리스트
+    public List<ScriptableCard> viewTamaList;
     private void Awake()
     {
         Inst = this;

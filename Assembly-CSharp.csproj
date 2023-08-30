@@ -92,6 +92,8 @@
     <Compile Include="Assets\Scripts\UI\UIPortrait.cs" />
     <Compile Include="Assets\Scripts\CardAbility.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerRaiseField.cs" />
+    <Compile Include="Assets\Scripts\Scene_BuildingDeck\MyTamaBook.cs" />
+    <Compile Include="Assets\Scripts\Scene_BuildingDeck\TamaTile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

@@ -2159,11 +2159,11 @@ MonoBehaviour:
   tiles: []
   deckTiles: []
   tamaTiles:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 770919484}
+  - {fileID: 1975395198}
+  - {fileID: 468252032}
+  - {fileID: 455390395}
+  - {fileID: 1391549575}
 --- !u!114 &332182596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3890,7 +3890,7 @@ MonoBehaviour:
   y: 0
   _item: {fileID: 0}
   button: {fileID: 455390396}
-  card: {fileID: 0}
+  card: {fileID: 455390397}
 --- !u!114 &455390396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4121,7 +4121,7 @@ MonoBehaviour:
   y: 0
   _item: {fileID: 0}
   button: {fileID: 468252033}
-  card: {fileID: 0}
+  card: {fileID: 468252034}
 --- !u!114 &468252033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6592,7 +6592,7 @@ MonoBehaviour:
   y: 0
   _item: {fileID: 0}
   button: {fileID: 770919485}
-  card: {fileID: 0}
+  card: {fileID: 770919486}
 --- !u!114 &770919485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9390,7 +9390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rows:
-  - {fileID: 0}
+  - {fileID: 332182595}
   deleteIndex: 0
 --- !u!114 &1339285574
 MonoBehaviour:
@@ -10166,7 +10166,7 @@ MonoBehaviour:
   y: 0
   _item: {fileID: 0}
   button: {fileID: 1391549576}
-  card: {fileID: 0}
+  card: {fileID: 1391549577}
 --- !u!114 &1391549576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14717,7 +14717,7 @@ MonoBehaviour:
   y: 0
   _item: {fileID: 0}
   button: {fileID: 1975395199}
-  card: {fileID: 0}
+  card: {fileID: 1975395200}
 --- !u!114 &1975395199
 MonoBehaviour:
   m_ObjectHideFlags: 0

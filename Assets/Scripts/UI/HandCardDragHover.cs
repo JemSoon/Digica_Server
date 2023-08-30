@@ -17,8 +17,8 @@ public class HandCardDragHover : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private GameObject temp;
 
     [Header("Test")]
-    private bool isDragging = false; // 카드를 드래그 중입니까?
     public GameObject EvoAlarm;
+    private bool isDragging = false; // 카드를 드래그 중입니까?
 
     public void OnPointerEnter(PointerEventData eventData)
     {

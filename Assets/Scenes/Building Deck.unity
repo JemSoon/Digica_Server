@@ -2171,6 +2171,30 @@ MonoBehaviour:
   myDigitamaCount: 0
   bookPage: 1
   buildingDeck:
+  - card: {fileID: 11400000, guid: e58c547c024c31244bbc3424c02fe633, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: b225841bdcb41b648a1e0c03b1016539, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: e7725b4cb06c79d4482ca07d77669e35, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: b1d437f445fc33246b52157f94c353b6, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: b1394bf7589a3c64a8f1d1fb67749630, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 6626d57451d64a24384de6d91ee47501, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: cc3091d6c1d24f94b840022e24dbe4d5, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 61c2738bf17899446adbac829c2f78a6, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 80a5f825268472848a214ad9846f6be0, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 8ece83bddb649f740a27179ad800dcd1, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 3070b1e3c7b5c654b889b325ff945bf7, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 103132fb01bcbb146a9b4c02339091e2, type: 2}
+    amount: 0
   - card: {fileID: 11400000, guid: c5252931bb137f54daf71910ee61dc53, type: 2}
     amount: 0
   - card: {fileID: 11400000, guid: 7bf4f52d1c0df0c44a1552e3688b5585, type: 2}

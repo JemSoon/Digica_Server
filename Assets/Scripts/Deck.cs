@@ -13,6 +13,7 @@ public class Deck : NetworkBehaviour
     public SyncListCard deckList = new SyncListCard(); // DeckList used during the match. Contains all cards in the deck. This is where we'll be drawing card froms.
     public SyncListCard graveyard = new SyncListCard(); // Cards in player graveyard.
     public SyncListCard hand = new SyncListCard(); // Cards in player's hand during the match.
+    public SyncListCard babyCard = new SyncListCard();
 
     [Header("Battlefield")]
     public SyncListCard playerField = new SyncListCard(); // Field where we summon creatures.

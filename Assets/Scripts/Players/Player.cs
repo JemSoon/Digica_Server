@@ -94,24 +94,20 @@ public class Player : Entity
     [Command]
     public void CmdLoadDeck(CardAndAmount[] startingDeck)
     {
-        Debug.Log("덱 로드 됨");
-
         for (int i = 0; i < startingDeck.Length; ++i)
         {
             CardAndAmount card = startingDeck[i];
             for (int v = 0; v < card.amount; ++v)
             {
-                deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo());
-                
-                //if (deck.hand.Count < 7) 
-                //{ 
-                //    deck.hand.Add(new CardInfo(card.card, 1)); 
-                //}
+                if ((card.card is CreatureCard creatureCard && creatureCard.level > 2) || !(card.card is CreatureCard))
+                { deck.deckList.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo()); }
 
+                else if (card.card is CreatureCard tamaCard && tamaCard.level == 2)
+                { deck.babyCard.Add(card.amount > 0 ? new CardInfo(card.card, 1) : new CardInfo()); }
             }
         }
 
-        //섞기
+        //섞기 (본 덱)
         for (int j = 0; j < deck.deckList.Count; ++j)
         {
             int rand = UnityEngine.Random.Range(j, deck.deckList.Count);
@@ -119,31 +115,23 @@ public class Player : Entity
             deck.deckList[j] = deck.deckList[rand];
             deck.deckList[rand] = temp;
         }
+        //섞기 (디지타마 덱)
+        for (int a=0; a<deck.babyCard.Count; ++a)
+        {
+            int rand = UnityEngine.Random.Range(a, deck.babyCard.Count);
+            CardInfo temp = deck.babyCard[a];
+            deck.babyCard[a] = deck.babyCard[rand];
+            deck.babyCard[rand] = temp;
+        }
 
-        
         //손에 섞은카드 차례로 배분
-        for(int i =0; i<deck.deckList.Count; ++i) 
+        for (int i =0; i<deck.deckList.Count; ++i) 
         {
             CardInfo card = deck.deckList[0];//기억하십시오 0번째를 빼면 1번이 다시 0번으로 당겨진다
             if (deck.hand.Count < 7)
             { 
                 deck.hand.Add(new CardInfo(card.data, 1));//손으로 카드 보내고
                 deck.deckList.Remove(card);//덱 리스트에선 제거
-            }
-        }
-        
-        if (deck.hand.Count == 7)
-        {
-            //deck.hand.Shuffle();
-            
-            for (int i = 0; i < deck.deckList.Count; ++i)
-            {
-                Debug.Log("전체 덱 "+i.ToString() + deck.deckList[i].name);
-                
-            }
-            for(int i =0; i<deck.hand.Count; ++i)
-            {
-                Debug.Log("손 카드 "+i.ToString() + deck.hand[i].name);
             }
         }
     }

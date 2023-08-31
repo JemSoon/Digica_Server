@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\Extensions.cs" />
     <Compile Include="Assets\Scripts\ScriptableCards\CreatureCard.cs" />
     <Compile Include="Assets\Scripts\Entity.cs" />
+    <Compile Include="Assets\Scripts\Scene_BuildingDeck\TamaTile.cs" />
     <Compile Include="Assets\Scripts\ArrowHead.cs" />
     <Compile Include="Assets\Scripts\Combat.cs" />
     <Compile Include="Assets\Scripts\UI\HandCardDragHover.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Assets\Scripts\Scene_BuildingDeck\CardBook.cs" />
     <Compile Include="Assets\Scripts\Scene_BuildingDeck\Tile.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Scene_BuildingDeck\MyTamaBook.cs" />
     <Compile Include="Assets\Scripts\UI\UIUtils.cs" />
     <Compile Include="Assets\Scripts\Scene_BuildingDeck\MyCardBook.cs" />
     <Compile Include="Assets\Scripts\FieldCard.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Assets\Scripts\Players\PlayerInfo.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHand.cs" />
     <Compile Include="Assets\Scripts\NetworkManagerCCG.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerRaiseField.cs" />
     <Compile Include="Assets\Scripts\Scene_BuildingDeck\Row.cs" />
     <Compile Include="Assets\Scripts\TargetingArrow.cs" />
     <Compile Include="Assets\Scripts\UI\EnemyFieldCardSort.cs" />
@@ -91,9 +94,6 @@
     <Compile Include="Assets\Scripts\UI\FieldCardHover.cs" />
     <Compile Include="Assets\Scripts\UI\UIPortrait.cs" />
     <Compile Include="Assets\Scripts\CardAbility.cs" />
-    <Compile Include="Assets\Scripts\UI\PlayerRaiseField.cs" />
-    <Compile Include="Assets\Scripts\Scene_BuildingDeck\MyTamaBook.cs" />
-    <Compile Include="Assets\Scripts\Scene_BuildingDeck\TamaTile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

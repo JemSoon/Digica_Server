@@ -14,6 +14,11 @@ public class GameManager : NetworkBehaviour
     public PlayerHand playerHand;
     public PlayerHand enemyHand;
 
+    [Header("Digitama_Test")]
+    public int tamaSize = 1;
+    public PlayerRaiseField playerRaiseField;
+    public PlayerRaiseField enemyRaiseField;
+
     [Header("Deck")]
     public int deckSize = 50; // Maximum deck size
     public int identicalCardCount = 4; // How many identical cards we allow to have in a deck

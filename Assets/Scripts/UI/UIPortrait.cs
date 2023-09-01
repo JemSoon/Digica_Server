@@ -9,6 +9,7 @@ public partial class UIPortrait : MonoBehaviour
     public Text deckAmount;
     public Text graveyardAmount;
     public Text handAmount;
+    public Text tamaAmount;
     public Text health;
     public Text mana;
     public PlayerType playerType;
@@ -29,6 +30,7 @@ public partial class UIPortrait : MonoBehaviour
             deckAmount.text = player.deck.deckList.Count.ToString();
             graveyardAmount.text = player.deck.graveyard.Count.ToString();
             handAmount.text = player.deck.hand.Count.ToString();
+            tamaAmount.text = player.deck.babyCard.Count.ToString();
             //health.text = player.health.ToString();
             //mana.text = player.mana.ToString();
             player.spawnOffset = portrait.transform;
@@ -42,6 +44,7 @@ public partial class UIPortrait : MonoBehaviour
             deckAmount.text = enemyInfo.deckCount.ToString();
             graveyardAmount.text = enemyInfo.graveCount.ToString();
             handAmount.text = enemyInfo.handCount.ToString();
+            //tamaAmount.text = enemyInfo.tamaCount.ToString(); //¾È¸¸µê ¾ÆÁ÷
             //health.text = enemyInfo.health.ToString();
             //mana.text = enemyInfo.mana.ToString();
             enemyInfo.data.spawnOffset = portrait.transform;

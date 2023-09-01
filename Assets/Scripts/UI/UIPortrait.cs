@@ -44,7 +44,7 @@ public partial class UIPortrait : MonoBehaviour
             deckAmount.text = enemyInfo.deckCount.ToString();
             graveyardAmount.text = enemyInfo.graveCount.ToString();
             handAmount.text = enemyInfo.handCount.ToString();
-            //tamaAmount.text = enemyInfo.tamaCount.ToString(); //¾È¸¸µê ¾ÆÁ÷
+            tamaAmount.text = enemyInfo.tamaCount.ToString(); //¾È¸¸µê ¾ÆÁ÷
             //health.text = enemyInfo.health.ToString();
             //mana.text = enemyInfo.mana.ToString();
             enemyInfo.data.spawnOffset = portrait.transform;

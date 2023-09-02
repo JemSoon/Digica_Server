@@ -1,7 +1,8 @@
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PlayerRaiseField : MonoBehaviour
+public class PlayerRaiseField : MonoBehaviour, IDropHandler
 {
     public Transform content;
     public GameObject Spawnbutton;
@@ -31,6 +32,30 @@ public class PlayerRaiseField : MonoBehaviour
         {
             FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
             card.CmdUpdateWaitTurn();
+        }
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        HandCard card = eventData.pointerDrag.transform.GetComponent<HandCard>();
+        Player player = Player.localPlayer;
+        int manaCost = card.Ecost;
+
+        if (Player.localPlayer.isServer && MemoryChecker.Inst.memory - manaCost < -10) { return; } //총 코스트량 오버하면 return
+        else if (!Player.localPlayer.isServer && MemoryChecker.Inst.memory + manaCost > 10) { return; }
+
+        if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost) && card.isEvoCard)
+        {
+            int index = card.handIndex;
+            CardInfo cardInfo = player.deck.hand[index];
+
+            Player.gameManager.isSpawning = true;
+            Player.gameManager.isHovering = false;
+            //Player.gameManager.CmdOnCardHover(0, index);
+            player.deck.CmdPlayEvoTamaCard(cardInfo, index, player, card.underCard); // Summon card onto the board
+            player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
+
+            player.PlayerDraw(1); // 진화시키고 나면 한장 드로우
         }
     }
 }

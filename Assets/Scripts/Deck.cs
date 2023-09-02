@@ -265,14 +265,14 @@ public class Deck : NetworkBehaviour
         if (Player.gameManager.isSpawning)
         {
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
-            boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
+            boardCard.GetComponent<FieldCard>().casterType = Target.MY_BABY;
             boardCard.transform.SetParent(Player.gameManager.playerRaiseField.content, false);
             //Player.gameManager.playerHand.RemoveCard(index); // 손에서 꺼내는게 아니라 손에서 제거할 필요가 없음
             Player.gameManager.isSpawning = false;
         }
         else if (player.hasEnemy)
         {
-            boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
+            boardCard.GetComponent<FieldCard>().casterType = Target.OTHER_BABY;
             boardCard.transform.SetParent(Player.gameManager.enemyRaiseField.content, false); // 적 RaiseField아직 안만듦
             Player.gameManager.enemyRaiseField.Spawnbutton.SetActive(false);//디지타마 뒷면 오브젝트 없어지게끔
             //Player.gameManager.enemyHand.RemoveCard(index);
@@ -288,7 +288,7 @@ public class Deck : NetworkBehaviour
             newCard.underCard = underCard;
             underCard.upperCard = newCard;
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
-            boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
+            boardCard.GetComponent<FieldCard>().casterType = Target.MY_BABY;
             boardCard.transform.SetParent(Player.gameManager.playerRaiseField.content, false);
             Player.gameManager.playerHand.RemoveCard(index); // Update player's hand
             Player.gameManager.isSpawning = false;
@@ -298,7 +298,7 @@ public class Deck : NetworkBehaviour
             FieldCard newCard = boardCard.GetComponent<FieldCard>();
             newCard.underCard = underCard;
             underCard.upperCard = newCard;
-            boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
+            boardCard.GetComponent<FieldCard>().casterType = Target.OTHER_BABY;
             boardCard.transform.SetParent(Player.gameManager.enemyRaiseField.content, false);
             Player.gameManager.enemyHand.RemoveCard(index);
         }

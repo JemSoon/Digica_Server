@@ -24,7 +24,7 @@ MonoBehaviour:
   description: 
   strength: 4000
   health: 1
-  Ecost: 0
+  Ecost: 2
   level: 4
   acceptableTargets: 0301
   creatureType: 

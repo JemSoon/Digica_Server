@@ -85,6 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7582166961206771458}
+  - component: {fileID: 2673262384994130637}
   m_Layer: 5
   m_Name: CardHover
   m_TagString: Untagged
@@ -110,9 +111,24 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 268, y: 82}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 255, y: 178}
+  m_SizeDelta: {x: 343.4, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2673262384994130637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7582166961206771457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07def6cb338b2d49a45e2e813d153ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 7582166961206771457}
+  halfX: 0
+  halfY: 0
 --- !u!1 &7582166961387128113
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3993672623134770151, guid: 8e60d01296f801340ab3f6b15ec5fe09, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 140
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3993672623134770151, guid: 8e60d01296f801340ab3f6b15ec5fe09, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

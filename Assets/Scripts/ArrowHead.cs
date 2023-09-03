@@ -23,6 +23,8 @@ public class ArrowHead : MonoBehaviour
             RaycastHit2D hit = hitInfo[0];
             Entity target = hit.collider.gameObject.GetComponent<Entity>();
 
+            if (target == null) return;
+
             bool canTarget = target.casterType.CanTarget(card.acceptableTargets);
 
             // Check to see if we can attack this target : If entity isn't the one currently targeting, is targetable and isn't friendly

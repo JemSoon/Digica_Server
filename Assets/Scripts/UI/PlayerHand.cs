@@ -19,7 +19,7 @@ public class PlayerHand : MonoBehaviour
 
         if (playerType == PlayerType.PLAYER && Input.GetKeyDown(KeyCode.C))
         {
-            player.deck.DrawCard(7);
+            player.deck.DrawCard(5);
         }
         if (IsEnemyHand())
         {

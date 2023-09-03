@@ -124,11 +124,22 @@ public class Player : Entity
             deck.babyCard[rand] = temp;
         }
 
+        //섞은카드 5장 세큐리티로 배분
+        for (int i = 0; i < deck.deckList.Count; ++i)
+        {
+            CardInfo card = deck.deckList[0];//기억하십시오 0번째를 빼면 1번이 다시 0번으로 당겨진다
+            if (deck.securityCard.Count < 5)
+            {
+                deck.securityCard.Add(new CardInfo(card.data, 1));//손으로 카드 보내고
+                deck.deckList.Remove(card);//덱 리스트에선 제거
+            }
+        }
+
         //손에 섞은카드 차례로 배분
         for (int i =0; i<deck.deckList.Count; ++i) 
         {
             CardInfo card = deck.deckList[0];//기억하십시오 0번째를 빼면 1번이 다시 0번으로 당겨진다
-            if (deck.hand.Count < 7)
+            if (deck.hand.Count < 5)
             { 
                 deck.hand.Add(new CardInfo(card.data, 1));//손으로 카드 보내고
                 deck.deckList.Remove(card);//덱 리스트에선 제거

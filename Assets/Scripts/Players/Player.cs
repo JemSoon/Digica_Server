@@ -182,16 +182,16 @@ public class Player : Entity
         Player[] onlinePlayers = FindObjectsOfType<Player>();
 
         //Loop through all online Players(should just be one other Player)
-        foreach (Player players in onlinePlayers)
+        for (int i =0; i<onlinePlayers.Length; ++i)
         {
             //Make sure the players are loaded properly(we load the usernames first)
-            if (players.username != "")
+            if (onlinePlayers[i].username != "")
             {
                 //There should only be one other Player online, so if it's not us then it's the enemy.
-                if (players != this)
+                if (onlinePlayers[i] != Player.localPlayer)
                 {
                     //Get & Set PlayerInfo from our Enemy's gameObject
-                    PlayerInfo currentPlayer = new PlayerInfo(players.gameObject);
+                    PlayerInfo currentPlayer = new PlayerInfo(onlinePlayers[i].gameObject);
                     enemyInfo = currentPlayer;
                     hasEnemy = true;
                     enemyInfo.data.casterType = Target.OPPONENT;

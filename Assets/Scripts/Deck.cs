@@ -18,6 +18,9 @@ public class Deck : NetworkBehaviour
     [Header("Battlefield")]
     public SyncListCard playerField = new SyncListCard(); // Field where we summon creatures.
 
+    [Header("SecurityCard")]
+    public SyncListCard securityCard = new SyncListCard();
+
     [Header("Starting Deck")]
     public CardAndAmount[] startingDeck;
 

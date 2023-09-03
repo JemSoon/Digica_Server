@@ -24,7 +24,7 @@ public partial class UIPortrait : MonoBehaviour
         if (player && playerType == PlayerType.PLAYER)
         {
             panel.SetActive(true);
-            player.transform.position = portrait.transform.position;
+            //player.transform.position = portrait.transform.position;
             portrait.sprite = player.portrait;
             username.text = player.username;
             deckAmount.text = player.deck.deckList.Count.ToString();
@@ -34,11 +34,13 @@ public partial class UIPortrait : MonoBehaviour
             //health.text = player.health.ToString();
             //mana.text = player.mana.ToString();
             player.spawnOffset = portrait.transform;
+            player.transform.localScale = new Vector3(100, 100, 10);
+            player.transform.localPosition = new Vector3(portrait.transform.position.x, portrait.transform.position.y, 0f);
         }
         else if (player && player.hasEnemy && playerType == PlayerType.ENEMY)
         {
             panel.SetActive(true);
-            enemyInfo.player.transform.position = portrait.transform.position;
+            //enemyInfo.player.transform.position = portrait.transform.position;
             portrait.sprite = enemyInfo.portrait;
             username.text = enemyInfo.username;
             deckAmount.text = enemyInfo.deckCount.ToString();
@@ -48,6 +50,8 @@ public partial class UIPortrait : MonoBehaviour
             //health.text = enemyInfo.health.ToString();
             //mana.text = enemyInfo.mana.ToString();
             enemyInfo.data.spawnOffset = portrait.transform;
+            enemyInfo.player.transform.localScale = new Vector3(100, 100, 10);
+            enemyInfo.player.transform.localPosition = new Vector3(portrait.transform.position.x, portrait.transform.position.y, 0f);
         }
         else
         {

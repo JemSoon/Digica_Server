@@ -20,10 +20,23 @@ public class ArrowHead : MonoBehaviour
         // If greater than 0, then we hit s
         if (hitInfo.Length > 0)
         {
-            RaycastHit2D hit = hitInfo[0];
-            Entity target = hit.collider.gameObject.GetComponent<Entity>();
+            RaycastHit2D hit;
+            Entity target=null;
+            for (int i =0; i<hitInfo.Length; ++i)
+            {
+                if (hitInfo[i].collider.gameObject.GetComponent<Entity>()!=null)
+                {
+                    hit = hitInfo[i];
+                    target = hit.collider.gameObject.GetComponent<Entity>();
+                    break;
+                }
+            }
+            //RaycastHit2D hit = hitInfo[0];
+            //target = hit.collider.gameObject.GetComponent<Entity>();
 
             if (target == null) return;
+            else
+            { Debug.Log("Ãæµ¹Áß"); }
 
             bool canTarget = target.casterType.CanTarget(card.acceptableTargets);
 

@@ -3269,7 +3269,7 @@ MonoBehaviour:
   networkAddress: localhost
   maxConnections: 2
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 1558563431315729131, guid: bc32225315537f64aa81c7b55a36b2b9, type: 3}
+  playerPrefab: {fileID: 5935445641307887272, guid: b232cffa0a3358542aa48356c9121ef7, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:

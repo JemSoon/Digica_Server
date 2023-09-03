@@ -35,8 +35,6 @@ public class ArrowHead : MonoBehaviour
             //target = hit.collider.gameObject.GetComponent<Entity>();
 
             if (target == null) return;
-            else
-            { Debug.Log("Ãæµ¹Áß"); }
 
             bool canTarget = target.casterType.CanTarget(card.acceptableTargets);
 

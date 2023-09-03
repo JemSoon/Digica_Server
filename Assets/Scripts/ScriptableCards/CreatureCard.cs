@@ -34,7 +34,14 @@ public partial class CreatureCard : ScriptableCard
 
     public virtual void Attack(Entity attacker, Entity target)
     {
-        attacker.combat.CmdBattle(attacker, target);
+        if (target is Player user)
+        {
+            //공격대상이 플레이어라면 세큐리티 카드[0]스폰 및 그것과 전투
+            Debug.Log("세큐리티 카드 오픈");
+        }
+
+        else
+        { attacker.combat.CmdBattle(attacker, target); }
         
         attacker.DestroyTargetingArrow();
         attacker.combat.CmdIncreaseWaitTurn();

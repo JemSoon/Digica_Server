@@ -2538,6 +2538,7 @@ GameObject:
   - component: {fileID: 721990055}
   - component: {fileID: 721990057}
   - component: {fileID: 721990056}
+  - component: {fileID: 721990058}
   m_Layer: 5
   m_Name: PlayerSecurityPortrait
   m_TagString: Untagged
@@ -2604,6 +2605,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721990054}
   m_CullTransparentMesh: 1
+--- !u!114 &721990058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721990054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23bae5a62ea12f54083e63bc62bebc78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalImage: {fileID: 21300000, guid: daa8fc549aaf7df4bbd25e1ea8baf8de, type: 3}
+  breakImage: {fileID: 21300000, guid: 1d922311c0fc23c4d9edc635f9ac971b, type: 3}
+  Icon1: {fileID: 297337377}
+  Icon2: {fileID: 144959037}
+  Icon3: {fileID: 794058865}
+  Icon4: {fileID: 1851427366}
+  Icon5: {fileID: 389142104}
 --- !u!1 &737196451
 GameObject:
   m_ObjectHideFlags: 0
@@ -6258,6 +6278,7 @@ GameObject:
   - component: {fileID: 2114661246}
   - component: {fileID: 2114661248}
   - component: {fileID: 2114661247}
+  - component: {fileID: 2114661249}
   m_Layer: 5
   m_Name: EnemySecurityPortrait
   m_TagString: Untagged
@@ -6324,6 +6345,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114661245}
   m_CullTransparentMesh: 1
+--- !u!114 &2114661249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114661245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90d6ef79cf107c4683f29d2378d4b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalImage: {fileID: 21300000, guid: d19a73f9ecd1556449db9d2eb0a7413d, type: 3}
+  breakImage: {fileID: 21300000, guid: 1d922311c0fc23c4d9edc635f9ac971b, type: 3}
+  Icon1: {fileID: 311060650}
+  Icon2: {fileID: 1567919322}
+  Icon3: {fileID: 111012317}
+  Icon4: {fileID: 252476474}
+  Icon5: {fileID: 1640353426}
 --- !u!1 &2130434877
 GameObject:
   m_ObjectHideFlags: 0

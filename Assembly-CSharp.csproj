@@ -95,6 +95,8 @@
     <Compile Include="Assets\Scripts\UI\FieldCardHover.cs" />
     <Compile Include="Assets\Scripts\UI\UIPortrait.cs" />
     <Compile Include="Assets\Scripts\CardAbility.cs" />
+    <Compile Include="Assets\Scripts\UI\MySecurityCount.cs" />
+    <Compile Include="Assets\Scripts\UI\EnemySecurityCount.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

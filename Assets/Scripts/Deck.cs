@@ -1,5 +1,6 @@
 using UnityEngine;
 using Mirror;
+using System;
 
 public class Deck : NetworkBehaviour
 {
@@ -211,33 +212,59 @@ public class Deck : NetworkBehaviour
         if (isServer) RpcPlayEvoTamaCard(boardCard, index, underCard);
     }
 
-    [Command]
-    public void CmdPlaySecurityCard(CardInfo card, int index, Player owner)
+    [Command(requiresAuthority = false)] //권한 없애줘야 실행됨 (상대 클라이언트의 세큐리티 카드를 꺼내는 것이기 때문)
+    public void CmdPlaySecurityCard(CardInfo card, Player owner)
     {
-        CreatureCard creature = (CreatureCard)card.data;
-        GameObject boardCard = Instantiate(creature.cardPrefab.gameObject);
-        FieldCard newCard = boardCard.GetComponent<FieldCard>();
-        newCard.card = new CardInfo(card.data); // Save Card Info so we can re-access it later if we need to.
-        //newCard.cardName.text = card.name;
-        newCard.health = creature.health;
-        newCard.strength = creature.strength;
-        newCard.image.sprite = card.image;
-        newCard.image.color = Color.white;
-        newCard.player = owner;
+        // 이 카드는 크리쳐 카드일지 옵션,테이머 카드일지 알 수 없다
 
-        // If creature has charge, reduce waitTurn to 0 so they can attack right away.
-        if (creature.hasCharge) newCard.waitTurn = 0;
+        if(card.data is CreatureCard)
+        {
+            CreatureCard creature = (CreatureCard)card.data;
+            GameObject boardCard = Instantiate(creature.cardPrefab.gameObject);
+            FieldCard newCard = boardCard.GetComponent<FieldCard>();
+            newCard.card = new CardInfo(card.data); // Save Card Info so we can re-access it later if we need to.
+                                                    //newCard.cardName.text = card.name;
+            newCard.health = creature.health;
+            newCard.strength = creature.strength;
+            newCard.image.sprite = card.image;
+            newCard.image.color = Color.white;
+            newCard.player = owner;
 
-        // Update the Card Info that appears when hovering
-        newCard.cardHover.UpdateFieldCardInfo(card);
+            if (creature.hasCharge) newCard.waitTurn = 0;
+            
+            // Update the Card Info that appears when hovering
+            newCard.cardHover.UpdateFieldCardInfo(card);
 
-        // Spawn it
-        NetworkServer.Spawn(boardCard);
+            // Spawn it
+            NetworkServer.Spawn(boardCard);
 
-        // Remove card from hand
-        hand.RemoveAt(index);
+            // 대상자의 세큐리티 카드를 스폰시켰으니 제거
+            owner.deck.securityCard.RemoveAt(0);
 
-        if (isServer) RpcPlayCard(boardCard, index);
+            if (isServer) RpcPlaySecurityCard(boardCard, owner);
+        }
+        else if(card.data is SpellCard)
+        {
+            SpellCard spellCard = (SpellCard)card.data;
+            GameObject boardCard = Instantiate(spellCard.cardPrefab.gameObject);
+            FieldCard newCard = boardCard.GetComponent<FieldCard>();
+            newCard.card = new CardInfo(card.data); // Save Card Info so we can re-access it later if we need to.
+                                                    //newCard.cardName.text = card.name;
+            newCard.image.sprite = card.image;
+            newCard.image.color = Color.white;
+            newCard.player = owner;
+
+            // Update the Card Info that appears when hovering
+            newCard.cardHover.UpdateFieldCardInfo(card);
+
+            // Spawn it
+            NetworkServer.Spawn(boardCard);
+
+            // 대상자의 세큐리티 카드를 스폰시켰으니 제거
+            owner.deck.securityCard.RemoveAt(0);
+
+            if (isServer) RpcPlaySecurityCard(boardCard, owner);
+        }
     }
 
     [Command]
@@ -332,6 +359,24 @@ public class Deck : NetworkBehaviour
             boardCard.GetComponent<FieldCard>().casterType = Target.OTHER_BABY;
             boardCard.transform.SetParent(Player.gameManager.enemyRaiseField.content, false);
             Player.gameManager.enemyHand.RemoveCard(index);
+        }
+    }
+
+
+    [ClientRpc]
+    public void RpcPlaySecurityCard(GameObject boardCard, Player player)
+    {
+        if (player.isLocalPlayer)
+        {
+            // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
+            boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
+            boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
+            Player.gameManager.isSpawning = false;
+        }
+        else if (player.hasEnemy)
+        {
+            boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
+            boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
         }
     }
 }

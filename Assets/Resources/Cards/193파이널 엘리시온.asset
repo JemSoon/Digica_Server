@@ -27,3 +27,4 @@ MonoBehaviour:
   strengthChange: 0
   cardDraw: 0
   untilEndOfTurn: 0
+  cardPrefab: {fileID: 7582166961649262295, guid: 27801e35bdc329143b17b015777515b9, type: 3}

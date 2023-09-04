@@ -55,9 +55,4 @@ public static class Extensions
     {
         return int.Parse(text);
     }
-
-    public static IEnumerator WaitforSeconds(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-    }
 }

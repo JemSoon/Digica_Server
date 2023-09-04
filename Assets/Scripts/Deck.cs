@@ -365,8 +365,10 @@ public class Deck : NetworkBehaviour
 
 
     [ClientRpc]
-    public void RpcPlaySecurityCard(GameObject boardCard, Player player, Entity attacker) // 크리쳐 카드 용
+    public void RpcPlaySecurityCard(GameObject boardCard, Player player, Entity attacker)
     {
+        // 크리쳐 카드 용
+
         if (player.isLocalPlayer)
         {
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
@@ -380,17 +382,17 @@ public class Deck : NetworkBehaviour
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
         }
 
-        StartCoroutine(DelayedBattle(attacker, boardCard, 2.0f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!
-
-        //yield return Extensions.WaitforSeconds(5.0f);
+        StartCoroutine(DelayedBattle(attacker, boardCard, 1.5f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!
 
         //FieldCard target = boardCard.GetComponent<FieldCard>();
         //if (target.player.isLocalPlayer)
         //{ attacker.combat.CmdBattle(attacker, target); }
     }
     [ClientRpc]
-    public void RpcPlaySecurityCard(GameObject boardCard, Player player) // 스펠 카드 용
+    public void RpcPlaySecurityCard(GameObject boardCard, Player player)
     {
+        // 스펠 카드 용
+
         if (player.isLocalPlayer)
         {
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.

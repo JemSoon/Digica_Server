@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Mirror;
+using System.Collections;
 
 public static class Extensions
 {
@@ -53,5 +54,10 @@ public static class Extensions
     public static int ToInt(this string text)
     {
         return int.Parse(text);
+    }
+
+    public static IEnumerator WaitforSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
     }
 }

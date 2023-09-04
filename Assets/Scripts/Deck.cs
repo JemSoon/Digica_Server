@@ -149,7 +149,7 @@ public class Deck : NetworkBehaviour
     }
 
     [Command]
-    public void CmdPlayTamaCard(CardInfo card, int index, Player owner)
+    public void CmdPlayTamaCard(CardInfo card, Player owner)
     {
         CreatureCard creature = (CreatureCard)card.data;
         GameObject boardCard = Instantiate(creature.cardPrefab.gameObject);
@@ -174,7 +174,7 @@ public class Deck : NetworkBehaviour
         // Remove card from hand
         babyCard.RemoveAt(0);
 
-        if (isServer) RpcPlayTamaCard(boardCard, index);
+        if (isServer) RpcPlayTamaCard(boardCard);
     }
 
     [Command]
@@ -211,6 +211,34 @@ public class Deck : NetworkBehaviour
         if (isServer) RpcPlayEvoTamaCard(boardCard, index, underCard);
     }
 
+    [Command]
+    public void CmdPlaySecurityCard(CardInfo card, int index, Player owner)
+    {
+        CreatureCard creature = (CreatureCard)card.data;
+        GameObject boardCard = Instantiate(creature.cardPrefab.gameObject);
+        FieldCard newCard = boardCard.GetComponent<FieldCard>();
+        newCard.card = new CardInfo(card.data); // Save Card Info so we can re-access it later if we need to.
+        //newCard.cardName.text = card.name;
+        newCard.health = creature.health;
+        newCard.strength = creature.strength;
+        newCard.image.sprite = card.image;
+        newCard.image.color = Color.white;
+        newCard.player = owner;
+
+        // If creature has charge, reduce waitTurn to 0 so they can attack right away.
+        if (creature.hasCharge) newCard.waitTurn = 0;
+
+        // Update the Card Info that appears when hovering
+        newCard.cardHover.UpdateFieldCardInfo(card);
+
+        // Spawn it
+        NetworkServer.Spawn(boardCard);
+
+        // Remove card from hand
+        hand.RemoveAt(index);
+
+        if (isServer) RpcPlayCard(boardCard, index);
+    }
 
     [Command]
     public void CmdStartNewTurn()
@@ -263,7 +291,7 @@ public class Deck : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcPlayTamaCard(GameObject boardCard, int index)
+    public void RpcPlayTamaCard(GameObject boardCard)
     {
         if (Player.gameManager.isSpawning)
         {

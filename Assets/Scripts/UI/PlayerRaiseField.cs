@@ -18,7 +18,7 @@ public class PlayerRaiseField : MonoBehaviour, IDropHandler
             Player.gameManager.isSpawning = true;
             Player.gameManager.isHovering = false;
 
-            player.deck.CmdPlayTamaCard(cardInfo, 0, player); // Summon card onto the board
+            player.deck.CmdPlayTamaCard(cardInfo, player); // Summon card onto the board
             player.combat.CmdChangeMana(0); // Reduce player's mana
 
             Spawnbutton.SetActive(false); //나중에 출전시킬때 다시 스폰버튼 액티브시켜야함

@@ -31,6 +31,9 @@ public class FieldCard : Entity
     public bool isUpperMostCard => upperCard == null; // 최상단 카드인가?
     public bool isUnderMostCard => underCard == null; // 최하단 카드인가?
 
+    [Header("Security")]
+    public bool isSecurity = false;
+
     // Update is called once per frame
     public override void Update()
     {

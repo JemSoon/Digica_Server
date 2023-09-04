@@ -2,6 +2,7 @@ using UnityEngine;
 using Mirror;
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Deck : NetworkBehaviour
 {
@@ -225,6 +226,7 @@ public class Deck : NetworkBehaviour
             FieldCard newCard = boardCard.GetComponent<FieldCard>();
             newCard.card = new CardInfo(card.data); // Save Card Info so we can re-access it later if we need to.
                                                     //newCard.cardName.text = card.name;
+            newCard.isSecurity = true;
             newCard.health = creature.health;
             newCard.strength = creature.strength;
             newCard.image.sprite = card.image;
@@ -383,10 +385,6 @@ public class Deck : NetworkBehaviour
         }
 
         StartCoroutine(DelayedBattle(attacker, boardCard, 1.5f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!
-
-        //FieldCard target = boardCard.GetComponent<FieldCard>();
-        //if (target.player.isLocalPlayer)
-        //{ attacker.combat.CmdBattle(attacker, target); }
     }
     [ClientRpc]
     public void RpcPlaySecurityCard(GameObject boardCard, Player player)
@@ -412,10 +410,13 @@ public class Deck : NetworkBehaviour
         //세큐리티 카드 출현 후 잠시 뒤에 싸우게 하기용
         yield return new WaitForSeconds(time);
 
-        FieldCard target = boardCard.GetComponent<FieldCard>();
-        if (target.player.isLocalPlayer)
+        if (boardCard.IsDestroyed() == false)
         {
-            attacker.combat.CmdBattle(attacker, target);
+            FieldCard target = boardCard.GetComponent<FieldCard>();
+            if (target.player.isLocalPlayer)
+            {
+                attacker.combat.CmdBattle(attacker, target);
+            }
         }
     }
 }

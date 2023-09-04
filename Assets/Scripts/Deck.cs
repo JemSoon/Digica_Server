@@ -1,6 +1,7 @@
 using UnityEngine;
 using Mirror;
 using System;
+using System.Collections;
 
 public class Deck : NetworkBehaviour
 {
@@ -59,7 +60,7 @@ public class Deck : NetworkBehaviour
     ///////////////
     public bool CanPlayCard(int manaCost)
     {
-        if(player.isServer)
+        if (player.isServer)
         {
             if (MemoryChecker.Inst.memory - manaCost >= -10 && player.health > 0)
             { return true; }
@@ -213,11 +214,11 @@ public class Deck : NetworkBehaviour
     }
 
     [Command(requiresAuthority = false)] //권한 없애줘야 실행됨 (상대 클라이언트의 세큐리티 카드를 꺼내는 것이기 때문)
-    public void CmdPlaySecurityCard(CardInfo card, Player owner)
+    public void CmdPlaySecurityCard(CardInfo card, Player owner, Entity attacker)
     {
         // 이 카드는 크리쳐 카드일지 옵션,테이머 카드일지 알 수 없다
 
-        if(card.data is CreatureCard)
+        if (card.data is CreatureCard)
         {
             CreatureCard creature = (CreatureCard)card.data;
             GameObject boardCard = Instantiate(creature.cardPrefab.gameObject);
@@ -231,7 +232,7 @@ public class Deck : NetworkBehaviour
             newCard.player = owner;
 
             if (creature.hasCharge) newCard.waitTurn = 0;
-            
+
             // Update the Card Info that appears when hovering
             newCard.cardHover.UpdateFieldCardInfo(card);
 
@@ -241,9 +242,9 @@ public class Deck : NetworkBehaviour
             // 대상자의 세큐리티 카드를 스폰시켰으니 제거
             owner.deck.securityCard.RemoveAt(0);
 
-            if (isServer) RpcPlaySecurityCard(boardCard, owner);
+            if (isServer) RpcPlaySecurityCard(boardCard, owner, attacker);
         }
-        else if(card.data is SpellCard)
+        else if (card.data is SpellCard)
         {
             SpellCard spellCard = (SpellCard)card.data;
             GameObject boardCard = Instantiate(spellCard.cardPrefab.gameObject);
@@ -270,7 +271,7 @@ public class Deck : NetworkBehaviour
     [Command]
     public void CmdStartNewTurn()
     {
-        
+
     }
 
     [ClientRpc]
@@ -364,7 +365,7 @@ public class Deck : NetworkBehaviour
 
 
     [ClientRpc]
-    public void RpcPlaySecurityCard(GameObject boardCard, Player player)
+    public void RpcPlaySecurityCard(GameObject boardCard, Player player, Entity attacker) // 크리쳐 카드 용
     {
         if (player.isLocalPlayer)
         {
@@ -377,6 +378,42 @@ public class Deck : NetworkBehaviour
         {
             boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
+        }
+
+        StartCoroutine(DelayedBattle(attacker, boardCard, 2.0f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!
+
+        //yield return Extensions.WaitforSeconds(5.0f);
+
+        //FieldCard target = boardCard.GetComponent<FieldCard>();
+        //if (target.player.isLocalPlayer)
+        //{ attacker.combat.CmdBattle(attacker, target); }
+    }
+    [ClientRpc]
+    public void RpcPlaySecurityCard(GameObject boardCard, Player player) // 스펠 카드 용
+    {
+        if (player.isLocalPlayer)
+        {
+            // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
+            boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
+            boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
+            Player.gameManager.isSpawning = false;
+        }
+        else if (player.hasEnemy)
+        {
+            boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
+            boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
+        }
+    }
+
+    private IEnumerator DelayedBattle(Entity attacker, GameObject boardCard, float time)
+    {
+        //세큐리티 카드 출현 후 잠시 뒤에 싸우게 하기용
+        yield return new WaitForSeconds(time);
+
+        FieldCard target = boardCard.GetComponent<FieldCard>();
+        if (target.player.isLocalPlayer)
+        {
+            attacker.combat.CmdBattle(attacker, target);
         }
     }
 }

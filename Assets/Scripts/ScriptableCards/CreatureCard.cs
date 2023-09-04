@@ -39,7 +39,7 @@ public partial class CreatureCard : ScriptableCard
             //공격대상이 플레이어라면 세큐리티 카드[0]스폰 및 그것과 전투
             Debug.Log("세큐리티 카드 오픈");
             Debug.Log(user.username);
-            user.deck.CmdPlaySecurityCard(user.deck.securityCard[0], user);
+            user.deck.CmdPlaySecurityCard(user.deck.securityCard[0], user, attacker);
         }
 
         else

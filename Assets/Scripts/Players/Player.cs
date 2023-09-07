@@ -213,7 +213,7 @@ public class Player : Entity
         //}
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdDrawDeck(int Count)
     {
         for (int i = 0; i < Count; ++i)

@@ -270,10 +270,11 @@ public class Deck : NetworkBehaviour
         }
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdStartNewTurn()
     {
-
+        if (Player.gameManager.turnCount != 1)
+        { player.CmdDrawDeck(1); }
     }
 
     [ClientRpc]

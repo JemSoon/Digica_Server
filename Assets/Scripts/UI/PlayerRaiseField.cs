@@ -55,7 +55,7 @@ public class PlayerRaiseField : MonoBehaviour, IDropHandler
             player.deck.CmdPlayEvoTamaCard(cardInfo, index, player, card.underCard); // Summon card onto the board
             player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
 
-            player.PlayerDraw(1); // 진화시키고 나면 한장 드로우
+            player.CmdDrawDeck(1); // 진화시키고 나면 한장 드로우
         }
     }
 }

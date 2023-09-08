@@ -94,9 +94,37 @@ public class GameManager : NetworkBehaviour
         RpcSetTurn();
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdPassTurn()
+    {
+        RpcSetPass();
+    }
+
     [ClientRpc]
     public void RpcSetTurn()
     {
+        // If isOurTurn was true, set it false. If it was false, set it true.
+        isOurTurn = !isOurTurn;
+        endTurnButton.SetActive(isOurTurn);
+        ++turnCount;
+
+        // If isOurTurn (after updating the bool above)
+        if (isOurTurn)
+        {
+            playerField.UpdateFieldCards();
+            Player.localPlayer.deck.CmdStartNewTurn();
+        }
+    }
+
+    [ClientRpc]
+    public void RpcSetPass()
+    {
+        if(Player.localPlayer.firstPlayer && isOurTurn)
+        { MemoryChecker.Inst.CmdChangeMemory(-3); }
+        
+        else if(!Player.localPlayer.firstPlayer && isOurTurn)
+        { MemoryChecker.Inst.CmdChangeMemory(3); }
+
         // If isOurTurn was true, set it false. If it was false, set it true.
         isOurTurn = !isOurTurn;
         endTurnButton.SetActive(isOurTurn);

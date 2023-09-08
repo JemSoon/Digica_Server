@@ -163,4 +163,11 @@ public class MemoryChecker : NetworkBehaviour
             //Debug.Log(Player.localPlayer.mana);
         }
     }
+
+    [Command (requiresAuthority = false)]
+    public void CmdChangeMemory(int memory)
+    {
+        Inst.memory = memory;
+    }
+
 }

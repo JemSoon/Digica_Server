@@ -11,15 +11,17 @@ public class PlayerHand : MonoBehaviour
     private Player player;
     private PlayerInfo enemyInfo;
     private int cardCount = 0; // Amount of cards in hand
+    private bool isFirstTime = true;
 
     void LateUpdate()
     {
         player = Player.localPlayer;
         if (player && player.hasEnemy) enemyInfo = player.enemyInfo;
 
-        if (playerType == PlayerType.PLAYER && Input.GetKeyDown(KeyCode.C))
+        if (playerType == PlayerType.PLAYER && isFirstTime && player && player.hasEnemy)
         {
             player.deck.DrawCard(5);
+            isFirstTime = false;
         }
         if (IsEnemyHand())
         {

@@ -35,12 +35,6 @@ public class PlayerHand : MonoBehaviour
                 cardCount = enemyInfo.handCount;
             }
         }
-
-        //test
-        //if (playerType == PlayerType.PLAYER && Input.GetKeyDown(KeyCode.F) && Player.gameManager.turnCount != 1)
-        //{
-        //    player.PlayerDraw(1);
-        //}
     }
 
     public void AddCard(int index)

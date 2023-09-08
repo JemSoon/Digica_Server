@@ -14,19 +14,17 @@ public class Combat : NetworkBehaviour
         {
             //entity.GetComponent<Player>().mana += amount;
             if (entity.GetComponent<Player>().firstPlayer)
-            { MemoryChecker.Inst.memory += amount; }
+            { 
+                MemoryChecker.Inst.memory += amount; 
+                if(MemoryChecker.Inst.memory < 0)
+                { Player.gameManager.CmdEndTurn(); }
+            }
             else
-            { MemoryChecker.Inst.memory -= amount;}
-        }
-    }
-
-    public void ChangeMana(int amount)
-    {
-        // Increase mana by amount. If 3, increase by 3. If -3, reduce by 3.
-        if (entity is Player)
-        {
-            entity.GetComponent<Player>().mana += amount;
-
+            {
+                MemoryChecker.Inst.memory -= amount;
+                if(MemoryChecker.Inst.memory > 0)
+                { Player.gameManager.CmdEndTurn();}
+            }
         }
     }
 

@@ -46,7 +46,6 @@ public class Player : Entity
         //Get and update the player's username and stats
         CmdLoadPlayer(PlayerPrefs.GetString("Name"));
         LoadBuildingDeck();//Â§ µ¦À» °¡Á®¿È
-        //CmdLoadDeck();
     }
 
     public void LoadBuildingDeck()
@@ -169,9 +168,7 @@ public class Player : Entity
         }
 
         if (hasEnemy && isLocalPlayer && gameManager.isGameStart == false)
-        {
-
-            //CmdLoadEnemyDeck();            
+        {  
             gameManager.StartGame();
         }
     }

@@ -297,6 +297,7 @@ MonoBehaviour:
   isTargetable: 1
   waitTurn: 1
   taunt: 0
+  IsDead: 0
   card:
     cardID: 
     amount: 0
@@ -312,6 +313,8 @@ MonoBehaviour:
   player: {fileID: 0}
   upperCard: {fileID: 0}
   underCard: {fileID: 0}
+  isSecurity: 0
+  icon: {fileID: 0}
 --- !u!114 &7582166961649262294
 MonoBehaviour:
   m_ObjectHideFlags: 0

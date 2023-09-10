@@ -13,6 +13,7 @@ public partial class SpellCard : ScriptableCard
     public int strengthChange = 0; // 
     public int cardDraw = 0; // Same as health. +X for positive (drawing cards), -X for negative (discarding)
     public bool untilEndOfTurn = false; // If the changes only purposes until end of turn.
+    public bool isTamer;
 
     [Header("Board Prefab")]
     public FieldCard cardPrefab;

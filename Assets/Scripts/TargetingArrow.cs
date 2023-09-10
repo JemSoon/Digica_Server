@@ -36,4 +36,4 @@ public class TargetingArrow : MonoBehaviour
     }
 }
 [Serializable]
-public enum Target : byte { OWNER, OPPONENT, FRIENDLIES, ENEMIES, RANDOM, ALL, MY_BABY, OTHER_BABY }
+public enum Target : byte { OWNER, OPPONENT, FRIENDLIES, ENEMIES, RANDOM, ALL, MY_BABY, OTHER_BABY, MY_OPTION, OTHER_OPTION }

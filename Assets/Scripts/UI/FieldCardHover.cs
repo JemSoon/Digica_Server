@@ -10,7 +10,7 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerClick(PointerEventData eventData)
     {
         // Make sure our Player isn't already targetting something
-        if (!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.FRIENDLIES && card.CanAttack())
+        if (!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.FRIENDLIES && card.CanAttack() && card.card.data is CreatureCard)
         {
             card.SpawnTargetingArrow(card.card);
             HideCardInfo();

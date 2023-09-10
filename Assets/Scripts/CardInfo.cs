@@ -35,6 +35,23 @@ public partial struct CardInfo
 
     public List<Target> acceptableTargets => ((CreatureCard)data).acceptableTargets;
 
+    //public List<Target> acceptableTargets
+    //{
+    //    get
+    //    {
+    //        if (data is CreatureCard creatureCard)
+    //        {
+    //            // data가 CreatureCard인 경우
+    //            return creatureCard.acceptableTargets;
+    //        }
+    //        else
+    //        {
+    //            // data가 CreatureCard가 아닌 경우 (예: SpellCard)
+    //            return null;
+    //        }
+    //    }
+    //}
+
     //#region Equals
     ////=========== "=="연산자 용 추가 함수 ===========//
     //public bool Equals(CardInfo other)

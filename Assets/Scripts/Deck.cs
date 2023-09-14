@@ -137,6 +137,8 @@ public class Deck : NetworkBehaviour
             newCard.image.color = Color.white;
             newCard.player = owner;
 
+            spellCard.AppearSpellCard(owner);//스펠카드 필드 스폰시 바로 카드효과 실행시킴
+
             // Update the Card Info that appears when hovering
             newCard.cardHover.UpdateFieldCardInfo(card);
 
@@ -308,6 +310,12 @@ public class Deck : NetworkBehaviour
     {
         if (Player.gameManager.turnCount != 1)
         { player.CmdDrawDeck(1); }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdEndTurn()
+    {
+
     }
 
     [ClientRpc]

@@ -109,6 +109,7 @@ public class Deck : NetworkBehaviour
             newCard.image.sprite = card.image;
             newCard.image.color = Color.white;
             newCard.player = owner;
+            newCard.player.deck.playerField.Add(card);//내 필드 카드 목록에 추가
 
             // If creature has charge, reduce waitTurn to 0 so they can attack right away.
             if (creature.hasCharge) newCard.waitTurn = 0;
@@ -136,6 +137,7 @@ public class Deck : NetworkBehaviour
             newCard.image.sprite = card.image;
             newCard.image.color = Color.white;
             newCard.player = owner;
+            newCard.player.deck.playerField.Add(card);//내 필드 카드 목록에 추가
 
             spellCard.AppearSpellCard(owner);//스펠카드 필드 스폰시 바로 카드효과 실행시킴
 
@@ -315,7 +317,6 @@ public class Deck : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdEndTurn()
     {
-
     }
 
     [ClientRpc]
@@ -460,7 +461,7 @@ public class Deck : NetworkBehaviour
         //세큐리티 카드 출현 후 잠시 뒤에 싸우게 하기용
         yield return new WaitForSeconds(time);
 
-        if (boardCard.IsDestroyed() == false)
+        if (boardCard.IsDestroyed() == false)//왜인진 모르겠지만 두번들어와서 터짐 파괴됬는지 확인해둬서 방어함
         {
             FieldCard target = boardCard.GetComponent<FieldCard>();
             if (target.player.isLocalPlayer)

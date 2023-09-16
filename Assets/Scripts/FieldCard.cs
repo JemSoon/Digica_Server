@@ -85,7 +85,9 @@ public class FieldCard : Entity
     [Command(requiresAuthority = false)]
     public void CmdDestroySpellCard()
     {
-        for (int i = 0; i < player.deck.playerField.Count; ++i)
+        int cardCount = Player.gameManager.playerField.content.childCount;
+        Debug.Log(cardCount);
+        for (int i = 0; i < cardCount; ++i)
         {
             if(card.data is SpellCard spellCard)
             {

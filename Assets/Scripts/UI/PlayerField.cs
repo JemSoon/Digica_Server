@@ -27,10 +27,10 @@ public class PlayerField : MonoBehaviour, IDropHandler
             Player.gameManager.isSpawning = true;
             Player.gameManager.isHovering = false;
             //Player.gameManager.CmdOnCardHover(0, index);
-            player.deck.CmdPlayEvoCard(cardInfo, index, player, card.underCard); // Summon card onto the board
-            player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
 
-            player.CmdDrawDeck(1); // 진화시키고 나면 한장 드로우
+            player.deck.CmdPlayEvoCard(cardInfo, index, player, card.underCard); // Summon card onto the board
+            player.CmdDrawDeck(1); // 진화시키고 나면 한장 드로우(코스트 까기전에 있어야함) 순서 이대로 둘것
+            player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
         }
 
         else if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost) && !card.isEvoCard)
@@ -65,6 +65,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
         for (int i = 0; i < cardCount; ++i)
         {
             FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
+            if(card == null) { continue; }// FieldCard 컴포넌트가 없으면 스킵
 
             card.CmdDestroySpellCard();//test
         }

@@ -205,6 +205,7 @@ public class Player : Entity
         {
             deck.hand.Add(deck.deckList[0]);
             deck.deckList.RemoveAt(0);
+            Debug.Log(deck.hand.Count);
         }
         RpcDrawDeckForTurn(Count);
     }

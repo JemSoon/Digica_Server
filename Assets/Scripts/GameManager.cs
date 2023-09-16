@@ -79,6 +79,7 @@ public class GameManager : NetworkBehaviour
     {
         if (!isHoveringField)
         {
+            if(cardObject.GetComponent<FieldCard>() == null) { return; }
             FieldCard card = cardObject.GetComponent<FieldCard>();
             if(card==null) return; // 혹시나 싶은 안전코드 cardObject==null이 맞나?
             Color shine = activateShine ? card.hoverColor : Color.clear;
@@ -116,7 +117,7 @@ public class GameManager : NetworkBehaviour
         }
         else //내 턴이 아니게 된 플레이어는 CmdEndTurn함수를 통해 정돈할것 정돈
         {
-            playerField.EndTurnFieldCards();//test
+            playerField.EndTurnFieldCards();//턴 끝날때 필드 카드중 스펠카드 삭제
             Player.localPlayer.deck.CmdEndTurn();
         }
     }

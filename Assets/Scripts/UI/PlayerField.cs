@@ -54,7 +54,19 @@ public class PlayerField : MonoBehaviour, IDropHandler
         for (int i = 0; i < cardCount; ++i)
         {
             FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
+            
             card.CmdUpdateWaitTurn();
+        }
+    }
+
+    public void EndTurnFieldCards()
+    {
+        int cardCount = content.childCount;
+        for (int i = 0; i < cardCount; ++i)
+        {
+            FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
+
+            card.CmdDestroySpellCard();//test
         }
     }
 

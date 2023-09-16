@@ -81,4 +81,17 @@ public class FieldCard : Entity
             upperCard.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition + new Vector2(0, 47);
         }
     }
+
+    [Command(requiresAuthority = false)]
+    public void CmdDestroySpellCard()
+    {
+        for (int i = 0; i < player.deck.playerField.Count; ++i)
+        {
+            if(card.data is SpellCard spellCard)
+            {
+                player.deck.graveyard.Add(card);
+                Destroy(this.gameObject);
+            }
+        }
+    }
 }

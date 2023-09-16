@@ -54,10 +54,4 @@ public partial class SpellCard : ScriptableCard
             }
         }
     }
-
-    public void DestroySpellCard()
-    {
-        Destroy(cardPrefab.gameObject);
-    }
-
 }

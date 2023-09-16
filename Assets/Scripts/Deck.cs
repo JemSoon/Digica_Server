@@ -109,7 +109,7 @@ public class Deck : NetworkBehaviour
             newCard.image.sprite = card.image;
             newCard.image.color = Color.white;
             newCard.player = owner;
-            newCard.player.deck.playerField.Add(card);//내 필드 카드 목록에 추가
+            //newCard.player.deck.playerField.Add(card);//내 필드 카드 목록에 추가
 
             // If creature has charge, reduce waitTurn to 0 so they can attack right away.
             if (creature.hasCharge) newCard.waitTurn = 0;
@@ -137,7 +137,7 @@ public class Deck : NetworkBehaviour
             newCard.image.sprite = card.image;
             newCard.image.color = Color.white;
             newCard.player = owner;
-            newCard.player.deck.playerField.Add(card);//내 필드 카드 목록에 추가
+            //newCard.player.deck.playerField.Add(card);//내 필드 카드 목록에 추가
 
             spellCard.AppearSpellCard(owner);//스펠카드 필드 스폰시 바로 카드효과 실행시킴
 
@@ -470,4 +470,5 @@ public class Deck : NetworkBehaviour
             }
         }
     }
+
 }

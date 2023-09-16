@@ -116,6 +116,7 @@ public class GameManager : NetworkBehaviour
         }
         else //내 턴이 아니게 된 플레이어는 CmdEndTurn함수를 통해 정돈할것 정돈
         {
+            playerField.EndTurnFieldCards();//test
             Player.localPlayer.deck.CmdEndTurn();
         }
     }

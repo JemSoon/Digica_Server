@@ -235,6 +235,7 @@ public class Player : Entity
                 if (card.casterType == Target.FRIENDLIES)
                 {
                     Debug.Log("필드카드 동료 목록 " + card.card.name);
+                    //나중에 해당 카드를 선택할수 있는 함수를 추가
                 }
             }
         }

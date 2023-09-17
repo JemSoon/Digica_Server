@@ -59,21 +59,9 @@ public class HandCard : MonoBehaviour
         {
             //만약 ScriptableCard의 종류가 Creature카드라면 레벨 정보를 가져온다
             level = creatureCard.level;
-            Debug.Log("CreatureCard level: " + level);
+            //Debug.Log("CreatureCard level: " + level);
         }
         cardInfo = newCard;
-        // Assign description, name and remaining stats
-        // 카드설명란..난 적을게 없다
-        //description.text = newCard.description; // Description
-        //cost.text = newCard.cost.ToString(); // Cost
-        //cardName.text = newCard.name;
-
-        // Only set Health & Strength if CreatureCard
-        //if (newCard.data is CreatureCard)
-        //{
-        //    health.text = ((CreatureCard)newCard.data).health.ToString();
-        //    strength.text = ((CreatureCard)newCard.data).strength.ToString();
-        //}
     }
 
     public void AddCardBack()

@@ -205,7 +205,7 @@ public class Player : Entity
         {
             deck.hand.Add(deck.deckList[0]);
             deck.deckList.RemoveAt(0);
-            Debug.Log(deck.hand.Count);
+            //Debug.Log(deck.hand.Count);
         }
         RpcDrawDeckForTurn(Count);
     }
@@ -222,6 +222,22 @@ public class Player : Entity
             }
         }
     }
+    [ClientRpc]
+    public void RPCGetMyFieldCard(Player owner)
+    {
+        if (owner == Player.localPlayer)
+        {
+            int childCount = Player.gameManager.playerField.content.childCount;
+            for (int i = 0; i < childCount; ++i)
+            {
+                FieldCard card = Player.gameManager.playerField.content.GetChild(i).GetComponent<FieldCard>();
 
+                if (card.casterType == Target.FRIENDLIES)
+                {
+                    Debug.Log("필드카드 동료 목록 " + card.card.name);
+                }
+            }
+        }
+    }
     public bool IsOurTurn() => gameManager.isOurTurn;
 }

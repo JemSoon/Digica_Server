@@ -45,16 +45,7 @@ public partial class SpellCard : ScriptableCard
                 case "뉴클리어 레이저":
                     owner.CmdDrawDeck(2);
 
-                    int childCount = Player.gameManager.playerField.content.childCount;
-                    for (int i = 0; i < childCount; ++i)
-                    {
-                        FieldCard card = Player.gameManager.playerField.content.GetChild(i).GetComponent<FieldCard>();
-
-                        if(card.casterType==Target.FRIENDLIES)
-                        {
-                            Debug.Log("필드카드 동료 목록 " + card.card.name);
-                        }
-                    }
+                    owner.RPCGetMyFieldCard(owner);
                     break;
             }
         }

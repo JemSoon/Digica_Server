@@ -37,9 +37,19 @@ public partial class SpellCard : ScriptableCard
                     break;
             }
         }
+
+        if(type == SpellType.DRAW)
+        {
+            switch (cardName)
+            {
+                case "뉴클리어 레이저":
+                    owner.CmdDrawDeck(2);
+                    break;
+            }
+        }
     }
 
-    public void EndTurn(Player owner)
+    public void EndTurnEffect(Player owner)
     {
         if (type == SpellType.MEMORY)
         {

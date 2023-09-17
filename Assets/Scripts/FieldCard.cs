@@ -89,7 +89,7 @@ public class FieldCard : Entity
         {
             //player.deck.playerField.Remove(card);
             player.deck.graveyard.Add(card);
-            spellCard.EndTurn(player);
+            spellCard.EndTurnEffect(player);
             Destroy(this.gameObject);
         }
     }

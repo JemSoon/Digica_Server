@@ -24,7 +24,7 @@ MonoBehaviour:
   description: 
   targeted: 0
   healthChange: 0
-  strengthChange: 0
+  strengthChange: 2000
   memoryChange: 0
   cardDraw: 0
   untilEndOfTurn: 0

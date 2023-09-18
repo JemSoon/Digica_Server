@@ -31,7 +31,6 @@ public class GameManager : NetworkBehaviour
     [Header("Turn Management")]
     public GameObject endTurnButton;
     [HideInInspector] public bool isOurTurn = false;
-    [HideInInspector] public bool isDraw = false;//test
     [SyncVar, HideInInspector] public int turnCount = 1; // Start at 1
     [SyncVar] public bool isGameStart;
 

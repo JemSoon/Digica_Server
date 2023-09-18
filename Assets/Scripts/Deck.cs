@@ -332,7 +332,7 @@ public class Deck : NetworkBehaviour
                 boardCard.GetComponent<FieldCard>().casterType = Target.MY_OPTION; 
                 if(spellCard.hasSelect==true)
                 {
-                    boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card);
+                    boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card,true);
                 }
             }
 

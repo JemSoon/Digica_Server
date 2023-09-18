@@ -1,7 +1,6 @@
 // Put all our cards in the Resources folder. We use Resources.LoadAll down
 // below to load our cards into a cache so we can easily reference them later
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum SpellType { DP, EVO, MEMORY, DESTROY, SECURITY_CHECK, BACKtoDECK, ACTIVE, DRAW, SECURITY, }
@@ -69,5 +68,28 @@ public partial class SpellCard : ScriptableCard
                     break;
             }
         }
+    }
+
+    public override void StartCast(Entity caster, Entity target)
+    {
+        base.StartCast(caster, target);
+
+        while (target.GetComponent<FieldCard>().isUpperMostCard == false)
+        {
+            target = target.GetComponent<FieldCard>().upperCard; //최상위 카드 가져오기
+        }
+
+        ((FieldCard)target).strength += strengthChange;
+    }
+    public override void EndCast(Entity caster, Entity target)
+    {
+        base.EndCast(caster, target);
+
+        while (target.GetComponent<FieldCard>().isUpperMostCard == false)
+        {
+            target = target.GetComponent<FieldCard>().upperCard; //최상위 카드 가져오기
+        }
+
+        ((FieldCard)target).strength -= strengthChange;
     }
 }

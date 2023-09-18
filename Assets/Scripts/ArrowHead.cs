@@ -48,7 +48,7 @@ public class ArrowHead : MonoBehaviour
                     { 
                         ((CreatureCard)card.data).Attack(caster, target);
                     }
-                    //else card.data.Cast(caster, target);
+                    else ((SpellCard)card.data).StartCast(caster, target);
                 }
             }
             else

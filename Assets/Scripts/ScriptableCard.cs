@@ -83,7 +83,11 @@ public partial class ScriptableCard : ScriptableObject
     }
 
     // Called when casting abilities or spells
-    public virtual void Cast(Entity caster, Entity target)
+    public virtual void StartCast(Entity caster, Entity target)
+    {
+
+    }
+    public virtual void EndCast(Entity caster, Entity target)
     {
 
     }

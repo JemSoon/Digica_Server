@@ -327,8 +327,14 @@ public class Deck : NetworkBehaviour
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
             if (boardCard.GetComponent<FieldCard>().card.data is CreatureCard)
             { boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES; }
-            else if(boardCard.GetComponent<FieldCard>().card.data is SpellCard)
-            { boardCard.GetComponent<FieldCard>().casterType = Target.MY_OPTION; }
+            else if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard)
+            {
+                boardCard.GetComponent<FieldCard>().casterType = Target.MY_OPTION; 
+                if(spellCard.hasSelect==true)
+                {
+                    boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card);
+                }
+            }
 
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
             Player.gameManager.playerHand.RemoveCard(index); // Update player's hand

@@ -19,9 +19,13 @@ public partial class SpellCard : ScriptableCard
     public bool untilEndOfTurn = false; // If the changes only purposes until end of turn.
     public bool isTamer;
     public SpellType type;
+    public bool hasSelect;
 
     [Header("Board Prefab")]
     public FieldCard cardPrefab;
+
+    [Header("Targets")]
+    public List<Target> acceptableTargets = new List<Target>();
 
     public void AppearSpellCard(Player owner)
     {

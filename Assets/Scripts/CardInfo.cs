@@ -33,24 +33,25 @@ public partial struct CardInfo
     public int cost => data.cost;
     public string description => data.description;
 
-    public List<Target> acceptableTargets => ((CreatureCard)data).acceptableTargets;
-
-    //public List<Target> acceptableTargets
-    //{
-    //    get
-    //    {
-    //        if (data is CreatureCard creatureCard)
-    //        {
-    //            // data가 CreatureCard인 경우
-    //            return creatureCard.acceptableTargets;
-    //        }
-    //        else
-    //        {
-    //            // data가 CreatureCard가 아닌 경우 (예: SpellCard)
-    //            return null;
-    //        }
-    //    }
-    //}
+    public List<Target> acceptableTargets
+    {
+        get
+        {
+            if (data is CreatureCard)
+            {
+                return ((CreatureCard)data).acceptableTargets;
+            }
+            else if (data is SpellCard)
+            {
+                return ((SpellCard)data).acceptableTargets;
+            }
+            else
+            {
+                // data가 CreatureCard 또는 SpellCard가 아닌 경우에 대한 처리
+                return null; // 또는 다른 기본값 또는 처리 방법을 설정할 수 있습니다.
+            }
+        }
+    }
 
     //#region Equals
     ////=========== "=="연산자 용 추가 함수 ===========//

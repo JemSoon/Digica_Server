@@ -18,7 +18,7 @@ public partial class SpellCard : ScriptableCard
     public bool untilEndOfTurn = false; // If the changes only purposes until end of turn.
     public bool isTamer;
     public SpellType type;
-    public bool hasSelect;
+    public bool hasSelectBuff;
 
     [Header("Board Prefab")]
     public FieldCard cardPrefab;

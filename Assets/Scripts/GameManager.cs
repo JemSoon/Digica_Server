@@ -130,6 +130,8 @@ public class GameManager : NetworkBehaviour
         else if(!Player.localPlayer.firstPlayer && isOurTurn)
         { MemoryChecker.Inst.CmdChangeMemory(3); }
 
+        playerField.EndTurnFieldCards();
+
         // If isOurTurn was true, set it false. If it was false, set it true.
         isOurTurn = !isOurTurn;
         endTurnButton.SetActive(isOurTurn);

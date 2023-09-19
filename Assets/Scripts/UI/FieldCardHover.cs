@@ -15,6 +15,12 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             card.SpawnTargetingArrow(card.card);
             HideCardInfo();
         }
+        else if(!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.MY_OPTION && !card.giveBuff && card.card.data is SpellCard)
+        {
+            card.SpawnTargetingArrow(card.card, true);
+            HideCardInfo();
+            card.giveBuff = true;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

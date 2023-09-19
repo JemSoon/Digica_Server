@@ -12,6 +12,8 @@ public class FieldCard : Entity
     public Text healthText; // Text of the health
     public Text strengthText; // Text of the strength
 
+    public bool giveBuff = false; // 1회용 버프 썼는가?(스펠카드용)
+
     [Header("Shine")]
     public Image shine;
     public Color hoverColor;
@@ -33,6 +35,8 @@ public class FieldCard : Entity
 
     [Header("Security")]
     public bool isSecurity = false;
+    //[Header("SpellEffect")]
+    //public SyncList<SpellCard> spellCards = new SyncList<SpellCard>(); // 효과 받은 카드들 저장해 두기
 
     // Update is called once per frame
     public override void Update()
@@ -92,5 +96,11 @@ public class FieldCard : Entity
             spellCard.EndTurnEffect(player);
             Destroy(this.gameObject);
         }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdChangeSomeThing(int something)
+    {
+        strength += something;
     }
 }

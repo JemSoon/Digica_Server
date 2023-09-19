@@ -139,8 +139,6 @@ public class Deck : NetworkBehaviour
             newCard.player = owner;
             //newCard.player.deck.playerField.Add(card);//내 필드 카드 목록에 추가
 
-            spellCard.AppearSpellCard(owner);//스펠카드 필드 스폰시 바로 카드효과 실행시킴
-
             // Update the Card Info that appears when hovering
             newCard.cardHover.UpdateFieldCardInfo(card);
 
@@ -151,6 +149,8 @@ public class Deck : NetworkBehaviour
             hand.RemoveAt(index);
 
             if (isServer) RpcPlayCard(boardCard, index);
+
+            spellCard.AppearSpellCard(owner);//스펠카드 필드 스폰시 바로 카드효과 실행시킴 서순!! 서순!! 서순!! RpcPlayCard에서 인덱스 정렬함!! 서순!! 하루 날림!!
         }
     }
 
@@ -330,10 +330,10 @@ public class Deck : NetworkBehaviour
             else if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard)
             {
                 boardCard.GetComponent<FieldCard>().casterType = Target.MY_OPTION; 
-                if(spellCard.hasSelect==true)
-                {
-                    boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card,true);
-                }
+                //if(spellCard.hasSelect==true)
+                //{
+                //    boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card,true);
+                //}
             }
 
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);

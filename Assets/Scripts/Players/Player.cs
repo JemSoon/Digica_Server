@@ -203,25 +203,31 @@ public class Player : Entity
     {
         for (int i = 0; i < Count; ++i)
         {
+            if (deck.deckList.Count == 0) { return; } // 카드 없으면 리턴
+
             deck.hand.Add(deck.deckList[0]);
             deck.deckList.RemoveAt(0);
-            //Debug.Log(deck.hand.Count);
         }
+
         RpcDrawDeckForTurn(Count);
     }
 
     [ClientRpc]
     private void RpcDrawDeckForTurn(int Count)
     {
+        //for (int i = 0; i < deck.hand.Count; ++i) { Debug.Log(deck.hand[i].data.cardName); }
         if (gameManager.isOurTurn)
         {
             PlayerHand playerHand = Player.gameManager.playerHand;
             for (int i = 0; i < Count; i++)
             {
-                playerHand.AddCard(deck.hand.Count - 1);
+                playerHand.AddCard(deck.hand.Count - Count + i);
+                Debug.Log(deck.hand[deck.hand.Count - Count + i].data.cardName +" "+ (deck.hand.Count - Count + i).ToString());
             }
+
         }
     }
+
     [ClientRpc]
     public void RPCGetMyFieldCard(Player owner)
     {

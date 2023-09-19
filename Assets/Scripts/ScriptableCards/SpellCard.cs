@@ -47,8 +47,7 @@ public partial class SpellCard : ScriptableCard
             {
                 case "뉴클리어 레이저":
                     owner.CmdDrawDeck(2);
-
-                    owner.RPCGetMyFieldCard(owner);
+                    //owner.RPCGetMyFieldCard(owner);
                     break;
             }
         }
@@ -66,6 +65,9 @@ public partial class SpellCard : ScriptableCard
                     else
                     { MemoryChecker.Inst.memory += 2; }
                     break;
+                case "뉴클리어 레이저":
+                    
+                    break;
             }
         }
     }
@@ -79,7 +81,9 @@ public partial class SpellCard : ScriptableCard
             target = target.GetComponent<FieldCard>().upperCard; //최상위 카드 가져오기
         }
 
-        ((FieldCard)target).strength += strengthChange;
+        target.GetComponent<FieldCard>().CmdChangeSomeThing(strengthChange);
+
+        caster.DestroyTargetingArrow();
     }
     public override void EndCast(Entity caster, Entity target)
     {

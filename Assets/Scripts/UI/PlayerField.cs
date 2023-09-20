@@ -82,7 +82,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
             }
             //===============================================================//
 
-            card.CmdDestroySpellCard();//test
+            card.CmdDestroySpellCard();
         }
     }
 

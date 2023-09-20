@@ -13,16 +13,16 @@ public class Deck : NetworkBehaviour
     [HideInInspector] public int handSize = 7;//나중에 수정 요망
 
     [Header("Decks")]
-    public SyncListCard deckList = new SyncListCard(); // DeckList used during the match. Contains all cards in the deck. This is where we'll be drawing card froms.
-    public SyncListCard graveyard = new SyncListCard(); // Cards in player graveyard.
-    public SyncListCard hand = new SyncListCard(); // Cards in player's hand during the match.
-    public SyncListCard babyCard = new SyncListCard();
+    readonly public SyncListCard deckList = new SyncListCard(); // DeckList used during the match. Contains all cards in the deck. This is where we'll be drawing card froms.
+    readonly public SyncListCard graveyard = new SyncListCard(); // Cards in player graveyard.
+    readonly public SyncListCard hand = new SyncListCard(); // Cards in player's hand during the match.
+    readonly public SyncListCard babyCard = new SyncListCard();
 
     [Header("Battlefield")]
-    public SyncListCard playerField = new SyncListCard(); // Field where we summon creatures.
+    readonly public SyncListCard playerField = new SyncListCard(); // Field where we summon creatures.
 
     [Header("SecurityCard")]
-    public SyncListCard securityCard = new SyncListCard();
+    readonly public SyncListCard securityCard = new SyncListCard();
 
     [Header("Starting Deck")]
     public CardAndAmount[] startingDeck;

@@ -36,7 +36,7 @@ public class FieldCard : Entity
     [Header("Security")]
     public bool isSecurity = false;
     [Header("SpellEffect")]
-    public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
+    readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
 
     // Update is called once per frame
     public override void Update()

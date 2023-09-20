@@ -67,6 +67,21 @@ public class PlayerField : MonoBehaviour, IDropHandler
             FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
             if(card == null) { continue; }// FieldCard 컴포넌트가 없으면 스킵
 
+            //=턴이 끝날때 버프 턴 카운트를 1씩 줄이고 0이되면 버프로 받은 DP제거=//
+            if(card.buffs.Count > 0)
+            {
+                for(int j =0; j<card.buffs.Count; ++j)
+                {
+                    card.buffs[j].buffTurn--;
+                    if (card.buffs[j].buffTurn == 0)
+                    {
+                        card.CmdChangeSomeThing(-card.buffs[j].buffDP);//딜뻥 버프 제거
+                        card.CmdRemoveBuff(card.buffs[j]);//그 다음 버프 목록 제거
+                    }
+                }
+            }
+            //===============================================================//
+
             card.CmdDestroySpellCard();//test
         }
     }

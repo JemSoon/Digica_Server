@@ -20,6 +20,9 @@ public partial class SpellCard : ScriptableCard
     public SpellType type;
     public bool hasSelectBuff;
 
+    [Header("Buff")]
+    public Buffs buff;
+
     [Header("Board Prefab")]
     public FieldCard cardPrefab;
 
@@ -82,6 +85,7 @@ public partial class SpellCard : ScriptableCard
         }
 
         target.GetComponent<FieldCard>().CmdChangeSomeThing(strengthChange);
+        target.GetComponent<FieldCard>().CmdAddBuff(buff);
 
         caster.DestroyTargetingArrow();
     }

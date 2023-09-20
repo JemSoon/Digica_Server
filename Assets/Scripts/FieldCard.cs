@@ -35,8 +35,8 @@ public class FieldCard : Entity
 
     [Header("Security")]
     public bool isSecurity = false;
-    //[Header("SpellEffect")]
-    //public SyncList<SpellCard> spellCards = new SyncList<SpellCard>(); // 효과 받은 카드들 저장해 두기
+    [Header("SpellEffect")]
+    public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
 
     // Update is called once per frame
     public override void Update()
@@ -73,7 +73,7 @@ public class FieldCard : Entity
     public void CmdUpdateWaitTurn()
     {
         //Debug.LogError("Here");
-        if (waitTurn > 0) waitTurn--;
+        if (waitTurn > 0) { waitTurn--; }
     }
 
     public void ChaseUpperCard()
@@ -102,5 +102,16 @@ public class FieldCard : Entity
     public void CmdChangeSomeThing(int something)
     {
         strength += something;
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdAddBuff(Buffs buff)
+    {
+        buffs.Add(buff);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdRemoveBuff(Buffs buff)
+    {
+        buffs.Remove(buff);
     }
 }

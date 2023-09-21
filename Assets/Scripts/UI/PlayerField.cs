@@ -70,14 +70,14 @@ public class PlayerField : MonoBehaviour, IDropHandler
             //=턴이 끝날때 버프 턴 카운트를 1씩 줄이고 0이되면 버프로 받은 DP제거=//
             if(card.buffs.Count > 0)
             {
-                for(int j =0; j<card.buffs.Count; ++j)
+                for(int j = card.buffs.Count - 1; j >= 0; j--)//0번부터 시작하면 꼬임 마지막 인덱스부터 ㄱㄱ
                 {
                     card.buffs[j].buffTurn--;
                     Debug.Log(card.buffs[j].buffTurn);
                     if (card.buffs[j].buffTurn == 0)
                     {
                         card.CmdChangeSomeThing(card.buffs[j],false);//딜뻥 버프 제거
-                        card.CmdRemoveBuff(card.buffs[j]);//그 다음 버프 목록 제거
+                        card.CmdRemoveBuff(j);//그 다음 버프 목록 제거
                     }
                 }
             }

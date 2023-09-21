@@ -122,9 +122,9 @@ public class FieldCard : Entity
         buffs.Add(buff);
     }
     [Command(requiresAuthority = false)]
-    public void CmdRemoveBuff(Buffs buff)
+    public void CmdRemoveBuff(int index)
     {
-        buffs.Remove(buff);
+        buffs.RemoveAt(index);
         Debug.Log("버프 제거 완료");
     }
 }

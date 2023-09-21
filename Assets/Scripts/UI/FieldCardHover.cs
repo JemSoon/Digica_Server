@@ -15,8 +15,15 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             card.SpawnTargetingArrow(card.card);
             HideCardInfo();
         }
+        else if (!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.FRIENDLIES && card.CantAttack() && card.securityAttack > 0 && card.card.data is CreatureCard)
+        {
+            //공격할 순 없는데 세큐리티 어택개수가 남아있다면
+            card.SpawnTargetingArrow(card.card);
+            HideCardInfo();
+        }
         else if(!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.MY_OPTION && !card.giveBuff && card.card.data is SpellCard spellCard && spellCard.hasSelectBuff)
         {
+            //선택부여 버프를 카드 스폰후 자동 발동이아닌 수동발동 할때 용도
             //card.SpawnTargetingArrow(card.card, true);
             //HideCardInfo();
             //card.giveBuff = true;

@@ -37,6 +37,8 @@ public class FieldCard : Entity
     public bool isSecurity = false;
     [Header("SpellEffect")]
     readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
+    [Header("Buffs")]
+    [SyncVar] public int securityAttack = 0;
 
     // Update is called once per frame
     public override void Update()
@@ -99,9 +101,18 @@ public class FieldCard : Entity
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdChangeSomeThing(int something)
+    public void CmdChangeSomeThing(Buffs buff, bool isStart)
     {
-        strength += something;
+        if(isStart)
+        {
+            //isStart는 버프를 추가할 때인지 뺄 때인지 구분용
+            strength += buff.buffDP;
+            securityAttack += buff.securityAttack;
+        }
+        else
+        {
+            strength -= buff.buffDP;
+        }
     }
 
     [Command(requiresAuthority = false)]
@@ -113,5 +124,10 @@ public class FieldCard : Entity
     public void CmdRemoveBuff(Buffs buff)
     {
         buffs.Remove(buff);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdReduceSecurityAttacak()
+    {
+        securityAttack--;
     }
 }

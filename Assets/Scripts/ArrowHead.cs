@@ -36,7 +36,20 @@ public class ArrowHead : MonoBehaviour
 
             if (target == null) return;
 
-            bool canTarget = target.casterType.CanTarget(card.acceptableTargets);
+            bool canTarget;
+
+            if (((FieldCard)caster).CanAttack() || IsAbility)
+            { 
+                canTarget = target.casterType.CanTarget(card.acceptableTargets);
+            }
+            else if (((FieldCard)caster).CantAttack() && ((FieldCard)caster).securityAttack > 0) 
+            { 
+                canTarget = (target.casterType == Target.OPPONENT); 
+            }
+            else
+            { 
+                canTarget = false; 
+            }
 
             // Check to see if we can attack this target : If entity isn't the one currently targeting, is targetable and isn't friendly
             if (target && !target.isTargeting && target.isTargetable && canTarget)
@@ -46,8 +59,14 @@ public class ArrowHead : MonoBehaviour
                 {
                     if (!IsAbility)
                     {
+                        //일반적인 상대 골라 공격
                         ((CreatureCard)card.data).Attack(caster, target);
                     }
+                    //else if(!IsAbility && caster.CantAttack() && ((FieldCard)caster).securityAttack>0 && target is Player)
+                    //{
+                    //    //공격할 순 없는데 세큐리티 어택이 남았을 때 세큐리티 어택을 했을 경우 
+                    //    ((CreatureCard)card.data).Attack(caster, target);
+                    //}
                     else 
                     { 
                         ((SpellCard)card.data).StartCast(caster, target);

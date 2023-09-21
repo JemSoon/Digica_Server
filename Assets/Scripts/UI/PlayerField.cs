@@ -75,7 +75,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
                     card.buffs[j].buffTurn--;
                     if (card.buffs[j].buffTurn == 0)
                     {
-                        card.CmdChangeSomeThing(-card.buffs[j].buffDP);//딜뻥 버프 제거
+                        card.CmdChangeSomeThing(card.buffs[j],false);//딜뻥 버프 제거
                         card.CmdRemoveBuff(card.buffs[j]);//그 다음 버프 목록 제거
                     }
                 }

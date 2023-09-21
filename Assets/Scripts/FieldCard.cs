@@ -112,6 +112,7 @@ public class FieldCard : Entity
         else
         {
             strength -= buff.buffDP;
+            securityAttack = 0;
         }
     }
 
@@ -124,10 +125,6 @@ public class FieldCard : Entity
     public void CmdRemoveBuff(Buffs buff)
     {
         buffs.Remove(buff);
-    }
-    [Command(requiresAuthority = false)]
-    public void CmdReduceSecurityAttacak()
-    {
-        securityAttack--;
+        Debug.Log("버프 제거 완료");
     }
 }

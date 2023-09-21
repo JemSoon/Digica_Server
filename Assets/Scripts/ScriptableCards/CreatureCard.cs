@@ -53,7 +53,15 @@ public partial class CreatureCard : ScriptableCard
         { attacker.combat.CmdBattle(attacker, target); }
         
         attacker.DestroyTargetingArrow();
-        attacker.combat.CmdIncreaseWaitTurn();
+        
+        if (attacker.CanAttack())
+        { 
+            attacker.combat.CmdIncreaseWaitTurn(); 
+        }
+        else if (attacker.CantAttack() && ((FieldCard)attacker).securityAttack > 0)
+        {
+            attacker.combat.CmdReduceSecurityAttack();
+        }
     }
 
     public bool isSameColor(CreatureCard card1, CreatureCard card2)

@@ -73,6 +73,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
                 for(int j =0; j<card.buffs.Count; ++j)
                 {
                     card.buffs[j].buffTurn--;
+                    Debug.Log(card.buffs[j].buffTurn);
                     if (card.buffs[j].buffTurn == 0)
                     {
                         card.CmdChangeSomeThing(card.buffs[j],false);//µô»½ ¹öÇÁ Á¦°Å

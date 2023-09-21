@@ -50,6 +50,12 @@ public class Combat : NetworkBehaviour
     }
 
     [Command(requiresAuthority = false)]
+    public void CmdReduceSecurityAttack()
+    {
+        ((FieldCard)entity).securityAttack--;
+    }
+
+    [Command(requiresAuthority = false)]
     public void CmdBattle(Entity attacker, Entity target)
     {
         #region 최상단 카드 가져오기

@@ -329,11 +329,10 @@ public class Deck : NetworkBehaviour
             { boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES; }
             else if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard)
             {
-                boardCard.GetComponent<FieldCard>().casterType = Target.MY_OPTION; 
-                //if(spellCard.hasSelect==true)
-                //{
-                //    boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card,true);
-                //}
+                boardCard.GetComponent<FieldCard>().casterType = Target.MY_OPTION;
+
+                if (spellCard.hasSelectBuff)
+                { boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card, true); }
             }
 
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);

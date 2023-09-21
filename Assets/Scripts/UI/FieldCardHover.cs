@@ -17,9 +17,9 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
         else if(!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.MY_OPTION && !card.giveBuff && card.card.data is SpellCard spellCard && spellCard.hasSelectBuff)
         {
-            card.SpawnTargetingArrow(card.card, true);
-            HideCardInfo();
-            card.giveBuff = true;
+            //card.SpawnTargetingArrow(card.card, true);
+            //HideCardInfo();
+            //card.giveBuff = true;
         }
     }
 

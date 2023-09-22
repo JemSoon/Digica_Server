@@ -213,11 +213,11 @@ public class Player : Entity
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdDrawSpecificCard(CardInfo card)
+    public void CmdDrawSpecificCard(CardInfo card, Player owner)
     {
         deck.hand.Add(card);
 
-        RpcDrawDeckForTurn(1 , false);//상대의 시큐리티 오픈해서 상대에게 넣는것이기에 내것이 아니라 false
+        RpcDrawDeckForTurn(1 , owner);//상대의 시큐리티 오픈해서 상대에게 넣는것이기에 내것이 아니라 false
     }
 
     [ClientRpc]
@@ -237,10 +237,10 @@ public class Player : Entity
     }
 
     [ClientRpc]
-    private void RpcDrawDeckForTurn(int Count, bool isMine)//isMine == 시전중인 player에게 주냐? 아니면 상대 player에게 주냐?
+    private void RpcDrawDeckForTurn(int Count, Player owner)//isMine == 시전중인 player에게 주냐? 아니면 상대 player에게 주냐?
     {
         //for (int i = 0; i < deck.hand.Count; ++i) { Debug.Log(deck.hand[i].data.cardName); }
-        if (gameManager.isOurTurn== isMine)
+        if (Player.localPlayer== owner)
         {
             PlayerHand playerHand = Player.gameManager.playerHand;
             for (int i = 0; i < Count; i++)

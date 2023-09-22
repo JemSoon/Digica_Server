@@ -87,7 +87,7 @@ public partial class SpellCard : ScriptableCard
                     cardInfo.cardID = CardID;
                     //cardInfo.data = ScriptableCard.Cache[cardInfo.cardID];
                     cardInfo.amount = 1;
-                    owner.CmdDrawSpecificCard(cardInfo);
+                    owner.CmdDrawSpecificCard(cardInfo, owner);
                     break;
             }
         }

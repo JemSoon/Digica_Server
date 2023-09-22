@@ -55,6 +55,44 @@ public partial class SpellCard : ScriptableCard
         }
     }
 
+    public void AppearSecuritySpellCard(Player owner)
+    {
+        if (type == SpellType.MEMORY)
+        {
+            switch (cardName)
+            {
+                case "그래비티 프레스":
+                    //세큐 효과 없음
+                    break;
+            }
+        }
+
+        if (type == SpellType.DRAW)
+        {
+            switch (cardName)
+            {
+                case "뉴클리어 레이저":
+                    //세큐 효과 없음
+                    break;
+            }
+        }
+
+        if (type == SpellType.DP)
+        {
+            switch (cardName)
+            {
+                case "브레이브 토네이도":
+                    //손에 이 카드 추가
+                    CardInfo cardInfo = new CardInfo();
+                    cardInfo.cardID = CardID;
+                    //cardInfo.data = ScriptableCard.Cache[cardInfo.cardID];
+                    cardInfo.amount = 1;
+                    owner.CmdDrawSpecificCard(cardInfo);
+                    break;
+            }
+        }
+    }
+
     public void EndTurnEffect(Player owner)
     {
         if (type == SpellType.MEMORY)

@@ -304,6 +304,8 @@ public class Deck : NetworkBehaviour
             owner.deck.securityCard.RemoveAt(0);
 
             if (isServer) RpcPlaySecurityCard(boardCard, owner);
+
+            spellCard.AppearSecuritySpellCard(owner);
         }
     }
 

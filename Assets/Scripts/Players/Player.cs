@@ -212,6 +212,14 @@ public class Player : Entity
         RpcDrawDeckForTurn(Count);
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdDrawSpecificCard(CardInfo card)
+    {
+        deck.hand.Add(card);
+
+        RpcDrawDeckForTurn(1 , false);//상대의 시큐리티 오픈해서 상대에게 넣는것이기에 내것이 아니라 false
+    }
+
     [ClientRpc]
     private void RpcDrawDeckForTurn(int Count)
     {
@@ -223,6 +231,22 @@ public class Player : Entity
             {
                 playerHand.AddCard(deck.hand.Count - Count + i);
                 Debug.Log(deck.hand[deck.hand.Count - Count + i].data.cardName +" "+ (deck.hand.Count - Count + i).ToString());
+            }
+
+        }
+    }
+
+    [ClientRpc]
+    private void RpcDrawDeckForTurn(int Count, bool isMine)//isMine == 시전중인 player에게 주냐? 아니면 상대 player에게 주냐?
+    {
+        //for (int i = 0; i < deck.hand.Count; ++i) { Debug.Log(deck.hand[i].data.cardName); }
+        if (gameManager.isOurTurn== isMine)
+        {
+            PlayerHand playerHand = Player.gameManager.playerHand;
+            for (int i = 0; i < Count; i++)
+            {
+                playerHand.AddCard(deck.hand.Count - Count + i);
+                Debug.Log(deck.hand[deck.hand.Count - Count + i].data.cardName + " " + (deck.hand.Count - Count + i).ToString());
             }
 
         }

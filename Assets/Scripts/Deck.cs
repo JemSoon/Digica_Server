@@ -334,7 +334,10 @@ public class Deck : NetworkBehaviour
                 boardCard.GetComponent<FieldCard>().casterType = Target.MY_OPTION;
 
                 if (spellCard.hasSelectBuff)
-                { boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card, true); }
+                { 
+                    boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card, true);
+                    Player.gameManager.caster = boardCard.GetComponent<FieldCard>();
+                }
             }
 
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);

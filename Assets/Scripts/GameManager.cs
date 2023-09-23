@@ -40,6 +40,8 @@ public class GameManager : NetworkBehaviour
     [HideInInspector] public bool isHoveringField = false;
     [HideInInspector] public bool isSpawning = false;
 
+    [HideInInspector] public Entity caster; // 타게팅 애로우 지우기용도
+
     //public SyncListPlayerInfo players = new SyncListPlayerInfo(); // Information of all players online. One is player, other is opponent.
 
     // Not sent from Player / Object with Authority, so we need to ignoreAuthority. 
@@ -118,6 +120,12 @@ public class GameManager : NetworkBehaviour
         {
             playerField.EndTurnFieldCards();//턴 끝날때 필드 카드중 스펠카드 삭제
             Player.localPlayer.deck.CmdEndTurn();
+            
+            if (Player.localPlayer.isTargeting)
+            { 
+                caster.DestroyTargetingArrow();
+                caster = null;
+            }
         }
     }
 

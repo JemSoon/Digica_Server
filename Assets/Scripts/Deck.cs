@@ -303,7 +303,7 @@ public class Deck : NetworkBehaviour
             // 대상자의 세큐리티 카드를 스폰시켰으니 제거
             owner.deck.securityCard.RemoveAt(0);
 
-            if (isServer) RpcPlaySecurityCard(boardCard, owner);
+            if (isServer) RpcPlaySecurityCard(boardCard, owner, attacker);
 
             spellCard.AppearSecuritySpellCard(owner);
         }
@@ -447,25 +447,7 @@ public class Deck : NetworkBehaviour
 
         StartCoroutine(DelayedBattle(attacker, boardCard, 1.5f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!
     }
-    [ClientRpc]
-    public void RpcPlaySecurityCard(GameObject boardCard, Player player)
-    {
-        // 스펠 카드 용
-
-        if (player.isLocalPlayer)
-        {
-            // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
-            boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
-            boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
-            Player.gameManager.isSpawning = false;
-        }
-        else if (player.hasEnemy)
-        {
-            boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
-            boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
-        }
-    }
-
+ 
     private IEnumerator DelayedBattle(Entity attacker, GameObject boardCard, float time)
     {
         //세큐리티 카드 출현 후 잠시 뒤에 싸우게 하기용

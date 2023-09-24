@@ -25,6 +25,19 @@ MonoBehaviour:
   targeted: 0
   healthChange: 0
   strengthChange: 0
+  memoryChange: 0
   cardDraw: 0
   untilEndOfTurn: 0
+  isTamer: 0
+  type: 0
+  hasSelectBuff: 1
+  if_Security_Go_Hand: 1
+  buff:
+    cardname: 
+    buffDP: 0
+    isJamming: 0
+    isBlock: 0
+    securityAttack: 0
+    buffTurn: 1
   cardPrefab: {fileID: 7582166961649262295, guid: 27801e35bdc329143b17b015777515b9, type: 3}
+  acceptableTargets: 

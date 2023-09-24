@@ -19,6 +19,7 @@ public partial class SpellCard : ScriptableCard
     public bool isTamer;
     public SpellType type;
     public bool hasSelectBuff;
+    public bool if_Security_Go_Hand;
 
     [Header("Buff")]
     public Buffs buff;

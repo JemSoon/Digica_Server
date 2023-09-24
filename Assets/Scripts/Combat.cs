@@ -70,91 +70,106 @@ public class Combat : NetworkBehaviour
         }
         #endregion
 
-        if (attacker.strength <target.strength) 
+        if (((FieldCard)target).card.data is SpellCard spellCard)
         {
-            // 마지막 카드 전까지 모든 카드 삭제
-            while(attacker.GetComponent<FieldCard>().isUnderMostCard == false)
+            if (spellCard.if_Security_Go_Hand == false)
             {
-                attacker.IsDead = true;
-                //죽은 공격카드 무덤 리스트 정보에 저장
-                attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
-
-                //Battle(attacker, target);
-                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제전 카드");
-                Destroy(attacker.gameObject);
-
-                attacker = attacker.GetComponent<FieldCard>().underCard;
-                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제후 카드");
-            }
-
-            // 마지막 맨 밑 카드도 삭제
-            attacker.IsDead = true;
-            attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
-            Destroy(attacker.gameObject);
-        }
-
-        else if (attacker.strength >target.strength) 
-        {
-            while (target.GetComponent<FieldCard>().isUnderMostCard == false)
-            {
-                target.IsDead = true;
-                //죽은 공격카드 무덤 리스트 정보에 저장
-                target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
-
-                //Battle(attacker, target);
-                Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제전 카드");
-                Destroy(target.gameObject);
-
-                target = target.GetComponent<FieldCard>().underCard;
-                Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+                //스펠카드가 if_Security_Go_Hand가 true라면 무덤에 가는게 아니라 손으로 돌아간 것
+                target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card); 
             }
 
             target.IsDead = true;
-            target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
             Destroy(target.gameObject);
         }
 
-        else//둘다 공격력이 같을때
+        else 
         {
-            while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
+            if (attacker.strength < target.strength)
             {
-                attacker.IsDead = true;
-                //죽은 공격카드 무덤 리스트 정보에 저장
-                attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+                // 마지막 카드 전까지 모든 카드 삭제
+                while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
+                {
+                    attacker.IsDead = true;
+                    //죽은 공격카드 무덤 리스트 정보에 저장
+                    attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
 
-                //Battle(attacker, target);
-                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                    //Battle(attacker, target);
+                    Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                    Destroy(attacker.gameObject);
+
+                    attacker = attacker.GetComponent<FieldCard>().underCard;
+                    Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+                }
+
+                // 마지막 맨 밑 카드도 삭제
+                attacker.IsDead = true;
+                attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+                Destroy(attacker.gameObject);
+            }
+
+            else if (attacker.strength > target.strength)
+            {
+                while (target.GetComponent<FieldCard>().isUnderMostCard == false)
+                {
+                    target.IsDead = true;
+                    //죽은 공격카드 무덤 리스트 정보에 저장
+                    target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
+
+                    //Battle(attacker, target);
+                    Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                    Destroy(target.gameObject);
+
+                    target = target.GetComponent<FieldCard>().underCard;
+                    Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+                }
+
+                target.IsDead = true;
+                target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
+                Destroy(target.gameObject);
+            }
+
+            else//둘다 공격력이 같을때
+            {
+                while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
+                {
+                    attacker.IsDead = true;
+                    //죽은 공격카드 무덤 리스트 정보에 저장
+                    attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+
+                    //Battle(attacker, target);
+                    Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                    Destroy(attacker.gameObject);
+
+                    attacker = attacker.GetComponent<FieldCard>().underCard;
+                    Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+                }
+                attacker.IsDead = true;
+                attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
                 Destroy(attacker.gameObject);
 
-                attacker = attacker.GetComponent<FieldCard>().underCard;
-                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제후 카드");
-            }
-            attacker.IsDead = true;
-            attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
-            Destroy(attacker.gameObject);
+                while (target.GetComponent<FieldCard>().isUnderMostCard == false)
+                {
+                    target.IsDead = true;
+                    //죽은 공격카드 무덤 리스트 정보에 저장
+                    target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
 
-            while (target.GetComponent<FieldCard>().isUnderMostCard == false)
-            {
+                    //Battle(attacker, target);
+                    Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                    Destroy(target.gameObject);
+
+                    target = target.GetComponent<FieldCard>().underCard;
+                    Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+                }
                 target.IsDead = true;
-                //죽은 공격카드 무덤 리스트 정보에 저장
                 target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
-
-                //Battle(attacker, target);
-                Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제전 카드");
                 Destroy(target.gameObject);
-
-                target = target.GetComponent<FieldCard>().underCard;
-                Debug.Log(target.GetComponent<FieldCard>().card.name + " 삭제후 카드");
             }
-            target.IsDead = true;
-            target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
-            Destroy(target.gameObject);
-        }
 
-        if (target.GetComponent<FieldCard>().isSecurity == true && target.IsDead == false)
-        {
-            target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
-            Destroy(target.gameObject);
+            if (target.GetComponent<FieldCard>().isSecurity == true && target.IsDead == false)
+            {
+                target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
+                Destroy(target.gameObject);
+            }
         }
     }
 }

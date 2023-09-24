@@ -31,6 +31,7 @@ MonoBehaviour:
   isTamer: 0
   type: 0
   hasSelectBuff: 1
+  if_Security_Go_Hand: 1
   buff:
     cardname: "\uBE0C\uB808\uC774\uBE0C \uD1A0\uB124\uC774\uB3C4"
     buffDP: 2000

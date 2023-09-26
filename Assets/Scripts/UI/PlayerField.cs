@@ -8,6 +8,22 @@ public class PlayerField : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (eventData.pointerDrag.transform.GetComponent<FieldCard>() != null && 
+            eventData.pointerDrag.transform.GetComponent<FieldCard>().casterType == Target.MY_BABY) 
+        {
+            //필드카드(육성존 카드)를 드롭하면
+            Debug.Log("육성 카드 온 드롭");
+            Player Raiseplayer = Player.localPlayer;
+            if (Raiseplayer.IsOurTurn())
+            {
+                Player.gameManager.isSpawning = true;
+                Player.gameManager.isHovering = false;
+                Raiseplayer.deck.CmdRaiseToBattle(eventData.pointerDrag.transform.GetComponent<FieldCard>(), Raiseplayer);
+            }
+
+            return; 
+        }
+
         HandCard card = eventData.pointerDrag.transform.GetComponent<HandCard>();
         Player player = Player.localPlayer;
         int manaCost;

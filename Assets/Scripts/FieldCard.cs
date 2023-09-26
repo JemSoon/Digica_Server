@@ -39,6 +39,8 @@ public class FieldCard : Entity
     readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
     [Header("Buffs")]
     [SyncVar] public int securityAttack = 0;
+    [Header("Test")]
+    public FieldCardHover cardDragHover;
 
     // Update is called once per frame
     public override void Update()
@@ -69,6 +71,14 @@ public class FieldCard : Entity
         //최상단 카드가 아니면 콜리전끄기test
         //if(isUpperMostCard==false) { GetComponent<BoxCollider2D>().enabled = false; }
         //else { GetComponent<BoxCollider2D>().enabled = true; }
+
+        if(player==Player.localPlayer && casterType==Target.MY_BABY && cardDragHover!=null /*&& waitTurn <= 0*/)
+        {
+            if (Player.gameManager.isOurTurn)
+            {
+                cardDragHover.canDrag = true; //player.deck.CanPlayCard(manaCost); //원래는 마나 총량 넘으면 못내게 했는데 ECost라는 다른 루트땜에 일단 낼 수 있게함
+            }
+        }
     }
 
     [Command(requiresAuthority = false)]
@@ -80,7 +90,7 @@ public class FieldCard : Entity
 
     public void ChaseUpperCard()
     {
-        if(isUpperMostCard==false && upperCard!=null)//맨 위 카드가 아니고 위 카드 정보가 null이 아니라면
+        if(isUpperMostCard==false && upperCard!=null && !cardDragHover.isDragging)//맨 위 카드가 아니고 위 카드 정보가 null이 아니라면
         {
             // 상대편에서 내 카드 볼때 메모리체커에 가려짐 반대로 해야할듯
             //GetComponent<RectTransform>().anchoredPosition = upperCard.GetComponent<RectTransform>().anchoredPosition + new Vector2(0, -47); 

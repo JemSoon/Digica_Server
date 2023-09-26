@@ -37,6 +37,8 @@ public class PlayerRaiseField : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (eventData.pointerDrag.transform.GetComponent<FieldCard>() != null) { return; }
+
         HandCard card = eventData.pointerDrag.transform.GetComponent<HandCard>();
         Player player = Player.localPlayer;
         int manaCost = card.Ecost;

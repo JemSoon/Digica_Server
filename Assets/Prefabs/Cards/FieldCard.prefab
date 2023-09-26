@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 7582166961649262293}
   - component: {fileID: 7582166961649262292}
   - component: {fileID: 7582166961649262299}
+  - component: {fileID: 5856603255306164162}
   m_Layer: 5
   m_Name: FieldCard
   m_TagString: Untagged
@@ -271,6 +272,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   card: {fileID: 7582166961649262295}
   hoverDelay: 0.4
+  canvasGroup: {fileID: 5856603255306164162}
+  canDrag: 0
+  EmptyCard: {fileID: 2149753886398829659, guid: 8f7cf76c587b86440b7c926082225ebf, type: 3}
 --- !u!114 &7582166961649262295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,6 +309,7 @@ MonoBehaviour:
   cardName: {fileID: 0}
   healthText: {fileID: 0}
   strengthText: {fileID: 0}
+  giveBuff: 0
   shine: {fileID: 9022467722773909007}
   hoverColor: {r: 0, g: 0.85490197, b: 0.98039216, a: 0.39215687}
   readyColor: {r: 0, g: 1, b: 0.11764706, a: 0.39215687}
@@ -314,7 +319,8 @@ MonoBehaviour:
   upperCard: {fileID: 0}
   underCard: {fileID: 0}
   isSecurity: 0
-  icon: {fileID: 0}
+  securityAttack: 0
+  cardDragHover: {fileID: 7582166961649262288}
 --- !u!114 &7582166961649262294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +400,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 137.47937, y: 200.25769}
   m_EdgeRadius: 0
+--- !u!225 &5856603255306164162
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7582166961649262297}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &882791231591453644
 PrefabInstance:
   m_ObjectHideFlags: 0

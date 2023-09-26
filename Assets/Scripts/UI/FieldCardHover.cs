@@ -1,12 +1,19 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public FieldCard card;
     public float hoverDelay = 0.4f;
     private bool isHovering = false;
 
+    [Header("Test")]
+    public CanvasGroup canvasGroup;
+    public bool canDrag = false;
+    Transform parentReturnTo = null; // Return to raise canvas
+    public GameObject EmptyCard; // Used for creating an empty placeholder card where our current card used to be.
+    private GameObject temp;
+    public bool isDragging = false;
     public void OnPointerClick(PointerEventData eventData)
     {
         // Make sure our Player isn't already targetting something
@@ -32,9 +39,12 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        isHovering = true;
+        if (!isDragging)
+        {
+            isHovering = true;
 
-        Invoke("ShowCardInfo", hoverDelay); // Reveal card info after a slight delay, so it doesn't appear instantly when we play a card.
+            Invoke("ShowCardInfo", hoverDelay);// Reveal card info after a slight delay, so it doesn't appear instantly when we play a card.
+        } 
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -50,9 +60,53 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         Player.gameManager.isHoveringField = false;
     }
 
+    public void OnBeginDrag(PointerEventData eventData)
+    { 
+        if(!canDrag) return;
+
+        temp = Instantiate(EmptyCard);
+        temp.transform.SetParent(this.transform.parent, false);
+
+        temp.transform.SetSiblingIndex(transform.GetSiblingIndex());
+
+        parentReturnTo = this.transform.parent;
+        transform.SetParent(this.transform.parent.parent, false);
+
+        canvasGroup.blocksRaycasts = false;
+
+        isDragging = true;
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        // If we can't drag, return.
+        if (!canDrag) return;
+
+        Vector3 screenPoint = eventData.position;
+        screenPoint.z = 10.0f; //distance of the plane from the camera
+
+        while(card.isUnderMostCard==false)
+        {
+            card.cardHover.gameObject.SetActive(false);
+            card = card.underCard;
+        }
+
+        card.transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
+    }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (!canDrag) return;
+
+        transform.SetParent(parentReturnTo, false);
+        transform.SetSiblingIndex(temp.transform.GetSiblingIndex());
+        canvasGroup.blocksRaycasts = true;
+        Destroy(temp);
+
+        isDragging = false;
+    }
+
     public void ShowCardInfo()
     {
-        if (isHovering)
+        if (isHovering && !isDragging)
         {
             // Turn on hover if player isn't targeting
             if (!Player.localPlayer.isTargeting) card.cardHover.gameObject.SetActive(true);

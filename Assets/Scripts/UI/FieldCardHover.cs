@@ -84,13 +84,17 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         Vector3 screenPoint = eventData.position;
         screenPoint.z = 10.0f; //distance of the plane from the camera
 
-        while(card.isUnderMostCard==false)
-        {
-            card.cardHover.gameObject.SetActive(false);
-            card = card.underCard;
-        }
+        //{
+        //    // 이거 키면 맨 밑카드 아닌 육성카드 드래그 온 드롭하면 배틀필드로 안나감
+        //    while (card.isUnderMostCard == false)
+        //    {
+        //        card.cardHover.gameObject.SetActive(false);
+        //        card = card.underCard;
+        //    }
+        //    card.transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
+        //} 
 
-        card.transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
+        transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
     }
     public void OnEndDrag(PointerEventData eventData)
     {

@@ -55,9 +55,9 @@ public class PlayerRaiseField : MonoBehaviour, IDropHandler
             Player.gameManager.isHovering = false;
             //Player.gameManager.CmdOnCardHover(0, index);
             player.deck.CmdPlayEvoTamaCard(cardInfo, index, player, card.underCard); // Summon card onto the board
-            player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
+            player.CmdDrawDeck(1); // 진화시키고 나면 한장 드로우 순서 바꾸면 절대 안됨!!
 
-            player.CmdDrawDeck(1); // 진화시키고 나면 한장 드로우
+            player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
         }
     }
 }

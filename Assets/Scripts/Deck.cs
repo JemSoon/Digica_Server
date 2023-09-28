@@ -331,68 +331,71 @@ public class Deck : NetworkBehaviour
 
         while (fieldCard.isUpperMostCard == false)
         {
-            CreatureCard creature = (CreatureCard)fieldCard.card.data; //(CreatureCard)card.data;
+            //CreatureCard creature = (CreatureCard)fieldCard.card.data; //(CreatureCard)card.data;
 
-            GameObject boardCard = Instantiate(creature.cardPrefab.gameObject);
-            FieldCard newCard = boardCard.GetComponent<FieldCard>();
-            newCard.card = new CardInfo(fieldCard.card.data); // Save Card Info so we can re-access it later if we need to.
-                                                    //newCard.cardName.text = card.name;
-            newCard.health = creature.health;
-            newCard.strength = creature.strength;
-            newCard.image.sprite = fieldCard.card.image;
-            newCard.image.color = Color.white;
-            newCard.player = owner;
+            //GameObject boardCard = Instantiate(creature.cardPrefab.gameObject);
+            //FieldCard newCard = boardCard.GetComponent<FieldCard>();
+            //newCard.card = new CardInfo(fieldCard.card.data); // Save Card Info so we can re-access it later if we need to.
+            //                                        //newCard.cardName.text = card.name;
+            //newCard.health = creature.health;
+            //newCard.strength = creature.strength;
+            //newCard.image.sprite = fieldCard.card.image;
+            //newCard.image.color = Color.white;
+            //newCard.player = owner;
 
-            newCard.underCard = fieldCard.underCard;
-            newCard.upperCard = fieldCard.upperCard;
+            //newCard.underCard = fieldCard.underCard;
+            //newCard.upperCard = fieldCard.upperCard;
 
-            // If creature has charge, reduce waitTurn to 0 so they can attack right away.
-            if (creature.hasCharge) newCard.waitTurn = 0;
+            //// If creature has charge, reduce waitTurn to 0 so they can attack right away.
+            //if (creature.hasCharge) newCard.waitTurn = 0;
 
-            // Update the Card Info that appears when hovering
-            newCard.cardHover.UpdateFieldCardInfo(fieldCard.card);
+            //// Update the Card Info that appears when hovering
+            //newCard.cardHover.UpdateFieldCardInfo(fieldCard.card);
 
-            // Spawn it
-            NetworkServer.Spawn(boardCard);
+            //// Spawn it
+            //NetworkServer.Spawn(boardCard);
 
-            if (isServer) RpcPlayRaiseToBattle(boardCard,true);
+            //if (isServer) RpcPlayRaiseToBattle(boardCard,true);
 
-            //다 만든건 지우기
-            NetworkServer.Destroy(fieldCard.gameObject);
+            ////다 만든건 지우기
+            //NetworkServer.Destroy(fieldCard.gameObject);
 
-            //다 하고 한단계 윗카드로 변경..디스트로이도..한 프레임 다 끝나야 지우니까..되겠..지?
+            ////다 하고 한단계 윗카드로 변경..디스트로이도..한 프레임 다 끝나야 지우니까..되겠..지?
+            //fieldCard = fieldCard.upperCard;
+
+            if (isServer) RpcTestRaiseToBattle(fieldCard, true);
             fieldCard = fieldCard.upperCard;
         }
-
+        if (isServer) RpcTestRaiseToBattle(fieldCard, false);
         //(한번 더)마지막 최상단 카드도.. while문은 최상단은 안해줌
-        CreatureCard creature2 = (CreatureCard)fieldCard.card.data; //(CreatureCard)card.data;
+        //CreatureCard creature2 = (CreatureCard)fieldCard.card.data; //(CreatureCard)card.data;
 
-        GameObject boardCard2 = Instantiate(creature2.cardPrefab.gameObject);
-        FieldCard newCard2 = boardCard2.GetComponent<FieldCard>();
-        newCard2.card = new CardInfo(fieldCard.card.data); // Save Card Info so we can re-access it later if we need to.
-                                                          //newCard.cardName.text = card.name;
-        newCard2.health = creature2.health;
-        newCard2.strength = creature2.strength;
-        newCard2.image.sprite = fieldCard.card.image;
-        newCard2.image.color = Color.white;
-        newCard2.player = owner;
+        //GameObject boardCard2 = Instantiate(creature2.cardPrefab.gameObject);
+        //FieldCard newCard2 = boardCard2.GetComponent<FieldCard>();
+        //newCard2.card = new CardInfo(fieldCard.card.data); // Save Card Info so we can re-access it later if we need to.
+        //                                                  //newCard.cardName.text = card.name;
+        //newCard2.health = creature2.health;
+        //newCard2.strength = creature2.strength;
+        //newCard2.image.sprite = fieldCard.card.image;
+        //newCard2.image.color = Color.white;
+        //newCard2.player = owner;
 
-        newCard2.underCard = fieldCard.underCard;
-        newCard2.upperCard = fieldCard.upperCard;
+        //newCard2.underCard = fieldCard.underCard;
+        //newCard2.upperCard = fieldCard.upperCard;
 
-        // If creature has charge, reduce waitTurn to 0 so they can attack right away.
-        if (creature2.hasCharge) newCard2.waitTurn = 0;
+        //// If creature has charge, reduce waitTurn to 0 so they can attack right away.
+        //if (creature2.hasCharge) newCard2.waitTurn = 0;
 
-        // Update the Card Info that appears when hovering
-        newCard2.cardHover.UpdateFieldCardInfo(fieldCard.card);
+        //// Update the Card Info that appears when hovering
+        //newCard2.cardHover.UpdateFieldCardInfo(fieldCard.card);
 
-        // Spawn it
-        NetworkServer.Spawn(boardCard2);
+        //// Spawn it
+        //NetworkServer.Spawn(boardCard2);
 
-        if (isServer) RpcPlayRaiseToBattle(boardCard2,false);
+        //if (isServer) RpcTestRaiseToBattle(fieldCard,false);
 
-        //다 만든건 지우기
-        NetworkServer.Destroy(fieldCard.gameObject);
+        ////다 만든건 지우기
+        //NetworkServer.Destroy(fieldCard.gameObject);
     }
 
     [ClientRpc]
@@ -544,7 +547,32 @@ public class Deck : NetworkBehaviour
 
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
 
-            Player.gameManager.enemyRaiseField.Spawnbutton.SetActive(false);
+            Player.gameManager.enemyRaiseField.Spawnbutton.SetActive(true);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcTestRaiseToBattle(FieldCard fieldCard, bool isSpawning)
+    {
+        if (Player.gameManager.isSpawning)
+        {
+            fieldCard.casterType = Target.FRIENDLIES;
+            fieldCard.transform.SetParent(Player.gameManager.playerField.content, false);
+            Player.gameManager.isSpawning = isSpawning;
+
+            if (isSpawning == false)
+            {
+                Player.gameManager.playerRaiseField.Spawnbutton.SetActive(true);
+            }
+        }
+
+        else if (player.hasEnemy)
+        {
+            fieldCard.casterType = Target.ENEMIES;
+
+            fieldCard.transform.SetParent(Player.gameManager.enemyField.content, false);
+
+            Player.gameManager.enemyRaiseField.Spawnbutton.SetActive(true);
         }
     }
 

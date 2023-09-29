@@ -72,7 +72,7 @@ public class FieldCard : Entity
         //if(isUpperMostCard==false) { GetComponent<BoxCollider2D>().enabled = false; }
         //else { GetComponent<BoxCollider2D>().enabled = true; }
 
-        if(player==Player.localPlayer && casterType==Target.MY_BABY && cardDragHover!=null /*&& waitTurn <= 0*/)
+        if(player==Player.localPlayer && casterType==Target.MY_BABY && cardDragHover!=null && waitTurn <= 0)
         {
             if (Player.gameManager.isOurTurn)
             {

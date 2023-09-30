@@ -64,13 +64,13 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     { 
         if(!canDrag) return;
 
-        temp = Instantiate(EmptyCard);
-        temp.transform.SetParent(this.transform.parent, false);
+        //temp = Instantiate(EmptyCard);
+        //temp.transform.SetParent(this.transform.parent, false);
 
-        temp.transform.SetSiblingIndex(transform.GetSiblingIndex());
+        //temp.transform.SetSiblingIndex(transform.GetSiblingIndex());
 
-        parentReturnTo = this.transform.parent;
-        transform.SetParent(this.transform.parent.parent, false);
+        //parentReturnTo = this.transform.parent;
+        //transform.SetParent(this.transform.parent.parent, false);
 
         canvasGroup.blocksRaycasts = false;
 
@@ -81,27 +81,17 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         // If we can't drag, return.
         if (!canDrag) return;
 
-        Vector3 screenPoint = eventData.position;
-        screenPoint.z = 10.0f; //distance of the plane from the camera
+        //Vector3 screenPoint = eventData.position;
+        //screenPoint.z = 10.0f; //distance of the plane from the camera
 
-        //{
-        //    // 이거 키면 맨 밑카드 아닌 육성카드 드래그 온 드롭하면 배틀필드로 안나감
-        //    while (card.isUnderMostCard == false)
-        //    {
-        //        card.cardHover.gameObject.SetActive(false);
-        //        card = card.underCard;
-        //    }
-        //    card.transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
-        //} 
-
-        transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
+        //transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
     }
     public void OnEndDrag(PointerEventData eventData)
     {
         if (!canDrag) return;
 
-        transform.SetParent(parentReturnTo, false);
-        transform.SetSiblingIndex(temp.transform.GetSiblingIndex());
+        //transform.SetParent(parentReturnTo, false);
+        //transform.SetSiblingIndex(temp.transform.GetSiblingIndex());
         canvasGroup.blocksRaycasts = true;
         Destroy(temp);
 

@@ -17,6 +17,7 @@ public class PlayerRaiseField : MonoBehaviour, IDropHandler
 
             Player.gameManager.isSpawning = true;
             Player.gameManager.isHovering = false;
+            Player.gameManager.isDigitamaOpenOrMove = true;
 
             player.deck.CmdPlayTamaCard(cardInfo, player); // Summon card onto the board
             player.combat.CmdChangeMana(0); // Reduce player's mana

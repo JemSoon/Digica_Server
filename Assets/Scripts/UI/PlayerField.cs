@@ -18,6 +18,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
                 uppestCard = uppestCard.upperCard; //최상단 카드 가져오고
             }
 
+            if(Player.gameManager.isDigitamaOpenOrMove) { return; } // 디지타마 오픈한 턴이면 리턴
             if (((CreatureCard)uppestCard.card.data).level<3) { return; } //필드에 보내려는 카드가 레벨3미만이면 못냄
 
             //필드카드(육성존 카드)를 드롭하면

@@ -18,6 +18,7 @@ public class GameManager : NetworkBehaviour
     public int tamaSize = 1;
     public PlayerRaiseField playerRaiseField;
     public PlayerRaiseField enemyRaiseField;
+    public bool isDigitamaOpenOrMove; // 디지타마를 오픈하거나 필드로 보내거나 한가지만 가능
 
     [Header("Deck")]
     public int deckSize = 50; // Maximum deck size
@@ -121,7 +122,8 @@ public class GameManager : NetworkBehaviour
         {
             playerField.EndTurnFieldCards();//턴 끝날때 필드 카드중 스펠카드 삭제
             Player.localPlayer.deck.CmdEndTurn();
-            
+            Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
+
             if (Player.localPlayer.isTargeting)
             { 
                 caster.DestroyTargetingArrow();

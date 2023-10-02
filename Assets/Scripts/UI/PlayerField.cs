@@ -28,6 +28,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
             {
                 Player.gameManager.isSpawning = true;
                 Player.gameManager.isHovering = false;
+                Player.gameManager.isDigitamaOpenOrMove = true;
                 Raiseplayer.deck.CmdRaiseToBattle(eventData.pointerDrag.transform.GetComponent<FieldCard>(), Raiseplayer);
             }
 

@@ -9,6 +9,8 @@ public class PlayerRaiseField : MonoBehaviour, IDropHandler
 
     public void SpawnDigitama()
     {
+        if (Player.gameManager.isDigitamaOpenOrMove) { return; }
+
         Player player = Player.localPlayer;
 
         if (player.IsOurTurn() && player.deck.CanPlayCard(0) && player.deck.babyCard.Count != 0)

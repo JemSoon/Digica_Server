@@ -141,8 +141,6 @@ public class GameManager : NetworkBehaviour
         else if(!Player.localPlayer.firstPlayer && isOurTurn)
         { MemoryChecker.Inst.CmdChangeMemory(3); }
 
-        playerField.EndTurnFieldCards();
-
         // If isOurTurn was true, set it false. If it was false, set it true.
         isOurTurn = !isOurTurn;
         endTurnButton.SetActive(isOurTurn);
@@ -154,6 +152,18 @@ public class GameManager : NetworkBehaviour
             playerField.UpdateFieldCards();
             playerRaiseField.UpdateRaiseCards();
             Player.localPlayer.deck.CmdStartNewTurn();
+        }
+        else
+        {
+            playerField.EndTurnFieldCards();
+            Player.localPlayer.deck.CmdEndTurn();
+            Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
+
+            if (Player.localPlayer.isTargeting)
+            {
+                caster.DestroyTargetingArrow();
+                caster = null;
+            }
         }
     }
 

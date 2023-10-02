@@ -103,8 +103,8 @@ public class FieldCard : Entity
     {
         if (card.data is SpellCard spellCard)
         {
-            //player.deck.playerField.Remove(card);
-            player.deck.graveyard.Add(card);
+            //player.deck.playerField.Remove(card);//안씀
+            //player.deck.graveyard.Add(card);//카드를 꺼내자마자 무덤에 저장되야함
             spellCard.EndTurnEffect(player);
             Destroy(this.gameObject);
         }

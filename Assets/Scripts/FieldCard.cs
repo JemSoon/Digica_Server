@@ -11,6 +11,7 @@ public class FieldCard : Entity
     public Text cardName; // Text of the card name
     public Text healthText; // Text of the health
     public Text strengthText; // Text of the strength
+    public Text buffText;
 
     public bool giveBuff = false; // 1회용 버프 썼는가?(스펠카드용)
 
@@ -37,6 +38,8 @@ public class FieldCard : Entity
     public bool isSecurity = false;
     [Header("SpellEffect")]
     readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
+    public Buffs tempBuff;//텍스트 시각효과를 위해 받아놓을 버프 변수
+
     [Header("Buffs")]
     [SyncVar] public int securityAttack = 0;
     [Header("Test")]
@@ -118,11 +121,27 @@ public class FieldCard : Entity
             //isStart는 버프를 추가할 때인지 뺄 때인지 구분용
             strength += buff.buffDP;
             securityAttack += buff.securityAttack;
+
+            RpcTextSetActive(buff, isStart);
         }
         else
         {
             strength -= buff.buffDP;
             securityAttack = 0;
+
+            tempBuff.buffDP -= buff.buffDP;
+            tempBuff.securityAttack = 0;
+
+            if (tempBuff.buffDP > 0)
+            {
+                buffText.gameObject.SetActive(true);
+                buffText.text = "DP + " + tempBuff.buffDP.ToString();
+            }
+            else
+            {
+                buffText.gameObject.SetActive(false);
+            }
+            RpcTextSetActive(buff, isStart);
         }
     }
 
@@ -137,4 +156,30 @@ public class FieldCard : Entity
         buffs.RemoveAt(index);
         Debug.Log("버프 제거 완료");
     }
+    [ClientRpc]
+    public void RpcTextSetActive(Buffs buff, bool isStart)
+    {
+        if (isStart)
+        {
+            tempBuff.buffDP += buff.buffDP;
+            tempBuff.securityAttack += buff.securityAttack;
+
+            if (tempBuff.buffDP > 0)
+            {
+                buffText.gameObject.SetActive(true);
+                buffText.text = "DP + " + tempBuff.buffDP.ToString();
+            }
+            if (tempBuff.securityAttack > 0)
+            {
+                buffText.gameObject.SetActive(true);
+                buffText.text = "S.C. + " + tempBuff.securityAttack.ToString();
+            }
+        }
+
+        else
+        {
+            buffText.gameObject.SetActive(false);
+        }
+    }
+
 }

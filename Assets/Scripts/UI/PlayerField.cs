@@ -8,6 +8,8 @@ public class PlayerField : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (Player.localPlayer.isTargeting) { return; }
+
         if (eventData.pointerDrag.transform.GetComponent<FieldCard>() != null && 
             eventData.pointerDrag.transform.GetComponent<FieldCard>().casterType == Target.MY_BABY) 
         {

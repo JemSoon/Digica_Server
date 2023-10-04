@@ -102,9 +102,25 @@ public partial class SpellCard : ScriptableCard
             {
                 case "그래비티 프레스":
                     if (owner.firstPlayer)
-                    { MemoryChecker.Inst.memory -= 2; }
+                    { 
+                        MemoryChecker.Inst.memory -= 2; 
+                        
+                        if(MemoryChecker.Inst.memory < -10)
+                        {   
+                            //메모리 -10넘어서 -11이하가 되면 -10으로 고정
+                            MemoryChecker.Inst.memory = -10; 
+                        }
+                    }
                     else
-                    { MemoryChecker.Inst.memory += 2; }
+                    { 
+                        MemoryChecker.Inst.memory += 2; 
+
+                        if (MemoryChecker.Inst.memory > 10)
+                        {
+                            //메모리 10넘어서 11이상이 되면 10으로 고정
+                            MemoryChecker.Inst.memory = 10;
+                        }
+                    }
                     break;
             }
         }

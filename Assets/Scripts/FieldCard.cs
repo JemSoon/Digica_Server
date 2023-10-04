@@ -9,9 +9,9 @@ public class FieldCard : Entity
     [Header("Card Properties")]
     public Image image; // card image on field
     public Text cardName; // Text of the card name
-    public Text healthText; // Text of the health
-    public Text strengthText; // Text of the strength
-    public Text buffText;
+    public Text AbilityText; 
+    public Text SecurityCheckText; 
+    public Text DPbuffText;
 
     public bool giveBuff = false; // 1회용 버프 썼는가?(스펠카드용)
 
@@ -134,12 +134,12 @@ public class FieldCard : Entity
 
             if (tempBuff.buffDP > 0)
             {
-                buffText.gameObject.SetActive(true);
-                buffText.text = "DP + " + tempBuff.buffDP.ToString();
+                DPbuffText.gameObject.SetActive(true);
+                DPbuffText.text = "DP + " + tempBuff.buffDP.ToString();
             }
             else
             {
-                buffText.gameObject.SetActive(false);
+                DPbuffText.gameObject.SetActive(false);
             }
             RpcTextSetActive(buff, isStart);
         }
@@ -166,19 +166,20 @@ public class FieldCard : Entity
 
             if (tempBuff.buffDP > 0)
             {
-                buffText.gameObject.SetActive(true);
-                buffText.text = "DP + " + tempBuff.buffDP.ToString();
+                DPbuffText.gameObject.SetActive(true);
+                DPbuffText.text = "DP + " + tempBuff.buffDP.ToString();
             }
             if (tempBuff.securityAttack > 0)
             {
-                buffText.gameObject.SetActive(true);
-                buffText.text = "S.C. + " + tempBuff.securityAttack.ToString();
+                SecurityCheckText.gameObject.SetActive(true);
+                SecurityCheckText.text = "S.C. + " + tempBuff.securityAttack.ToString();
             }
         }
 
         else
         {
-            buffText.gameObject.SetActive(false);
+            DPbuffText.gameObject.SetActive(false);
+            SecurityCheckText.gameObject.SetActive(false);
         }
     }
 

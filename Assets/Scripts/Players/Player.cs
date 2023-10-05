@@ -213,11 +213,35 @@ public class Player : Entity
     }
 
     [Command(requiresAuthority = false)]
+    public void CmdDrawDeckServerOnly(int Count)
+    {
+        //서버에서 SyncListCard정보만 가져오기용 함수(Rpc사용 안함)
+        //드로우 하고 Sepcific까지 추가하려니 서버속도차 때문에 한카드만 두장 추가되게 되서 만듦
+        //이걸 이용한 후 CmdDrawSpecificCard(CardInfo card, Player owner, int Amount)에 Amount를 통해 추가한 모든카드 한번에 드로우
+        for (int i = 0; i < Count; ++i)
+        {
+            if (deck.deckList.Count == 0) { return; } // 카드 없으면 리턴
+
+            deck.hand.Add(deck.deckList[0]);
+            deck.deckList.RemoveAt(0);
+        }
+    }
+
+    [Command(requiresAuthority = false)]
     public void CmdDrawSpecificCard(CardInfo card, Player owner)
     {
         deck.hand.Add(card);
 
-        RpcDrawDeckForTurn(1 , owner);//상대의 시큐리티 오픈해서 상대에게 넣는것이기에 내것이 아니라 false
+        RpcDrawDeckForPlayer(1 , owner);//상대의 시큐리티 오픈해서 상대에게 넣는것이기에 내것이 아니라 false
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdDrawSpecificCard(CardInfo card, Player owner, int Amount)
+    {
+        // Amount == 이 특정카드와 그 전에 드로우해서 추가한 총 카드 장 수
+        deck.hand.Add(card);
+
+        RpcDrawDeckForPlayer(Amount, owner);//서버 통신 속도문제로 SyncList만 서버에서 가져와놓고 여기서 최종 추가된 모든 SyncList카드 손에 추가하기
     }
 
     [ClientRpc]
@@ -237,7 +261,7 @@ public class Player : Entity
     }
 
     [ClientRpc]
-    private void RpcDrawDeckForTurn(int Count, Player owner)//isMine == 시전중인 player에게 주냐? 아니면 상대 player에게 주냐?
+    private void RpcDrawDeckForPlayer(int Count, Player owner)//isMine == 시전중인 player에게 주냐? 아니면 상대 player에게 주냐?
     {
         //for (int i = 0; i < deck.hand.Count; ++i) { Debug.Log(deck.hand[i].data.cardName); }
         if (Player.localPlayer== owner)

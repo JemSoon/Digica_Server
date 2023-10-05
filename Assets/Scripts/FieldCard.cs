@@ -178,6 +178,9 @@ public class FieldCard : Entity
 
         else
         {
+            tempBuff.buffDP -= buff.buffDP;
+            tempBuff.securityAttack = 0;
+
             DPbuffText.gameObject.SetActive(false);
             SecurityCheckText.gameObject.SetActive(false);
         }

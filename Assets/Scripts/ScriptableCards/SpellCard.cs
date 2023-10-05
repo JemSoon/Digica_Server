@@ -90,6 +90,18 @@ public partial class SpellCard : ScriptableCard
                     cardInfo.amount = 1;
                     owner.CmdDrawSpecificCard(cardInfo, owner);
                     break;
+
+                case "헬 파이어":
+                    //한장 카드 드로우
+                    owner.CmdDrawDeckServerOnly(1);
+
+                    //손에 이 카드 추가
+                    CardInfo cardInfo1 = new CardInfo();
+                    cardInfo1.cardID = CardID;
+                    //cardInfo.data = ScriptableCard.Cache[cardInfo.cardID];
+                    cardInfo1.amount = 1;
+                    owner.CmdDrawSpecificCard(cardInfo1, owner, 2);
+                    break;
             }
         }
     }

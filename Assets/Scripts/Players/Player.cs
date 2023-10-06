@@ -228,6 +228,20 @@ public class Player : Entity
     }
 
     [Command(requiresAuthority = false)]
+    public void CmdDrawDeckNotMyTurn(int Count, Player owner)
+    {
+        for (int i = 0; i < Count; ++i)
+        {
+            if (deck.deckList.Count == 0) { return; } // 카드 없으면 리턴
+
+            deck.hand.Add(deck.deckList[0]);
+            deck.deckList.RemoveAt(0);
+        }
+
+        RpcDrawDeckForPlayer(Count, owner);
+    }
+
+    [Command(requiresAuthority = false)]
     public void CmdDrawSpecificCard(CardInfo card, Player owner)
     {
         deck.hand.Add(card);

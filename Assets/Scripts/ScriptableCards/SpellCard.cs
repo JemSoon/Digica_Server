@@ -52,6 +52,9 @@ public partial class SpellCard : ScriptableCard
                 case "뉴클리어 레이저":
                     owner.CmdDrawDeck(2);
                     break;
+                case "보링 스톰":
+                    owner.CmdDrawDeck(1);
+                    break;
             }
         }
     }
@@ -74,6 +77,9 @@ public partial class SpellCard : ScriptableCard
             {
                 case "뉴클리어 레이저":
                     //세큐 효과 없음
+                    break;
+                case "보링 스톰":
+                    owner.CmdDrawDeckNotMyTurn(2, owner);
                     break;
             }
         }

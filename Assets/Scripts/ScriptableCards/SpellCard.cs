@@ -93,6 +93,7 @@ public partial class SpellCard : ScriptableCard
 
                 case "헬 파이어":
                     //한장 카드 드로우
+                    //★드로우 후 또 다른 후속 드로우 처리가있으면 ServerOnly사용★
                     owner.CmdDrawDeckServerOnly(1);
 
                     //손에 이 카드 추가

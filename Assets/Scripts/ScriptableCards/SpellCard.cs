@@ -57,6 +57,8 @@ public partial class SpellCard : ScriptableCard
                     break;
             }
         }
+
+       
     }
 
     public void AppearSecuritySpellCard(Player owner)

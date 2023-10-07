@@ -122,6 +122,11 @@ public class FieldCard : Entity
             strength += buff.buffDP;
             securityAttack += buff.securityAttack;
 
+            if(buff.breakEvo)
+            {
+                CmdRemoveEvo(buff.removeEvoCount);
+            }
+
             RpcTextSetActive(buff, isStart);
         }
         else
@@ -186,4 +191,31 @@ public class FieldCard : Entity
         }
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdRemoveEvo(int Count/*, bool isAscending //나중에 오름차순,내림차순 부분삭제할때 쓰기*/)
+    {
+        if(Count == -1)
+        {
+            FieldCard fieldCard = this;
+
+            if (fieldCard.isUnderMostCard && fieldCard.isUpperMostCard) { return; } //최상단겸 최하단(단 한장)이면 리턴
+
+            while(!fieldCard.isUnderMostCard)
+            {
+                //최하단 카드를 가져와서
+                fieldCard = fieldCard.underCard;
+            }
+            while(!fieldCard.isUpperMostCard)
+            {
+                //무덤 보내기
+                fieldCard.player.deck.graveyard.Add(fieldCard.card);
+                //차례로 아래서부터 모두 파괴
+                Destroy(fieldCard.gameObject);
+                fieldCard = fieldCard.upperCard;
+                fieldCard.underCard = null;
+            }
+            fieldCard.underCard = null;
+            fieldCard.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; //y축 정렬용 x축은 Update로 자동 정렬됨
+        }
+    }
 }

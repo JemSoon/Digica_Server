@@ -214,8 +214,16 @@ public class FieldCard : Entity
                 fieldCard = fieldCard.upperCard;
                 fieldCard.underCard = null;
             }
-            fieldCard.underCard = null;
-            fieldCard.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; //y축 정렬용 x축은 Update로 자동 정렬됨
+            //fieldCard.underCard = null;
+            //fieldCard.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; //y축 정렬용 x축은 Update로 자동 정렬됨
+            RpcRemoveEvoAfter(fieldCard);
         }
+    }
+
+    [ClientRpc]
+    public void RpcRemoveEvoAfter(FieldCard fieldCard)
+    {
+        fieldCard.underCard = null;
+        fieldCard.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; //y축 정렬용 x축은 Update로 자동 정렬됨
     }
 }

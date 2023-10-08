@@ -55,6 +55,9 @@ public partial class SpellCard : ScriptableCard
                 case "보링 스톰":
                     owner.CmdDrawDeck(1);
                     break;
+                case "홀리 에스파다":
+                    owner.CmdDrawDeck(owner.deck.securityCard.Count / 2);//세큐리티2장마다 드로우
+                    break;
             }
         }
 

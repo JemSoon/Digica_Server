@@ -119,11 +119,29 @@ public class FieldCard : Entity
         if(isStart)
         {
             //isStart는 버프를 추가할 때인지 뺄 때인지 구분용
-            strength += buff.buffDP;
-            securityAttack += buff.securityAttack;
+            if (buff.isFix)
+            {
+                //해당 버프가 고정값을 주면
+                strength = buff.buffDP;
+            }
+            else
+            {
+                //해당 버프가 더하는 값이면
+                strength += buff.buffDP;
+                securityAttack += buff.securityAttack;
+            }
+
+            if(strength <= 0)
+            {
+                //공깎 디버프로 최종 DP가 0이하가 되면 소멸
+                IsDead = true;
+                player.deck.graveyard.Add(this.card);
+                Destroy(this.gameObject);
+            }
 
             if(buff.breakEvo)
             {
+                //진화원 퇴화면 이쪽으로
                 CmdRemoveEvo(buff.removeEvoCount);
             }
 
@@ -131,13 +149,21 @@ public class FieldCard : Entity
         }
         else
         {
-            strength -= buff.buffDP;
+            if(buff.isFix)
+            {
+                strength = ((CreatureCard)card.data).strength;
+            }
+            else
+            {
+                tempBuff.buffDP -= buff.buffDP;
+                strength -= buff.buffDP;
+            }
             securityAttack = 0;
 
-            tempBuff.buffDP -= buff.buffDP;
+            
             tempBuff.securityAttack = 0;
 
-            if (tempBuff.buffDP > 0)
+            if (tempBuff.buffDP != 0)
             {
                 DPbuffText.gameObject.SetActive(true);
                 DPbuffText.text = "DP + " + tempBuff.buffDP.ToString();
@@ -166,13 +192,21 @@ public class FieldCard : Entity
     {
         if (isStart)
         {
+            tempBuff.isFix = buff.isFix;
             tempBuff.buffDP += buff.buffDP;
             tempBuff.securityAttack += buff.securityAttack;
 
-            if (tempBuff.buffDP > 0)
+            if (tempBuff.buffDP != 0)
             {
                 DPbuffText.gameObject.SetActive(true);
-                DPbuffText.text = "DP + " + tempBuff.buffDP.ToString();
+                if(tempBuff.isFix)
+                {
+                    DPbuffText.text = "DP = " + tempBuff.buffDP.ToString();
+                }
+                else
+                {
+                    DPbuffText.text = "DP + " + tempBuff.buffDP.ToString();
+                }
             }
             if (tempBuff.securityAttack > 0)
             {
@@ -185,7 +219,7 @@ public class FieldCard : Entity
         {
             tempBuff.buffDP -= buff.buffDP;
             tempBuff.securityAttack = 0;
-
+            
             DPbuffText.gameObject.SetActive(false);
             SecurityCheckText.gameObject.SetActive(false);
         }

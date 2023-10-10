@@ -1,5 +1,6 @@
 using UnityEngine;
 using Mirror;
+using Unity.VisualScripting;
 
 public class GameManager : NetworkBehaviour
 {
@@ -81,6 +82,7 @@ public class GameManager : NetworkBehaviour
     {
         if (!isHoveringField)
         {
+            if (cardObject.IsDestroyed()) { return; }
             if(cardObject.GetComponent<FieldCard>() == null) { return; }
             FieldCard card = cardObject.GetComponent<FieldCard>();
             if(card==null) return; // 혹시나 싶은 안전코드 cardObject==null이 맞나?
@@ -120,7 +122,7 @@ public class GameManager : NetworkBehaviour
         }
         else //내 턴이 아니게 된 플레이어는 CmdEndTurn함수를 통해 정돈할것 정돈
         {
-            playerField.EndTurnFieldCards();//턴 끝날때 필드 카드중 스펠카드 삭제
+            //playerField.EndTurnFieldCards();//턴 끝날때 필드 카드중 스펠카드 삭제
             Player.localPlayer.deck.CmdEndTurn();
             Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
 
@@ -130,6 +132,7 @@ public class GameManager : NetworkBehaviour
                 caster = null;
             }
         }
+        playerField.EndTurnFieldCards();
     }
 
     [ClientRpc]
@@ -155,7 +158,7 @@ public class GameManager : NetworkBehaviour
         }
         else
         {
-            playerField.EndTurnFieldCards();
+            //playerField.EndTurnFieldCards();
             Player.localPlayer.deck.CmdEndTurn();
             Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
 
@@ -165,6 +168,7 @@ public class GameManager : NetworkBehaviour
                 caster = null;
             }
         }
+        playerField.EndTurnFieldCards();
     }
 
     public void StartGame()

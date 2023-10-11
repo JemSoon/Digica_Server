@@ -123,6 +123,7 @@ public class FieldCard : Entity
             {
                 //해당 버프가 고정값을 주면
                 strength = buff.buffDP;
+                //strength += -((CreatureCard)card.data).strength + buff.buffDP;
             }
             else
             {

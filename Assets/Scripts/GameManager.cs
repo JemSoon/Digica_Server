@@ -127,9 +127,13 @@ public class GameManager : NetworkBehaviour
             Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
 
             if (Player.localPlayer.isTargeting)
-            { 
-                caster.DestroyTargetingArrow();
-                caster = null;
+            {
+                //상대 턴으로 넘어가면 타게팅 마우스 없앰(아직 삭제 전이라 -1 삭제는 밑에 playerField.EndTurnFieldCards)
+                if (((FieldCard)caster).card.data is SpellCard spellCard && spellCard.buff.buffTurn -1 <= 0)
+                {
+                    caster.DestroyTargetingArrow();
+                    caster = null;
+                }
             }
         }
         playerField.EndTurnFieldCards();

@@ -16,7 +16,7 @@ public abstract partial class Entity : NetworkBehaviour
     public Target casterType;
     public TargetingArrow arrow;
     public Transform spawnOffset;
-    [HideInInspector] public bool isTargeting = false;
+    [SyncVar] public bool isTargeting = false;
     [HideInInspector] public GameObject arrowObject;
 
     public bool isTargetable = true; //// If a Player/Minion can be targeted.
@@ -32,8 +32,10 @@ public abstract partial class Entity : NetworkBehaviour
 
     public virtual void SpawnTargetingArrow(CardInfo card, bool IsAbility = false)
     {
-        Player.localPlayer.isTargeting = true;
-        isTargeting = true;
+        //Player.localPlayer.isTargeting = true;
+        //isTargeting = true;
+        Player player = Player.localPlayer;
+        CmdSyncTargeting(player, true);
 
         Cursor.visible = false; //Hide cursor
 
@@ -47,6 +49,7 @@ public abstract partial class Entity : NetworkBehaviour
     {
         Player.localPlayer.isTargeting = false;
         isTargeting = false;
+
         Cursor.visible = true;
         Destroy(arrowObject);
     }
@@ -57,5 +60,12 @@ public abstract partial class Entity : NetworkBehaviour
         {
             DestroyTargetingArrow();
         }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdSyncTargeting(Player player, bool Targeting)
+    {
+        player.isTargeting = Targeting;
+        isTargeting = Targeting;
     }
 }

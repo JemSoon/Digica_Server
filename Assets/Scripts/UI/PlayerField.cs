@@ -8,6 +8,11 @@ public class PlayerField : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (Player.localPlayer.enemyInfo.data.isTargeting) //이게 현재 서버인 플레이어만 가져옴..
+        {
+            Debug.Log(Player.localPlayer.enemyInfo.data.username);
+            return; 
+        } //test 상대가 타게팅중이면 리턴
         if (Player.localPlayer.isTargeting) { return; }
 
         if (eventData.pointerDrag.transform.GetComponent<FieldCard>() != null && 

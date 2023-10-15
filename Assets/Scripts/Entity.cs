@@ -47,8 +47,10 @@ public abstract partial class Entity : NetworkBehaviour
 
     public void DestroyTargetingArrow()
     {
-        Player.localPlayer.isTargeting = false;
-        isTargeting = false;
+        //Player.localPlayer.isTargeting = false;
+        //isTargeting = false;
+        Player player = Player.localPlayer;
+        CmdSyncTargeting(player, false);
 
         Cursor.visible = true;
         Destroy(arrowObject);

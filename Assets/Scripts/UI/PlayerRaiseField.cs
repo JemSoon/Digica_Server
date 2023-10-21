@@ -10,6 +10,7 @@ public class PlayerRaiseField : MonoBehaviour, IDropHandler
     public void SpawnDigitama()
     {
         if (Player.gameManager.isDigitamaOpenOrMove) { return; }
+        if (Player.localPlayer.enemyInfo.data.isTargeting) { return; }
 
         Player player = Player.localPlayer;
 

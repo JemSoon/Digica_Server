@@ -17,12 +17,12 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerClick(PointerEventData eventData)
     {
         // Make sure our Player isn't already targetting something
-        if (!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.FRIENDLIES && card.CanAttack() && card.card.data is CreatureCard)
+        if (!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.FRIENDLIES && card.CanAttack() && card.card.data is CreatureCard && Player.localPlayer.enemyInfo.data.isTargeting==false)
         {
             card.SpawnTargetingArrow(card.card);
             HideCardInfo();
         }
-        else if (!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.FRIENDLIES && card.CantAttack() && card.securityAttack > 0 && card.card.data is CreatureCard)
+        else if (!Player.localPlayer.isTargeting && Player.gameManager.isOurTurn && card.casterType == Target.FRIENDLIES && card.CantAttack() && card.securityAttack > 0 && card.card.data is CreatureCard && Player.localPlayer.enemyInfo.data.isTargeting == false)
         {
             //공격할 순 없는데 세큐리티 어택개수가 남아있다면
             card.SpawnTargetingArrow(card.card);

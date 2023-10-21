@@ -77,7 +77,7 @@ public class FieldCard : Entity
 
         if (player==Player.localPlayer && casterType==Target.MY_BABY && cardDragHover!=null /*&& waitTurn <= 0*/)
         {
-            if (Player.gameManager.isOurTurn)
+            if (Player.gameManager.isOurTurn && Player.localPlayer.enemyInfo.data.isTargeting==false)
             {
                 cardDragHover.canDrag = true; //player.deck.CanPlayCard(manaCost); //원래는 마나 총량 넘으면 못내게 했는데 ECost라는 다른 루트땜에 일단 낼 수 있게함
             }

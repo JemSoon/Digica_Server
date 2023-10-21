@@ -32,7 +32,7 @@ public class HandCard : MonoBehaviour
     /*[HideInInspector]*/ public int handIndex;
     [HideInInspector] public PlayerType playerType;
 
-    [Header("Test")]
+    [Header("Evolnfo")]
     [HideInInspector] public CardInfo cardInfo;
     public FieldCard underCard;
 

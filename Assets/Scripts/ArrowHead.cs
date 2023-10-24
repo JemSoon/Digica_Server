@@ -38,13 +38,21 @@ public class ArrowHead : MonoBehaviour
 
             bool canTarget;
 
-            if (((FieldCard)caster).CanAttack() || IsAbility)
+            if (((FieldCard)caster).CanAttack() || (IsAbility && ((FieldCard)caster).isSecurity==false))
             { 
+                //통상 크리쳐카드거나 스펠카드중 Security가 아니라면
                 canTarget = target.casterType.CanTarget(card.acceptableTargets);
+                Debug.Log(((FieldCard)caster).isSecurity + ((FieldCard)caster).card.name);
             }
             else if (((FieldCard)caster).CantAttack() && ((FieldCard)caster).securityAttack > 0) 
             { 
+                //통상 크리쳐카드가 공격은 못해도 세큐리티 어택이 가능한 경우
                 canTarget = (target.casterType == Target.OPPONENT); 
+            }
+            else if ((IsAbility && ((FieldCard)caster).isSecurity))
+            {
+                //캐스터가 시큐리티 카드인 경우
+                canTarget = target.casterType.CanTarget(((SpellCard)card.data).acceptableSecurityTargets);
             }
             else
             { 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Mirror;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class GameManager : NetworkBehaviour
 {
@@ -35,6 +36,8 @@ public class GameManager : NetworkBehaviour
     [HideInInspector] public bool isOurTurn = false;
     [SyncVar, HideInInspector] public int turnCount = 1; // Start at 1
     [SyncVar] public bool isGameStart;
+    public GameObject waitingPanel;
+    public Text panelText;
 
     // isHovering is only set to true on the Client that called the OnCardHover function.
     // We only want the hovering to appear on the enemy's Client, so we must exclude the OnCardHover caller from the Rpc call.
@@ -195,4 +198,18 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     public void RpcStartGame()
     { isGameStart = true; }
+
+    private void Update()
+    {
+        if(Player.localPlayer.hasEnemy&&Player.localPlayer.IsOurTurn() && Player.localPlayer.enemyInfo.data.isTargeting)
+        {
+            waitingPanel.SetActive(true);
+            panelText.text = "아직 상대가 옵션카드 대상을 고르는 중입니다";
+        }
+        else
+        {
+            waitingPanel.SetActive(false);
+        }
+
+    }
 }

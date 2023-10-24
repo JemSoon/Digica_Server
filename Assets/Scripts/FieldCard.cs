@@ -35,7 +35,7 @@ public class FieldCard : Entity
     public bool isUnderMostCard => underCard == null; // 최하단 카드인가?
 
     [Header("Security")]
-    public bool isSecurity = false;
+    [SyncVar]public bool isSecurity = false;
     [Header("SpellEffect")]
     readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
     public Buffs tempBuff;//텍스트 시각효과를 위해 받아놓을 버프 변수
@@ -130,6 +130,7 @@ public class FieldCard : Entity
                 //해당 버프가 더하는 값이면
                 strength += buff.buffDP;
                 securityAttack += buff.securityAttack;
+                waitTurn += buff.waitTurn;
             }
 
             if(strength <= 0)

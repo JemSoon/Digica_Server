@@ -291,6 +291,7 @@ public class Deck : NetworkBehaviour
             FieldCard newCard = boardCard.GetComponent<FieldCard>();
             newCard.card = new CardInfo(card.data); // Save Card Info so we can re-access it later if we need to.
                                                     //newCard.cardName.text = card.name;
+            newCard.isSecurity = true;
             newCard.image.sprite = card.image;
             newCard.image.color = Color.white;
             newCard.player = owner;
@@ -457,6 +458,14 @@ public class Deck : NetworkBehaviour
             boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
             Player.gameManager.isSpawning = false;
+
+            if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard &&
+                spellCard.hasSelectSecurityBuff)
+            {
+                Player player2 = boardCard.GetComponent<FieldCard>().player;
+                boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card, player2, true);
+                Player.gameManager.caster = boardCard.GetComponent<FieldCard>();
+            }
         }
         else if (player.hasEnemy)
         {
@@ -496,6 +505,14 @@ public class Deck : NetworkBehaviour
     {
         //세큐리티 카드 출현 후 잠시 뒤에 싸우게 하기용
         yield return new WaitForSeconds(time);
+        //while문을 이 다음에 써야함 안그럼 isTargeting인식 못함
+        //★순서 바꾸지 마시오★
+
+        while (boardCard != null && boardCard.GetComponent<FieldCard>().isTargeting)
+        {
+            // boardCard가 파괴되지 않았고 isTargeting이 true인 경우 계속 대기
+            yield return null;
+        }
 
         if (boardCard.IsDestroyed() == false)//왜인진 모르겠지만 두번들어와서 터짐 파괴됬는지 확인해둬서 방어함
         {

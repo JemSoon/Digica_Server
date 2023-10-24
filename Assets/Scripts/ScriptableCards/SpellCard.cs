@@ -19,16 +19,19 @@ public partial class SpellCard : ScriptableCard
     public bool isTamer;
     public SpellType type;
     public bool hasSelectBuff;
+    public bool hasSelectSecurityBuff;
     public bool if_Security_Go_Hand;
 
     [Header("Buff")]
     public Buffs buff;
+    public Buffs SecurityBuff;
 
     [Header("Board Prefab")]
     public FieldCard cardPrefab;
 
     [Header("Targets")]
     public List<Target> acceptableTargets = new List<Target>();
+    public List<Target> acceptableSecurityTargets = new List<Target>();
 
     public void AppearSpellCard(Player owner)
     {
@@ -116,6 +119,11 @@ public partial class SpellCard : ScriptableCard
                     //cardInfo.data = ScriptableCard.Cache[cardInfo.cardID];
                     cardInfo1.amount = 1;
                     owner.CmdDrawSpecificCard(cardInfo1, owner, 2);
+                    break;
+                case "호른 버스터":
+                    CardInfo cardInfo2 = new CardInfo();
+                    cardInfo2.cardID = CardID;
+                    owner.CmdDrawSpecificCard(cardInfo2, owner);
                     break;
             }
         }

@@ -36,6 +36,19 @@ public abstract partial class Entity : NetworkBehaviour
         //isTargeting = true;
         Player player = Player.localPlayer;
         CmdSyncTargeting(player, true);
+        Debug.Log(player.username);
+
+        Cursor.visible = false; //Hide cursor
+
+        // If we have a spawnOffset, use it. Otherwise, use transform position.
+        Vector3 spawnPos = spawnOffset == null ? transform.position : spawnOffset.position;
+        arrowObject = Instantiate(arrow.gameObject, spawnPos, Quaternion.identity);
+        arrowObject.GetComponent<TargetingArrow>().DrawLine(this, card, spawnPos, IsAbility);
+    }
+
+    public virtual void SpawnTargetingArrow(CardInfo card, Player player, bool IsAbility = false)
+    {
+        CmdSyncTargeting(player, true);
 
         Cursor.visible = false; //Hide cursor
 

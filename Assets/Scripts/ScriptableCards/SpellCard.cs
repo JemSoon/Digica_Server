@@ -170,8 +170,18 @@ public partial class SpellCard : ScriptableCard
             target = target.GetComponent<FieldCard>().upperCard; //최상위 카드 가져오기
         }
 
-        target.GetComponent<FieldCard>().CmdChangeSomeThing(buff,true);
-        target.GetComponent<FieldCard>().CmdAddBuff(buff);
+        if (caster.GetComponent<FieldCard>().isSecurity == false)
+        {
+            //일반 옵션카드 효과라면
+            target.GetComponent<FieldCard>().CmdChangeSomeThing(buff, true);
+            target.GetComponent<FieldCard>().CmdAddBuff(buff);
+        }
+        else
+        {
+            //시큐 옵션카드 효과라면
+            target.GetComponent<FieldCard>().CmdChangeSomeThing(SecurityBuff, true);
+            target.GetComponent<FieldCard>().CmdAddBuff(SecurityBuff);
+        }
 
         caster.DestroyTargetingArrow();
     }

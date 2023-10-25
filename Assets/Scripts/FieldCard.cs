@@ -12,6 +12,7 @@ public class FieldCard : Entity
     public Text AbilityText; 
     public Text SecurityCheckText; 
     public Text DPbuffText;
+    public Text isRestText;
 
     public bool giveBuff = false; // 1회용 버프 썼는가?(스펠카드용)
 
@@ -210,10 +211,17 @@ public class FieldCard : Entity
                     DPbuffText.text = "DP + " + tempBuff.buffDP.ToString();
                 }
             }
+            
             if (tempBuff.securityAttack > 0)
             {
                 SecurityCheckText.gameObject.SetActive(true);
                 SecurityCheckText.text = "S.C. + " + tempBuff.securityAttack.ToString();
+            }
+
+            if(tempBuff.waitTurn > 0)
+            {
+                isRestText.gameObject.SetActive(true);
+                isRestText.text = "레스트";
             }
         }
 
@@ -224,6 +232,7 @@ public class FieldCard : Entity
             
             DPbuffText.gameObject.SetActive(false);
             SecurityCheckText.gameObject.SetActive(false);
+            isRestText.gameObject.SetActive(false);
         }
     }
 

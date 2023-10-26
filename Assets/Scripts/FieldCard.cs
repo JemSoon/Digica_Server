@@ -37,8 +37,8 @@ public class FieldCard : Entity
 
     [Header("Security")]
     [SyncVar]public bool isSecurity = false;
-    [Header("SpellEffect")]
-    readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
+    //[Header("SpellEffect")]
+    //readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
     public Buffs tempBuff;//텍스트 시각효과를 위해 받아놓을 버프 변수
 
     [Header("Buffs")]

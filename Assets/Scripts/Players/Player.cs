@@ -38,6 +38,8 @@ public class Player : Entity
     [HideInInspector] public static GameManager gameManager;
     [SyncVar] public bool firstPlayer = false; // Is it player 1, player 2, etc.
 
+    [Header("Buffs")]
+    [SyncVar] public bool smashPotato;
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
@@ -256,6 +258,33 @@ public class Player : Entity
         deck.hand.Add(card);
 
         RpcDrawDeckForPlayer(Amount, owner);//서버 통신 속도문제로 SyncList만 서버에서 가져와놓고 여기서 최종 추가된 모든 SyncList카드 손에 추가하기
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdAddBuff(Buffs buff)
+    {
+        buffs.Add(buff);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdChangeSomeThing(Buffs buff, bool isStart)
+    {
+        if (isStart) 
+        {
+            smashPotato = buff.smashPotato;
+        }
+
+        else
+        {
+            smashPotato = !buff.smashPotato;
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdRemoveBuff(int index)
+    {
+        buffs.RemoveAt(index);
+        Debug.Log("버프 제거 완료");
     }
 
     [ClientRpc]

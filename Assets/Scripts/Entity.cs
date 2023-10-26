@@ -26,6 +26,9 @@ public abstract partial class Entity : NetworkBehaviour
     public bool taunt = false; //// Whether it's a taunt minion or not.
     // waitTurn is also used for stunning/freezing/etc. minions.
 
+    [Header("SpellEffect")]
+    readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
+
     public bool IsDead = false;
     public bool CanAttack() => Player.gameManager.isOurTurn && waitTurn == 0 && casterType == Target.FRIENDLIES;
     public bool CantAttack() => Player.gameManager.isOurTurn && waitTurn > 0 && casterType == Target.FRIENDLIES;

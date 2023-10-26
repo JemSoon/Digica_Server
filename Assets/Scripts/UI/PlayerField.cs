@@ -64,7 +64,24 @@ public class PlayerField : MonoBehaviour, IDropHandler
 
             player.deck.CmdPlayEvoCard(cardInfo, index, player, card.underCard); // Summon card onto the board
             player.CmdDrawDeck(1); // 진화시키고 나면 한장 드로우(코스트 까기전에 있어야함) 순서 이대로 둘것
-            player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
+
+            if(player.smashPotato && ((CreatureCard)card.cardInfo.data).level == 6 /*&& (((CreatureCard)card.cardInfo.data).color1==CardColor.Green || ((CreatureCard)card.cardInfo.data).color2 == CardColor.Green)*/)
+            {
+                //스매시 포테이토 효과 체크
+                int reduceCost = (manaCost - 4);
+
+                if (reduceCost <= 0) { reduceCost = 0; }
+
+                player.combat.CmdChangeMana(-reduceCost);
+                //버프 썻으니 false로 되돌려주기
+                player.smashPotato = false;
+            }
+
+            else
+            {
+                //그 외엔 일반 코스트 차감
+                player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
+            }
         }
 
         else if (player.IsOurTurn() && player.deck.CanPlayCard(manaCost) && !card.isEvoCard)
@@ -95,6 +112,28 @@ public class PlayerField : MonoBehaviour, IDropHandler
 
     public void EndTurnFieldCards()
     {
+        //플레이어 버프 제거
+
+        Player players = Player.localPlayer;
+
+
+        if (players.buffs.Count > 0)
+        {
+            for (int z = players.buffs.Count - 1; z >= 0; z--)
+            {
+                players.buffs[z].buffTurn--;
+                Debug.Log(players.username +" "+ players.buffs[z].buffTurn);
+                if (players.buffs[z].buffTurn == 0)
+                {
+                    players.CmdChangeSomeThing(players.buffs[z], false);
+                    players.CmdRemoveBuff(z);
+                }
+            }
+        }
+        
+        
+
+        //각 카드별 버프제거
         int cardCount = content.childCount;
         for (int i = 0; i < cardCount; ++i)
         {
@@ -115,7 +154,6 @@ public class PlayerField : MonoBehaviour, IDropHandler
                     }
                 }
             }
-            //===============================================================//
 
             card.CmdDestroySpellCard();
         }

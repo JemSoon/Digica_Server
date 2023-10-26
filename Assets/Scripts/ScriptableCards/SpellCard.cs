@@ -64,7 +64,17 @@ public partial class SpellCard : ScriptableCard
             }
         }
 
-       
+       if(type == SpellType.MEMORY)
+        {
+            switch (cardName)
+            {
+                case "스매시 포테이토":
+                    owner.CmdAddBuff(buff);
+                    owner.CmdChangeSomeThing(buff,true);
+                    break;
+            }
+        }
+
     }
 
     public void AppearSecuritySpellCard(Player owner)

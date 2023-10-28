@@ -183,6 +183,13 @@ public class Deck : NetworkBehaviour
         // Spawn it
         NetworkServer.Spawn(boardCard);
 
+        if (underCard.GetComponent<RectTransform>().rotation == Quaternion.Euler(0, 0, -90))
+        {
+            //만약 카드가 레스트 상태였으면 이전카드는 세우고 최상단 카드를 돌려놓기
+            underCard.CmdRotation(underCard, Quaternion.Euler(0, 0, 0));
+            newCard.CmdRotation(newCard, Quaternion.Euler(0, 0, -90));
+        }
+
         // Remove card from hand
         hand.RemoveAt(index);
 

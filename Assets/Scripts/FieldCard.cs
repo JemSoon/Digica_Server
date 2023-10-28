@@ -277,6 +277,7 @@ public class FieldCard : Entity
     public void CmdRotation(FieldCard card, Quaternion rotation)
     {
         card.GetComponent<RectTransform>().rotation = rotation;
+        card.cardHover.GetComponent<RectTransform>().rotation = Quaternion.identity;
         RpcRotation(card, rotation);
     }
 
@@ -284,6 +285,7 @@ public class FieldCard : Entity
     public void RpcRotation(FieldCard card, Quaternion rotation)
     {
         card.GetComponent<RectTransform>().rotation = rotation;
+        card.cardHover.GetComponent<RectTransform>().rotation = Quaternion.identity;
     }
 
     [ClientRpc]

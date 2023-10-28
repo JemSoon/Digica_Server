@@ -42,7 +42,7 @@ public class ArrowHead : MonoBehaviour
             { 
                 //통상 크리쳐카드거나 스펠카드중 Security가 아니라면
                 canTarget = target.casterType.CanTarget(card.acceptableTargets);
-                Debug.Log(((FieldCard)caster).isSecurity + ((FieldCard)caster).card.name);
+                //Debug.Log(((FieldCard)caster).isSecurity + ((FieldCard)caster).card.name);
             }
             else if (((FieldCard)caster).CantAttack() && ((FieldCard)caster).securityAttack > 0) 
             { 

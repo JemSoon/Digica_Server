@@ -544,8 +544,9 @@ MonoBehaviour:
   AbilityText: {fileID: 4451735555160035683}
   SecurityCheckText: {fileID: 3124610008354749969}
   DPbuffText: {fileID: 511494260464701866}
-  isRest: {fileID: 5022131815835564184}
+  isRestText: {fileID: 0}
   giveBuff: 0
+  attacked: 0
   shine: {fileID: 9022467722773909007}
   hoverColor: {r: 0, g: 0.85490197, b: 0.98039216, a: 0.39215687}
   readyColor: {r: 0, g: 1, b: 0.11764706, a: 0.39215687}
@@ -566,6 +567,7 @@ MonoBehaviour:
     waitTurn: 0
     removeEvoCount: 0
     buffTurn: 1
+    smashPotato: 0
   securityAttack: 0
   cardDragHover: {fileID: 7582166961649262288}
 --- !u!114 &7582166961649262294

@@ -14,7 +14,9 @@ public class FieldCard : Entity
     public Text DPbuffText;
     public Text isRestText;
 
+    [Header("Spell / Creature Card")]
     public bool giveBuff = false; // 1회용 버프 썼는가?(스펠카드용)
+    [SyncVar] public bool attacked = false; // 이 턴에 공격을 했는가?(크리처 카드용)
 
     [Header("Shine")]
     public Image shine;
@@ -88,6 +90,8 @@ public class FieldCard : Entity
     [Command(requiresAuthority = false)]
     public void CmdUpdateWaitTurn()
     {
+        CmdChangeAttacked(false);
+        CmdRotation(this, Quaternion.identity);
         //Debug.LogError("Here");
         if (waitTurn > 0) { waitTurn--; }
     }
@@ -261,6 +265,25 @@ public class FieldCard : Entity
             }
             RpcRemoveEvoAfter(fieldCard);
         }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdChangeAttacked(bool TorF)
+    {
+        attacked = TorF;
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdRotation(FieldCard card, Quaternion rotation)
+    {
+        card.GetComponent<RectTransform>().rotation = rotation;
+        RpcRotation(card, rotation);
+    }
+
+    [ClientRpc]
+    public void RpcRotation(FieldCard card, Quaternion rotation)
+    {
+        card.GetComponent<RectTransform>().rotation = rotation;
     }
 
     [ClientRpc]

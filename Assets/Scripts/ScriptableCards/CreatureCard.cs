@@ -50,7 +50,11 @@ public partial class CreatureCard : ScriptableCard
         }
 
         else
-        { attacker.combat.CmdBattle(attacker, target); }
+        {
+            attacker.GetComponentInParent<FieldCard>().CmdChangeAttacked(true);
+            attacker.GetComponent<FieldCard>().CmdRotation(attacker.GetComponent<FieldCard>(), Quaternion.Euler(0, 0, -90));
+            attacker.combat.CmdBattle(attacker, target); 
+        }
         
         attacker.DestroyTargetingArrow();
         

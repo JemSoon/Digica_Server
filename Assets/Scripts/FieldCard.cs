@@ -236,7 +236,7 @@ public class FieldCard : Entity
             
             DPbuffText.gameObject.SetActive(false);
             SecurityCheckText.gameObject.SetActive(false);
-            isRestText.gameObject.SetActive(false);
+            //isRestText.gameObject.SetActive(false);
         }
     }
 

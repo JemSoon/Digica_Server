@@ -45,7 +45,7 @@ public class GameManager : NetworkBehaviour
     [HideInInspector] public bool isHoveringField = false;
     [HideInInspector] public bool isSpawning = false;
 
-    [HideInInspector] public Entity caster; // 타게팅 애로우 지우기용도
+    /*[HideInInspector]*/ public Entity caster; // 타게팅 애로우 지우기용도
 
     //public SyncListPlayerInfo players = new SyncListPlayerInfo(); // Information of all players online. One is player, other is opponent.
 
@@ -129,15 +129,16 @@ public class GameManager : NetworkBehaviour
             Player.localPlayer.deck.CmdEndTurn();
             Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
 
-            if (Player.localPlayer.isTargeting)
-            {
-                //상대 턴으로 넘어가면 타게팅 마우스 없앰(아직 삭제 전이라 -1 삭제는 밑에 playerField.EndTurnFieldCards)
-                if (((FieldCard)caster).card.data is SpellCard spellCard && spellCard.buff.buffTurn -1 <= 0)
-                {
-                    caster.DestroyTargetingArrow();
-                    caster = null;
-                }
-            }
+            //if (Player.localPlayer.isTargeting)
+            //{
+            //    isTargeting이 늦게들어와서 여기 안걸림
+            //    //상대 턴으로 넘어가면 타게팅 마우스 없앰(아직 삭제 전이라 -1 삭제는 밑에 playerField.EndTurnFieldCards)
+            //    if (((FieldCard)caster).card.data is SpellCard spellCard && spellCard.buff.buffTurn -1 <= 0)
+            //    {
+            //        caster.DestroyTargetingArrow();
+            //        caster = null;
+            //    }
+            //}
         }
         playerField.EndTurnFieldCards();
     }
@@ -171,15 +172,12 @@ public class GameManager : NetworkBehaviour
 
             if (Player.localPlayer.isTargeting)
             {
-                if (Player.localPlayer.isTargeting)
-                {
-                    //상대 턴으로 넘어가면 타게팅 마우스 없앰(아직 삭제 전이라 -1 삭제는 밑에 playerField.EndTurnFieldCards)
-                    if (((FieldCard)caster).card.data is SpellCard spellCard && spellCard.buff.buffTurn - 1 <= 0)
-                    {
-                        caster.DestroyTargetingArrow();
-                        caster = null;
-                    }
-                }
+                 //상대 턴으로 넘어가면 타게팅 마우스 없앰(아직 삭제 전이라 -1 삭제는 밑에 playerField.EndTurnFieldCards)
+                 if (((FieldCard)caster).card.data is SpellCard spellCard && spellCard.buff.buffTurn - 1 <= 0)
+                 {
+                     caster.DestroyTargetingArrow();
+                     caster = null;
+                 }
             }
         }
         playerField.EndTurnFieldCards();

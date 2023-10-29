@@ -297,7 +297,7 @@ public class Player : Entity
             for (int i = 0; i < Count; i++)
             {
                 playerHand.AddCard(deck.hand.Count - Count + i);
-                Debug.Log(deck.hand[deck.hand.Count - Count + i].data.cardName +" "+ (deck.hand.Count - Count + i).ToString());
+                //Debug.Log(deck.hand[deck.hand.Count - Count + i].data.cardName +" "+ (deck.hand.Count - Count + i).ToString());
             }
 
         }

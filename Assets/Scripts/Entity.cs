@@ -39,7 +39,7 @@ public abstract partial class Entity : NetworkBehaviour
         //isTargeting = true;
         Player player = Player.localPlayer;
         CmdSyncTargeting(player, true);
-        Debug.Log(player.username);
+        //Debug.Log(player.username);
 
         Cursor.visible = false; //Hide cursor
 
@@ -85,5 +85,18 @@ public abstract partial class Entity : NetworkBehaviour
     {
         player.isTargeting = Targeting;
         isTargeting = Targeting;
+
+        CheckBuff(player);
+    }
+
+    [ClientRpc]
+    public void CheckBuff(Player player)
+    {
+        //만약 버프 선택과 동시에 턴이 넘어갔다면, 턴넘어간 순간 버프가 끝난다면 그냥 선택지 파괴
+        if (player.IsOurTurn() == false && player.isTargeting == true && ((FieldCard)this).card.data is SpellCard spellCard && spellCard.buff.buffTurn - 1 <= 0)
+        {
+            DestroyTargetingArrow();
+            Player.gameManager.caster = null;
+        }
     }
 }

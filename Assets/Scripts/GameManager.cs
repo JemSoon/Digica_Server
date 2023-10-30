@@ -199,7 +199,7 @@ public class GameManager : NetworkBehaviour
 
     private void Update()
     {
-        if(Player.localPlayer.hasEnemy&&Player.localPlayer.IsOurTurn() && Player.localPlayer.enemyInfo.data.isTargeting)
+        if(Player.localPlayer!=null && Player.localPlayer.hasEnemy&&Player.localPlayer.IsOurTurn() && Player.localPlayer.enemyInfo.data.isTargeting)
         {
             waitingPanel.SetActive(true);
             panelText.text = "아직 상대가 옵션카드 대상을 고르는 중입니다";

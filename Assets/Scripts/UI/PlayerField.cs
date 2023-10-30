@@ -106,6 +106,12 @@ public class PlayerField : MonoBehaviour, IDropHandler
         {
             FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
             
+            if(card.card.data is SpellCard spellCard && spellCard.isTamer)
+            {
+                //테이머 턴 개시시 효과 발동
+                spellCard.StartTamerCast(card.player);
+            }
+
             card.CmdUpdateWaitTurn();
         }
     }

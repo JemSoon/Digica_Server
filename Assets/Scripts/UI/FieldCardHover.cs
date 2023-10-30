@@ -10,7 +10,7 @@ public class FieldCardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [Header("Test")]
     public CanvasGroup canvasGroup;
     public bool canDrag = false;
-    Transform parentReturnTo = null; // Return to raise canvas
+    //Transform parentReturnTo = null; // Return to raise canvas
     public GameObject EmptyCard; // Used for creating an empty placeholder card where our current card used to be.
     private GameObject temp;
     public bool isDragging = false;

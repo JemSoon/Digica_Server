@@ -151,7 +151,10 @@ public class Deck : NetworkBehaviour
 
             spellCard.AppearSpellCard(owner);//스펠카드 필드 스폰시 바로 카드효과 실행시킴 서순!! 서순!! 서순!! RpcPlayCard에서 인덱스 정렬함!! 서순!! 하루 날림!!
 
-            newCard.player.deck.graveyard.Add(newCard.card);//발동 직후 무덤으로 
+            if(!spellCard.isTamer)
+            { 
+                newCard.player.deck.graveyard.Add(newCard.card);//발동 직후 무덤으로
+            }
         }
     }
 

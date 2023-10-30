@@ -109,7 +109,7 @@ public class FieldCard : Entity
     [Command(requiresAuthority = false)]
     public void CmdDestroySpellCard()
     {
-        if (card.data is SpellCard spellCard && isTargeting == false)
+        if (card.data is SpellCard spellCard && isTargeting == false && !spellCard.isTamer)
         {
             //player.deck.playerField.Remove(card);//안씀
             //player.deck.graveyard.Add(card);//카드를 꺼내자마자 무덤에 저장되야함

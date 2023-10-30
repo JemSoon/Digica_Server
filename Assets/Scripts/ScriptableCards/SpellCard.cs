@@ -198,4 +198,19 @@ public partial class SpellCard : ScriptableCard
     public override void EndCast(Entity caster, Entity target)
     {
     }
+    
+    public void StartTamerCast(Player player)
+    {
+        if(cardName=="Ω≈≈¬¿œ")
+        {
+            if(player.isServer && MemoryChecker.Inst.memory <=2)
+            {
+                 MemoryChecker.Inst.CmdChangeMemory(3);
+            }
+            else if(!player.isServer && MemoryChecker.Inst.memory>=-2)
+            {
+                MemoryChecker.Inst.CmdChangeMemory(-3);
+            }
+        }
+    }
 }

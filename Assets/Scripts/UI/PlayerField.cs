@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerField : MonoBehaviour, IDropHandler
 {
     public Transform content;
+    public Transform raiseContent;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -15,6 +16,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
         } //test 상대가 타게팅중이면 리턴
         if (Player.localPlayer.isTargeting) { return; }
 
+        #region 육성카드 필드로
         if (eventData.pointerDrag.transform.GetComponent<FieldCard>() != null && 
             eventData.pointerDrag.transform.GetComponent<FieldCard>().casterType == Target.MY_BABY) 
         {
@@ -41,10 +43,15 @@ public class PlayerField : MonoBehaviour, IDropHandler
 
             return; 
         }
+        #endregion
 
+        #region 핸드카드 필드로
         HandCard card = eventData.pointerDrag.transform.GetComponent<HandCard>();
         Player player = Player.localPlayer;
         int manaCost;
+
+        if (card == null) { return; }//필드카드도 육성에서 여기다 놓을수도 있기에 핸드카드만 받게끔
+
         if (card.isEvoCard)
         { manaCost = card.Ecost; }
         else
@@ -97,10 +104,13 @@ public class PlayerField : MonoBehaviour, IDropHandler
             player.combat.CmdChangeMana(-manaCost); // Reduce player's mana
 
         }
+        #endregion
     }
 
     public void UpdateFieldCards()
     {
+        UpdateTamerEffect();
+
         int cardCount = content.childCount;
         for (int i = 0; i < cardCount; ++i)
         {
@@ -116,12 +126,26 @@ public class PlayerField : MonoBehaviour, IDropHandler
         }
     }
 
+    public void UpdateTamerEffect()
+    {
+        int cardCount = content.childCount;
+        for (int i = 0; i < cardCount; ++i)
+        {
+            FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
+
+            if (card.card.data is SpellCard spellCard && spellCard.isTamer)
+            {
+                //테이머 턴개시,끝날시 발동될 효과
+                spellCard.FindTamerTarget(content);
+                spellCard.FindTamerTarget(raiseContent);
+            }
+        }
+    }
+
     public void EndTurnFieldCards()
     {
         //플레이어 버프 제거
-
         Player players = Player.localPlayer;
-
 
         if (players.buffs.Count > 0)
         {
@@ -136,7 +160,6 @@ public class PlayerField : MonoBehaviour, IDropHandler
                 }
             }
         }
-        
         
 
         //각 카드별 버프제거

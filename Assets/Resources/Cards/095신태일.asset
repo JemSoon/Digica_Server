@@ -25,7 +25,7 @@ MonoBehaviour:
   targeted: 0
   healthChange: 0
   strengthChange: 0
-  memoryChange: 3
+  memoryChange: 0
   cardDraw: 0
   untilEndOfTurn: 0
   isTamer: 1
@@ -39,8 +39,8 @@ MonoBehaviour:
     isJamming: 0
     isBlock: 0
     breakEvo: 0
-    isFix: 1
-    securityAttack: 0
+    isFix: 0
+    securityAttack: 1
     waitTurn: 0
     removeEvoCount: 0
     buffTurn: -1

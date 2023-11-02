@@ -51,8 +51,8 @@ public partial class CreatureCard : ScriptableCard
 
         else
         {
-            attacker.GetComponentInParent<FieldCard>().CmdChangeAttacked(true);
-            attacker.GetComponent<FieldCard>().CmdRotation(attacker.GetComponent<FieldCard>(), Quaternion.Euler(0, 0, -90));
+            //attacker.GetComponentInParent<FieldCard>().CmdChangeAttacked(true);
+            //attacker.GetComponent<FieldCard>().CmdRotation(attacker.GetComponent<FieldCard>(), Quaternion.Euler(0, 0, -90));
             attacker.combat.CmdBattle(attacker, target); 
         }
         
@@ -60,7 +60,8 @@ public partial class CreatureCard : ScriptableCard
         
         if (attacker.CanAttack())
         { 
-            attacker.combat.CmdIncreaseWaitTurn(); 
+            attacker.combat.CmdIncreaseWaitTurn();
+            attacker.GetComponentInParent<FieldCard>().CmdChangeAttacked(true);
         }
         else if (attacker.CantAttack() && ((FieldCard)attacker).securityAttack > 0)
         {

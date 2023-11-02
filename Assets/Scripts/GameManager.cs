@@ -125,20 +125,9 @@ public class GameManager : NetworkBehaviour
         }
         else //내 턴이 아니게 된 플레이어는 CmdEndTurn함수를 통해 정돈할것 정돈
         {
-            //playerField.EndTurnFieldCards();//턴 끝날때 필드 카드중 스펠카드 삭제
+            playerField.UpdateTamerEffect();//턴 끝날때 버프 제거하는 함수
             Player.localPlayer.deck.CmdEndTurn();
             Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
-
-            //if (Player.localPlayer.isTargeting)
-            //{
-            //    isTargeting이 늦게들어와서 여기 안걸림
-            //    //상대 턴으로 넘어가면 타게팅 마우스 없앰(아직 삭제 전이라 -1 삭제는 밑에 playerField.EndTurnFieldCards)
-            //    if (((FieldCard)caster).card.data is SpellCard spellCard && spellCard.buff.buffTurn -1 <= 0)
-            //    {
-            //        caster.DestroyTargetingArrow();
-            //        caster = null;
-            //    }
-            //}
         }
         playerField.EndTurnFieldCards();
     }

@@ -69,6 +69,7 @@ public class Combat : NetworkBehaviour
             target = target.GetComponent<FieldCard>().upperCard;
         }
         #endregion
+        ((FieldCard)attacker).CmdRotation(((FieldCard)attacker), Quaternion.Euler(0, 0, -90));
 
         if (((FieldCard)target).card.data is SpellCard spellCard)
         {

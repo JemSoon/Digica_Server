@@ -36,12 +36,13 @@ public class FieldCard : Entity
     public FieldCard underCard;
     public bool isUpperMostCard => upperCard == null; // 최상단 카드인가?
     public bool isUnderMostCard => underCard == null; // 최하단 카드인가?
+    [SyncVar]public int evoCount;// 최상단에서 진화원 개수
 
     [Header("Security")]
     [SyncVar]public bool isSecurity = false;
     //[Header("SpellEffect")]
     //readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
-    public Buffs tempBuff;//텍스트 시각효과를 위해 받아놓을 버프 변수
+    /*[SyncVar] */public Buffs tempBuff;//텍스트 시각효과를 위해 받아놓을 버프 변수
 
     [Header("Buffs")]
     [SyncVar] public int securityAttack = 0;
@@ -84,7 +85,7 @@ public class FieldCard : Entity
             {
                 cardDragHover.canDrag = true; //player.deck.CanPlayCard(manaCost); //원래는 마나 총량 넘으면 못내게 했는데 ECost라는 다른 루트땜에 일단 낼 수 있게함
             }
-        }
+        }    
     }
 
     [Command(requiresAuthority = false)]
@@ -109,12 +110,16 @@ public class FieldCard : Entity
     [Command(requiresAuthority = false)]
     public void CmdDestroySpellCard()
     {
-        if (card.data is SpellCard spellCard && isTargeting == false && !spellCard.isTamer)
+        if (card.data is SpellCard spellCard && isTargeting == false)
         {
             //player.deck.playerField.Remove(card);//안씀
             //player.deck.graveyard.Add(card);//카드를 꺼내자마자 무덤에 저장되야함
             spellCard.EndTurnEffect(player);
-            Destroy(this.gameObject);
+            
+            if (!spellCard.isTamer)
+            { 
+                Destroy(this.gameObject); 
+            }
         }
     }
 
@@ -192,7 +197,13 @@ public class FieldCard : Entity
     public void CmdRemoveBuff(int index)
     {
         buffs.RemoveAt(index);
-        Debug.Log("버프 제거 완료");
+        Debug.Log("버프 인덱스로 제거 완료");
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdRemoveBuff(Buffs buff)
+    {
+        buffs.Remove(buff);
+        Debug.Log("버프 특정해 제거 완료");
     }
     [ClientRpc]
     public void RpcTextSetActive(Buffs buff, bool isStart)
@@ -263,6 +274,7 @@ public class FieldCard : Entity
                 fieldCard = fieldCard.upperCard;
                 fieldCard.underCard = null;
             }
+            evoCount = 0; //진화원 전부 파괴이기에 evoCount도 맞게 초기화
             RpcRemoveEvoAfter(fieldCard);
         }
     }

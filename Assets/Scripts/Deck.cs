@@ -176,6 +176,7 @@ public class Deck : NetworkBehaviour
         underCard.upperCard = newCard;
 
         newCard.waitTurn = underCard.waitTurn;
+        newCard.evoCount = underCard.evoCount + 1;
 
         // If creature has charge, reduce waitTurn to 0 so they can attack right away.
         if (creature.hasCharge) newCard.waitTurn = 0;
@@ -246,6 +247,7 @@ public class Deck : NetworkBehaviour
         underCard.upperCard = newCard;
 
         newCard.waitTurn = underCard.waitTurn;
+        newCard.evoCount = underCard.evoCount + 1;
 
         // If creature has charge, reduce waitTurn to 0 so they can attack right away.
         if (creature.hasCharge) newCard.waitTurn = 0;
@@ -530,6 +532,7 @@ public class Deck : NetworkBehaviour
             if (target.player.isLocalPlayer)
             {
                 attacker.combat.CmdBattle(attacker, target);
+                //((FieldCard)attacker).CmdRotation(((FieldCard)attacker), Quaternion.Euler(0, 0, -90));
             }
         }
     }

@@ -255,4 +255,39 @@ public partial class SpellCard : ScriptableCard
             
         }
     }
+
+    public void FindTamerTarget(FieldCard card)
+    {
+        //모든 필드카드가 아닌 특정 카드에 테이머 효과 부여될건지 체크하는 함수
+
+        switch (cardName)
+        {
+            case "신태일":
+                if (card == null) { return; }
+                if (card.evoCount >= 4)
+                {
+                    if (card.player.IsOurTurn())
+                    {
+                        card.CmdAddBuff(buff);
+                        card.CmdChangeSomeThing(buff, true);
+                    }
+                    else
+                    {
+                        card.CmdChangeSomeThing(buff, false);
+
+                        for (int a = card.buffs.Count - 1; a >= 0; --a)
+                        {
+                            if (card.buffs[a].cardname == buff.cardname)
+                            {
+                                //버프는 턴이지남에따라 증가해서 buff==card.buff가 될수 없다(턴이 --되면서 다르게 되기 때문)
+                                //즉 이름으로 같은버프인지 찾아서 인덱스로 제거 
+                                card.CmdRemoveBuff(a);
+                            }
+                        }
+                        //card.CmdRemoveBuff(buff);
+                    }
+                }
+                break;
+        }
+    }
 }

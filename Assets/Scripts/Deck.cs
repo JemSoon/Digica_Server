@@ -452,6 +452,8 @@ public class Deck : NetworkBehaviour
             boardCard.transform.SetParent(Player.gameManager.playerRaiseField.content, false);
             Player.gameManager.playerHand.RemoveCard(index); // Update player's hand
             Player.gameManager.isSpawning = false;
+
+            CheckTamerInField(newCard); //새로 카드 올릴 시 테이머 효과 체크(현재 신태일 확인용, 나중에 다른 효과들도 있다면 거기에 맞게 스폰상황 PlayCard에 추가해야함)
         }
         else if (player.hasEnemy)
         {
@@ -543,4 +545,21 @@ public class Deck : NetworkBehaviour
         }
     }
 
+    public void CheckTamerInField(FieldCard spawnCard)
+    {
+        //필드를 선회하며 테이머카드가 나와있는지 체크한다
+        int cardCount = Player.gameManager.playerField.content.childCount;
+        Transform content = Player.gameManager.playerField.content;
+
+        for (int i = 0; i < cardCount; ++i)
+        {
+            FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
+
+            if (card.card.data is SpellCard spellCard && spellCard.isTamer)
+            {   
+                //만약 필드에 이미 테이머 카드가 있다면 새로 spawn시킨 디지몬 카드에 해당 테이머 효과 적용할지 체크시킨다
+                spellCard.FindTamerTarget(spawnCard);
+            }
+        }
+    }
 }

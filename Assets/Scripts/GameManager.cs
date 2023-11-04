@@ -155,7 +155,7 @@ public class GameManager : NetworkBehaviour
         }
         else
         {
-            //playerField.EndTurnFieldCards();
+            playerField.UpdateTamerEffect();//턴 끝날때 버프 제거하는 함수
             Player.localPlayer.deck.CmdEndTurn();
             Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
 

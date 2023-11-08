@@ -69,6 +69,26 @@ public class Combat : NetworkBehaviour
             target = target.GetComponent<FieldCard>().upperCard;
         }
         #endregion
+
+        #region 진화원 효과 검색
+        FieldCard card = attacker.GetComponent<FieldCard>();
+
+        while (card.isUnderMostCard == false)
+        {
+            card = card.underCard;
+
+            for (int i = 0; i < ((CreatureCard)card.card.data).evolutionType.Count; ++i)
+            {
+                if (card.card.data is CreatureCard creatureCard && creatureCard.evolutionType[i] == EvolutionType.ATTACK)
+                {
+                    //최상단 카드에 하단 카드들의 진화원 효과 버프를 더한다
+                    //CreatureCard도 버프를 가지고 있어야함 
+                    creatureCard.AttackCast(card, attacker.GetComponent<FieldCard>());
+                }
+            }
+        }
+        #endregion
+
         ((FieldCard)attacker).CmdRotation(((FieldCard)attacker), Quaternion.Euler(0, 0, -90));
 
         if (((FieldCard)target).card.data is SpellCard spellCard)

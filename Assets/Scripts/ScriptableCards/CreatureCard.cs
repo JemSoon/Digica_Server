@@ -3,7 +3,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public enum CreatureType : byte { BEAST, DRAGON, ALL }
+public enum CreatureType : byte { ATTACK, EVO,  }
+public enum EvolutionType : byte { ATTACK, EVO, }
+
 
 // Struct for cards in your deck. Card + amount (ex : Sinister Strike x3). Used for Deck Building. Probably won't use it, just add amount to Card struct instead.
 [CreateAssetMenu(menuName = "Card/Creature Card", order = 111)]
@@ -20,6 +22,7 @@ public partial class CreatureCard : ScriptableCard
 
     [Header("Type")]
     public List<CreatureType> creatureType;
+    public List<EvolutionType> evolutionType;
 
     [Header("Specialities")]
     public bool hasCharge = false;
@@ -31,6 +34,9 @@ public partial class CreatureCard : ScriptableCard
 
     [Header("Board Prefab")]
     public FieldCard cardPrefab;
+
+    [Header("Buff")]
+    public Buffs buff;
 
     public virtual void Attack(Entity attacker, Entity target)
     {
@@ -91,6 +97,27 @@ public partial class CreatureCard : ScriptableCard
         {
             acceptableTargets.Add(Target.ENEMIES);
             acceptableTargets.Add(Target.OPPONENT);
+        }
+    }
+
+    public override void StartCast(Entity caster, Entity target)
+    {
+
+    }
+
+    public void AttackCast(FieldCard caster, FieldCard target)
+    {
+        switch(cardName)
+        {
+            case "¾î´Ï¸ó":
+                target = caster.upperCard;
+                while(target!=target.isUpperMostCard)
+                {
+                    target = target.upperCard;
+                }
+                target.CmdChangeSomeThing(buff, true);
+                target.CmdAddBuff(buff);
+                break;
         }
     }
 }

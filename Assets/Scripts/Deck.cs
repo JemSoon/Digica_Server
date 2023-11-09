@@ -194,6 +194,19 @@ public class Deck : NetworkBehaviour
             newCard.CmdRotation(newCard, Quaternion.Euler(0, 0, -90));
         }
 
+        if(underCard.buffs.Count > 0)
+        {
+            //아래가 될 카드가 버프가 있다면
+            for(int i = underCard.buffs.Count-1; i>=0; i--)
+            {
+                //전부 새로 올라갈 카드에 옮겨주고 버프를 빼고 제거
+                newCard.CmdAddBuff(underCard.buffs[i]);
+                newCard.CmdChangeSomeThing(underCard.buffs[i], true);
+                underCard.CmdChangeSomeThing(underCard.buffs[i], false);
+                underCard.CmdRemoveBuff(i);
+            } 
+        }
+
         // Remove card from hand
         hand.RemoveAt(index);
 

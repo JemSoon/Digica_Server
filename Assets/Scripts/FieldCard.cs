@@ -42,7 +42,7 @@ public class FieldCard : Entity
     [SyncVar]public bool isSecurity = false;
     //[Header("SpellEffect")]
     //readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
-    /*[SyncVar] */public Buffs tempBuff;//텍스트 시각효과를 위해 받아놓을 버프 변수
+    [SyncVar] public Buffs tempBuff;//텍스트 시각효과를 위해 받아놓을 버프 변수
 
     [Header("Buffs")]
     [SyncVar] public int securityAttack = 0;
@@ -167,7 +167,7 @@ public class FieldCard : Entity
             }
             else
             {
-                tempBuff.buffDP -= buff.buffDP;
+                //tempBuff.buffDP -= buff.buffDP;//??이게 왜 여기에?
                 strength -= buff.buffDP;
             }
             securityAttack = 0;
@@ -213,6 +213,7 @@ public class FieldCard : Entity
             tempBuff.isFix = buff.isFix;
             tempBuff.buffDP += buff.buffDP;
             tempBuff.securityAttack += buff.securityAttack;
+            tempBuff.buffTurn = buff.buffTurn;
 
             if (tempBuff.buffDP != 0)
             {

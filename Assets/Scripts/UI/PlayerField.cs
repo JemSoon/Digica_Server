@@ -122,6 +122,11 @@ public class PlayerField : MonoBehaviour, IDropHandler
                 spellCard.StartTamerCast(card.player);
             }
 
+            //else if (card.card.data is CreatureCard creatureCard && creatureCard.evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+            //{
+            //    creatureCard.MyTurnCast(card, card.upperCard);
+            //}
+
             card.CmdUpdateWaitTurn();
         }
     }
@@ -142,7 +147,21 @@ public class PlayerField : MonoBehaviour, IDropHandler
         }
     }
 
-    public void EndTurnFieldCards()
+    public void UpdateTurnEvoEffect()
+    {
+        int cardCount = content.childCount;
+        for (int i = 0; i < cardCount; ++i)
+        {
+            FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
+
+            if (card.card.data is CreatureCard creatureCard && creatureCard.evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+            {
+                creatureCard.MyTurnCast(card, card.upperCard);
+            }
+        }
+    }
+
+    public void EndBuffTurnSpellCards()
     {
         //플레이어 버프 제거
         Player players = Player.localPlayer;

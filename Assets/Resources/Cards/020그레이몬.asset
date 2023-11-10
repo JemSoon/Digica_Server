@@ -28,8 +28,21 @@ MonoBehaviour:
   level: 4
   acceptableTargets: 0301
   creatureType: 
+  evolutionType: 02
   hasCharge: 0
   hasTaunt: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 7582166961649262295, guid: 27801e35bdc329143b17b015777515b9, type: 3}
+  buff:
+    cardname: "\uADF8\uB808\uC774\uBAAC"
+    buffDP: 2000
+    isJamming: 0
+    isBlock: 0
+    breakEvo: 0
+    isFix: 0
+    securityAttack: 0
+    waitTurn: 0
+    removeEvoCount: 0
+    buffTurn: -1
+    smashPotato: 0

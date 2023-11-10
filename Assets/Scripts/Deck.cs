@@ -207,6 +207,13 @@ public class Deck : NetworkBehaviour
             } 
         }
 
+        //만약 아래카드가 나의턴 진화원 효과가 있다면 즉시 새 카드에 추가
+        if(((CreatureCard)underCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+        {
+            newCard.CmdAddBuff(((CreatureCard)underCard.card.data).buff);
+            newCard.CmdChangeSomeThing(((CreatureCard)underCard.card.data).buff, true);
+        }
+
         // Remove card from hand
         hand.RemoveAt(index);
 

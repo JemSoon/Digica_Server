@@ -129,7 +129,8 @@ public class GameManager : NetworkBehaviour
             Player.localPlayer.deck.CmdEndTurn();
             Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
         }
-        playerField.EndTurnFieldCards();
+        playerField.EndBuffTurnSpellCards();
+        playerField.UpdateTurnEvoEffect();
     }
 
     [ClientRpc]
@@ -169,7 +170,9 @@ public class GameManager : NetworkBehaviour
                  }
             }
         }
-        playerField.EndTurnFieldCards();
+
+        playerField.EndBuffTurnSpellCards();
+        playerField.UpdateTurnEvoEffect();
     }
 
     public void StartGame()

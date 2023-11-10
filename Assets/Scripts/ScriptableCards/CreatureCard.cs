@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public enum CreatureType : byte { ATTACK, EVO,  }
-public enum EvolutionType : byte { ATTACK, EVO, }
+public enum EvolutionType : byte { ATTACK, EVO, MYTURN, }
 
 
 // Struct for cards in your deck. Card + amount (ex : Sinister Strike x3). Used for Deck Building. Probably won't use it, just add amount to Card struct instead.
@@ -117,6 +117,41 @@ public partial class CreatureCard : ScriptableCard
                 }
                 target.CmdChangeSomeThing(buff, true);
                 target.CmdAddBuff(buff);
+                break;
+        }
+    }
+
+    public void MyTurnCast(FieldCard caster, FieldCard target)
+    {
+        switch (cardName)
+        {
+            case "그레이몬":
+                
+                if (caster.upperCard == null) { return; }
+
+                target = caster.upperCard;
+                while (target != target.isUpperMostCard)
+                {
+                    target = target.upperCard;
+                }
+                if (caster.player.IsOurTurn())
+                {
+                    target.CmdChangeSomeThing(buff, true);
+                    target.CmdAddBuff(buff);
+                }
+                else
+                {
+                    for (int a = target.buffs.Count - 1; a >= 0; --a)
+                    {
+                        if (target.buffs[a].cardname == buff.cardname)
+                        {
+                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                            target.CmdChangeSomeThing(buff, false);
+                            target.CmdRemoveBuff(a);
+                        }
+                    }
+                }
+                
                 break;
         }
     }

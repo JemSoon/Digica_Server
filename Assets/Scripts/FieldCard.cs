@@ -42,7 +42,7 @@ public class FieldCard : Entity
     [SyncVar]public bool isSecurity = false;
     //[Header("SpellEffect")]
     //readonly public SyncList<Buffs> buffs = new SyncList<Buffs>(); // 효과 받은 수치를 저장해 두기
-    [SyncVar] public Buffs tempBuff;//텍스트 시각효과를 위해 받아놓을 버프 변수
+    /*[SyncVar]*/ public Buffs tempBuff;//텍스트 시각효과를 위해 받아놓을 버프 변수
 
     [Header("Buffs")]
     [SyncVar] public int securityAttack = 0;

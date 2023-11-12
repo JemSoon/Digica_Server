@@ -86,7 +86,7 @@ public class GameManager : NetworkBehaviour
         if (!isHoveringField)
         {
             if (cardObject.IsDestroyed()) { return; }
-            if(cardObject.GetComponent<FieldCard>() == null) { return; }
+            if(cardObject == null) { return; }
             FieldCard card = cardObject.GetComponent<FieldCard>();
             if(card==null) return; // 혹시나 싶은 안전코드 cardObject==null이 맞나?
             Color shine = activateShine ? card.hoverColor : Color.clear;
@@ -130,7 +130,7 @@ public class GameManager : NetworkBehaviour
             Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
         }
         playerField.EndBuffTurnSpellCards();
-        playerField.UpdateTurnEvoEffect();
+        //playerField.UpdateTurnEvoEffect();
     }
 
     [ClientRpc]
@@ -172,7 +172,7 @@ public class GameManager : NetworkBehaviour
         }
 
         playerField.EndBuffTurnSpellCards();
-        playerField.UpdateTurnEvoEffect();
+        //playerField.UpdateTurnEvoEffect();
     }
 
     public void StartGame()

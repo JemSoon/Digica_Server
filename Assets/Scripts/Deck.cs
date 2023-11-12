@@ -208,8 +208,9 @@ public class Deck : NetworkBehaviour
         }
 
         //만약 아래카드가 나의턴 진화원 효과가 있다면 즉시 새 카드에 추가
-        if(((CreatureCard)underCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+        if (((CreatureCard)underCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
         {
+            //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
             newCard.CmdAddBuff(((CreatureCard)underCard.card.data).buff);
             newCard.CmdChangeSomeThing(((CreatureCard)underCard.card.data).buff, true);
         }
@@ -358,7 +359,9 @@ public class Deck : NetworkBehaviour
     [Command]
     public void CmdRaiseToBattle(FieldCard fieldCard, Player owner)
     {
-        while(fieldCard.isUnderMostCard == false)
+        FieldCard mostUpperCard = fieldCard.FindMostUpperCard();
+
+        while (fieldCard.isUnderMostCard == false)
         {
             //최하단 카드 우선 가져오기
             fieldCard = fieldCard.underCard;
@@ -366,6 +369,13 @@ public class Deck : NetworkBehaviour
 
         while (fieldCard.isUpperMostCard == false)
         {
+            //최하단 부터 차례차례 나의 턴 진화원 효과가 있으면 최상단 카드에 넣어준다
+            if (((CreatureCard)fieldCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+            {
+                mostUpperCard.CmdAddBuff(((CreatureCard)fieldCard.card.data).buff);
+                mostUpperCard.CmdChangeSomeThing(((CreatureCard)fieldCard.card.data).buff, true);
+            }
+
             if (isServer) RpcMoveRaiseToBattle(fieldCard, true);
             fieldCard = fieldCard.upperCard;
         }

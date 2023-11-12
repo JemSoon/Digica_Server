@@ -106,6 +106,15 @@ public class FieldCard : Entity
             upperCard.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition + new Vector2(0, 47);
         }
     }
+    public FieldCard FindMostUpperCard()
+    {
+        FieldCard mostCard = this;
+        while(!mostCard.isUpperMostCard)
+        {
+            mostCard = mostCard.upperCard;
+        }
+        return mostCard;
+    }
 
     [Command(requiresAuthority = false)]
     public void CmdDestroySpellCard()
@@ -196,6 +205,12 @@ public class FieldCard : Entity
     [Command(requiresAuthority = false)]
     public void CmdRemoveBuff(int index)
     {
+        if(index >= buffs.Count || index < 0) 
+        {
+            Debug.Log(buffs.Count + " " + index);
+            return; 
+        }
+        Debug.Log(player + "의 " + card.data.cardName + "의 버프인 " + buffs[index].cardname + " 제거 진행중");
         buffs.RemoveAt(index);
         Debug.Log("버프 인덱스로 제거 완료");
     }
@@ -213,7 +228,7 @@ public class FieldCard : Entity
             tempBuff.isFix = buff.isFix;
             tempBuff.buffDP += buff.buffDP;
             tempBuff.securityAttack += buff.securityAttack;
-            tempBuff.buffTurn = buff.buffTurn;
+            //tempBuff.buffTurn = buff.buffTurn;
 
             if (tempBuff.buffDP != 0)
             {

@@ -141,17 +141,49 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
-                    for (int a = target.buffs.Count - 1; a >= 0; --a)
+                    if (target.buffs.Count > 0)
                     {
-                        if (target.buffs[a].cardname == buff.cardname)
+                        for (int a = target.buffs.Count - 1; a >= 0; --a)
                         {
-                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
-                            target.CmdChangeSomeThing(buff, false);
-                            target.CmdRemoveBuff(a);
+                            if (target.buffs[a].cardname == buff.cardname)
+                            {
+                                //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                                target.CmdChangeSomeThing(buff, false);
+                                target.CmdRemoveBuff(a);
+                            }
                         }
                     }
                 }
-                
+                break;
+
+            case "메탈그레이몬(청)":
+                if (caster.upperCard == null) { return; }
+
+                target = caster.upperCard;
+                while (target != target.isUpperMostCard)
+                {
+                    target = target.upperCard;
+                }
+                if (caster.player.IsOurTurn())
+                {
+                    target.CmdChangeSomeThing(buff, true);
+                    target.CmdAddBuff(buff);
+                }
+                else
+                {
+                    if (target.buffs.Count > 0)
+                    {
+                        for (int a = target.buffs.Count - 1; a >= 0; --a)
+                        {
+                            if (target.buffs[a].cardname == buff.cardname)
+                            {
+                                //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                                target.CmdChangeSomeThing(buff, false);
+                                target.CmdRemoveBuff(a);
+                            }
+                        }
+                    }
+                }
                 break;
         }
     }

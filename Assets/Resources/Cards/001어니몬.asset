@@ -22,7 +22,7 @@ MonoBehaviour:
   intiatives: []
   hasInitiative: 0
   description: 
-  strength: 0
+  strength: 1
   health: 1
   Ecost: 0
   level: 2

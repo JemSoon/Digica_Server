@@ -153,8 +153,9 @@ public class PlayerField : MonoBehaviour, IDropHandler
         for (int i = 0; i < cardCount; ++i)
         {
             FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
+            if(card==null) { return; }
 
-            if (card.card.data is CreatureCard creatureCard && creatureCard.evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+            if (card.card.data is CreatureCard creatureCard && creatureCard.evolutionType.Exists(evo => evo == EvolutionType.MYTURN) && card.upperCard!=null)
             {
                 creatureCard.MyTurnCast(card, card.upperCard);
             }
@@ -205,6 +206,8 @@ public class PlayerField : MonoBehaviour, IDropHandler
 
             card.CmdDestroySpellCard();
         }
+
+        UpdateTurnEvoEffect();
     }
 
     public int GetFieldCardCount()

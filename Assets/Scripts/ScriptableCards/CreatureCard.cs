@@ -143,15 +143,15 @@ public partial class CreatureCard : ScriptableCard
                 {
                     if (target.buffs.Count > 0)
                     {
-                        for (int a = target.buffs.Count - 1; a >= 0; --a)
-                        {
-                            if (target.buffs[a].cardname == buff.cardname)
+                        //for (int a = target.buffs.Count - 1; a >= 0; --a)
+                        //{
+                        //    if (target.buffs[a].cardname == buff.cardname)
                             {
                                 //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                                 target.CmdChangeSomeThing(buff, false);
-                                target.CmdRemoveBuff(a);
+                                target.CmdRemoveBuff(buff.cardname);
                             }
-                        }
+                        //}
                     }
                 }
                 break;
@@ -173,15 +173,15 @@ public partial class CreatureCard : ScriptableCard
                 {
                     if (target.buffs.Count > 0)
                     {
-                        for (int a = target.buffs.Count - 1; a >= 0; --a)
-                        {
-                            if (target.buffs[a].cardname == buff.cardname)
+                        //for (int a = target.buffs.Count - 1; a >= 0; --a)
+                        //{
+                        //    if (target.buffs[a].cardname == buff.cardname)
                             {
                                 //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                                 target.CmdChangeSomeThing(buff, false);
-                                target.CmdRemoveBuff(a);
+                                target.CmdRemoveBuff(buff.cardname);
                             }
-                        }
+                        //}
                     }
                 }
                 break;

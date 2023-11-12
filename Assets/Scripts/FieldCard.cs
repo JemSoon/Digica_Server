@@ -205,18 +205,19 @@ public class FieldCard : Entity
     [Command(requiresAuthority = false)]
     public void CmdRemoveBuff(int index)
     {
-        if(index >= buffs.Count || index < 0) 
-        {
-            Debug.Log(buffs.Count + " " + index);
-            return; 
-        }
+        //if(index >= buffs.Count || index < 0) 
+        //{
+        //    Debug.Log(buffs.Count + " " + index);
+        //    return; 
+        //}
         Debug.Log(player + "의 " + card.data.cardName + "의 버프인 " + buffs[index].cardname + " 제거 진행중");
         buffs.RemoveAt(index);
         Debug.Log("버프 인덱스로 제거 완료");
     }
     [Command(requiresAuthority = false)]
-    public void CmdRemoveBuff(Buffs buff)
+    public void CmdRemoveBuff(string buffName)
     {
+        Buffs buff = buffs.Find(buffs => buffName.Equals(buffs.cardname));
         buffs.Remove(buff);
         Debug.Log("버프 특정해 제거 완료");
     }

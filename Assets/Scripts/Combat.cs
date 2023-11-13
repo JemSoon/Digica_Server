@@ -107,6 +107,17 @@ public class Combat : NetworkBehaviour
         {
             if (attacker.strength < target.strength)
             {
+                CreatureCard creatureCard = ((CreatureCard)((FieldCard)attacker).card.data);
+                if(creatureCard.hasJamming && ((FieldCard)target).isSecurity)
+                {
+                    //어택커의 최상단 카드가 재밍이면 소멸하지 않음 return시켜야 함
+                    //근데 타겟은 시큐리티니까 무덤으로
+                    target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
+                    Destroy(target.gameObject);
+                    return;
+                }
+
+
                 // 마지막 카드 전까지 모든 카드 삭제
                 while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
                 {

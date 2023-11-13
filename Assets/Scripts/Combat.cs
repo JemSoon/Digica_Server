@@ -105,10 +105,11 @@ public class Combat : NetworkBehaviour
 
         else 
         {
+            CreatureCard attackerCreatureCard = ((CreatureCard)((FieldCard)attacker).card.data);
+
             if (attacker.strength < target.strength)
             {
-                CreatureCard creatureCard = ((CreatureCard)((FieldCard)attacker).card.data);
-                if(creatureCard.hasJamming && ((FieldCard)target).isSecurity)
+                if(attackerCreatureCard.hasJamming && ((FieldCard)target).isSecurity)
                 {
                     //어택커의 최상단 카드가 재밍이면 소멸하지 않음 return시켜야 함
                     //근데 타겟은 시큐리티니까 무덤으로
@@ -158,6 +159,12 @@ public class Combat : NetworkBehaviour
                 target.IsDead = true;
                 target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
                 Destroy(target.gameObject);
+
+                if(attackerCreatureCard.hasSpear && !((FieldCard)target).isSecurity)
+                {
+                    //세큐리티 추가 공격
+                    attackerCreatureCard.Attack(attacker, ((FieldCard)target).player);
+                }
             }
 
             else//둘다 공격력이 같을때

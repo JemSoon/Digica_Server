@@ -146,6 +146,7 @@ public class FieldCard : Entity
             }
             else
             {
+                //여기에 if(버프 whenItSpear==true)라면 최상단 카드가 hasSpear일때만 발동 아니면 return;
                 //해당 버프가 더하는 값이면
                 strength += buff.buffDP;
                 securityAttack += buff.securityAttack;

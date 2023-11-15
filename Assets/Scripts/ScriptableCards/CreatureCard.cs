@@ -39,7 +39,8 @@ public partial class CreatureCard : ScriptableCard
     public FieldCard cardPrefab;
 
     [Header("Buff")]
-    public Buffs buff;
+    public Buffs buff;//디지몬 버프
+    public Buffs evolutionBuff;//진화원 버프
 
     public virtual void Attack(Entity attacker, Entity target)
     {
@@ -139,22 +140,18 @@ public partial class CreatureCard : ScriptableCard
                 }
                 if (caster.player.IsOurTurn())
                 {
-                    target.CmdChangeSomeThing(buff, true);
-                    target.CmdAddBuff(buff);
+                    target.CmdChangeSomeThing(evolutionBuff, true);
+                    target.CmdAddBuff(evolutionBuff);
                 }
                 else
                 {
                     if (target.buffs.Count > 0)
                     {
-                        //for (int a = target.buffs.Count - 1; a >= 0; --a)
-                        //{
-                        //    if (target.buffs[a].cardname == buff.cardname)
-                            {
-                                //내 턴이 아닌동안 그레이몬 버프 찾아 제거
-                                target.CmdChangeSomeThing(buff, false);
-                                target.CmdRemoveBuff(buff.cardname);
-                            }
-                        //}
+                        {
+                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                            target.CmdChangeSomeThing(evolutionBuff, false);
+                            target.CmdRemoveBuff(evolutionBuff.cardname);
+                        }
                     }
                 }
                 break;
@@ -169,22 +166,48 @@ public partial class CreatureCard : ScriptableCard
                 }
                 if (caster.player.IsOurTurn())
                 {
-                    target.CmdChangeSomeThing(buff, true);
-                    target.CmdAddBuff(buff);
+                    target.CmdChangeSomeThing(evolutionBuff, true);
+                    target.CmdAddBuff(evolutionBuff);
                 }
                 else
                 {
                     if (target.buffs.Count > 0)
                     {
-                        //for (int a = target.buffs.Count - 1; a >= 0; --a)
-                        //{
-                        //    if (target.buffs[a].cardname == buff.cardname)
-                            {
-                                //내 턴이 아닌동안 그레이몬 버프 찾아 제거
-                                target.CmdChangeSomeThing(buff, false);
-                                target.CmdRemoveBuff(buff.cardname);
-                            }
-                        //}
+                        {
+                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                            target.CmdChangeSomeThing(evolutionBuff, false);
+                            target.CmdRemoveBuff(evolutionBuff.cardname);
+                        }
+                    }
+                }
+                break;
+
+            case "베이비드몬":
+                if (caster.upperCard == null) { return; }
+
+                target = caster.upperCard;
+                while (target != target.isUpperMostCard)
+                {
+                    target = target.upperCard;
+                }
+                if (caster.player.IsOurTurn())
+                {
+                    if (((CreatureCard)target.card.data).hasSpear)
+                    {
+                        //FieldCard에 CreatureCard의 isSpear정보를 따로 bool로 받아야함 
+                        target.CmdChangeSomeThing(evolutionBuff, true);
+                        target.CmdAddBuff(evolutionBuff);
+                    }
+                }
+                else
+                {
+                    if (target.buffs.Count > 0)
+                    {
+                        {
+                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                            target.CmdChangeSomeThing(evolutionBuff, false);
+                            target.CmdRemoveBuff(evolutionBuff.cardname);
+                        }
                     }
                 }
                 break;

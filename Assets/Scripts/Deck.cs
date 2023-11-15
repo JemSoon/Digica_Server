@@ -211,8 +211,8 @@ public class Deck : NetworkBehaviour
         if (((CreatureCard)underCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
         {
             //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
-            newCard.CmdAddBuff(((CreatureCard)underCard.card.data).buff);
-            newCard.CmdChangeSomeThing(((CreatureCard)underCard.card.data).buff, true);
+            newCard.CmdAddBuff(((CreatureCard)underCard.card.data).evolutionBuff);
+            newCard.CmdChangeSomeThing(((CreatureCard)underCard.card.data).evolutionBuff, true);
         }
 
         // Remove card from hand
@@ -372,8 +372,8 @@ public class Deck : NetworkBehaviour
             //최하단 부터 차례차례 나의 턴 진화원 효과가 있으면 최상단 카드에 넣어준다
             if (((CreatureCard)fieldCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
             {
-                mostUpperCard.CmdAddBuff(((CreatureCard)fieldCard.card.data).buff);
-                mostUpperCard.CmdChangeSomeThing(((CreatureCard)fieldCard.card.data).buff, true);
+                mostUpperCard.CmdAddBuff(((CreatureCard)fieldCard.card.data).evolutionBuff);
+                mostUpperCard.CmdChangeSomeThing(((CreatureCard)fieldCard.card.data).evolutionBuff, true);
             }
 
             if (isServer) RpcMoveRaiseToBattle(fieldCard, true);

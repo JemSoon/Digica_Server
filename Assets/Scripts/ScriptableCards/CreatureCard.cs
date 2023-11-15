@@ -119,8 +119,8 @@ public partial class CreatureCard : ScriptableCard
                 {
                     target = target.upperCard;
                 }
-                target.CmdChangeSomeThing(buff, true);
-                target.CmdAddBuff(buff);
+                target.CmdChangeSomeThing(evolutionBuff, true);
+                target.CmdAddBuff(evolutionBuff);
                 break;
         }
     }

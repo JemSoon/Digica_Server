@@ -338,12 +338,18 @@ public class Player : Entity
         }
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdSetActiveBlockPanel(Player owner)
+    {
+        RPCSetActiveBlockPanel(owner);
+    }
+
     [ClientRpc]
     public void RPCSetActiveBlockPanel(Player owner)
     {
         if(owner == Player.localPlayer)
         {
-            //Player.gameManager.ºí·ÏÆÇ³Ú.SetActive(true);
+            Player.gameManager.blockPanel.SetActive(true);
         }
     }
 

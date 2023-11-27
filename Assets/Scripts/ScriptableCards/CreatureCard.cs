@@ -75,7 +75,8 @@ public partial class CreatureCard : ScriptableCard
                     enemyCard.CmdSyncTargeting(enemyCard.player, true);
                     //Player player = Player.localPlayer.enemyInfo.data;
                     //Debug.Log(player.username);
-                    
+
+                    enemyCard.player.CmdSetActiveBlockPanel(enemyCard.player);
                     //enemyCard.player.블록선택해주세요.SetActive(true);
                     //target = 선택한 카드
                     //Test 스타트코루틴(Wait대상)

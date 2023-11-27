@@ -92,6 +92,8 @@ public abstract partial class Entity : NetworkBehaviour
     [ClientRpc]
     public void CheckBuff(Player player)
     {
+        if (this.GetComponent<FieldCard>() == null) { return; }
+
         //만약 버프 선택과 동시에 턴이 넘어갔다면, 턴넘어간 순간 버프가 끝난다면 그냥 선택지 파괴
         //테이머 버프는 무제한이라 -1주기땜에 0보다 작거나 같은경우의 조건은 안됨
         if (player.IsOurTurn() == false && player.isTargeting == true && ((FieldCard)this).card.data is SpellCard spellCard && spellCard.buff.buffTurn - 1 == 0)

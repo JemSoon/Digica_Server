@@ -337,5 +337,15 @@ public class Player : Entity
             }
         }
     }
+
+    [ClientRpc]
+    public void RPCSetActiveBlockPanel(Player owner)
+    {
+        if(owner == Player.localPlayer)
+        {
+            //Player.gameManager.ºí·ÏÆÇ³Ú.SetActive(true);
+        }
+    }
+
     public bool IsOurTurn() => gameManager.isOurTurn;
 }

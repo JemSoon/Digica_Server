@@ -61,9 +61,35 @@ public partial class CreatureCard : ScriptableCard
 
         else
         {
-            //attacker.GetComponentInParent<FieldCard>().CmdChangeAttacked(true);
-            //attacker.GetComponent<FieldCard>().CmdRotation(attacker.GetComponent<FieldCard>(), Quaternion.Euler(0, 0, -90));
-            attacker.combat.CmdBattle(attacker, target); 
+            GameObject enemyField = ((FieldCard)target).transform.parent.gameObject;
+            for (int i = 0; i < enemyField.transform.childCount; ++i)
+            {
+                FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
+
+
+                //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
+                if (enemyCard.isUpperMostCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
+                {
+                    //블록타임
+                    Debug.Log("블록 타입 디지몬 카드 있음!");
+                    enemyCard.CmdSyncTargeting(enemyCard.player, true);
+                    //Player player = Player.localPlayer.enemyInfo.data;
+                    //Debug.Log(player.username);
+                    
+                    //enemyCard.player.블록선택해주세요.SetActive(true);
+                    //target = 선택한 카드
+                    //Test 스타트코루틴(Wait대상)
+                    //Test target = 대상
+                    //attacker.combat.CmdBattle(attacker, target);
+                    break;
+                }
+                else
+                {
+                    Debug.Log("블록 타입 디지몬 카드 없음 일반 공격 실행");
+                    attacker.combat.CmdBattle(attacker, target);
+                }
+                //attacker.combat.CmdBattle(attacker, target);
+            }
         }
         
         attacker.DestroyTargetingArrow();

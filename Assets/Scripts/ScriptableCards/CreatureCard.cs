@@ -106,6 +106,11 @@ public partial class CreatureCard : ScriptableCard
         }
     }
 
+    public void ChangeTarget(FieldCard target)
+    {
+        target = target.player.blockCards[0];
+    }
+
     public bool isSameColor(CreatureCard card1, CreatureCard card2)
     {
         if(card1.color1 == card2.color1 ||

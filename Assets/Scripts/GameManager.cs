@@ -2,6 +2,7 @@ using UnityEngine;
 using Mirror;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameManager : NetworkBehaviour
 {
@@ -40,7 +41,8 @@ public class GameManager : NetworkBehaviour
     public Text panelText;
 
     public GameObject blockPanel;
-
+    public List<Image> blockImage;
+    public int blockIndex;
     // isHovering is only set to true on the Client that called the OnCardHover function.
     // We only want the hovering to appear on the enemy's Client, so we must exclude the OnCardHover caller from the Rpc call.
     [HideInInspector] public bool isHovering = false;
@@ -203,5 +205,10 @@ public class GameManager : NetworkBehaviour
             waitingPanel.SetActive(false);
         }
 
+    }
+
+    public void OnButtonClick(int index)
+    {
+        Debug.Log(index);
     }
 }

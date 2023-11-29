@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Mirror;
+using System.Collections.Generic;
 
 //Useful for UI. Whether the player is, well, a player or an enemy.
 public enum PlayerType { PLAYER, ENEMY };
@@ -40,6 +41,8 @@ public class Player : Entity
 
     [Header("Buffs")]
     [SyncVar] public bool smashPotato;
+
+    public List<FieldCard> blockCards;
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
@@ -347,10 +350,36 @@ public class Player : Entity
     [ClientRpc]
     public void RPCSetActiveBlockPanel(Player owner)
     {
-        if(owner == Player.localPlayer)
+        if (owner == Player.localPlayer)
         {
             Player.gameManager.blockPanel.SetActive(true);
+            blockCards = new List<FieldCard>();
+
+            int cardCount = Player.gameManager.playerField.content.childCount;
+            for (int i = 0; i < cardCount; ++i)
+            {
+                FieldCard card = Player.gameManager.playerField.content.GetChild(i).GetComponent<FieldCard>();
+
+                if(card.isUpperMostCard && card.card.data is CreatureCard creature && creature.hasBlocker)
+                {
+                    blockCards.Add(card);
+
+                    for (int j = 0; j < blockCards.Count; ++j)
+                    {
+                        Player.gameManager.blockImage[j].sprite = creature.image;
+                        Player.gameManager.blockImage[j].gameObject.SetActive(true);
+                    }
+                }
+            }
         }
+    }
+    [ClientRpc]
+    public void RPCOffBlockPanel(Player owner)
+    {
+        if (Player.gameManager.blockPanel.activeSelf && owner.isTargeting==false)
+        {
+            Player.gameManager.blockPanel.SetActive(false);
+        }   
     }
 
     public bool IsOurTurn() => gameManager.isOurTurn;

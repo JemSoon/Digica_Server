@@ -62,6 +62,7 @@ public partial class CreatureCard : ScriptableCard
         else
         {
             GameObject enemyField = ((FieldCard)target).transform.parent.gameObject;
+            bool foundBlocker = false; // 추가: 블록 타입 디지몬 카드를 찾았는지 여부
             for (int i = 0; i < enemyField.transform.childCount; ++i)
             {
                 FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
@@ -70,31 +71,22 @@ public partial class CreatureCard : ScriptableCard
                 //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
                 if (enemyCard.isUpperMostCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
                 {
+                    foundBlocker = true;
+                    Player.gameManager.CmdSyncTarget(target);
                     //블록타임
                     Debug.Log("블록 타입 디지몬 카드 있음!");
                     enemyCard.CmdSyncTargeting(enemyCard.player, true);
-                    //Player player = Player.localPlayer.enemyInfo.data;
-                    //Debug.Log(player.username);
 
                     enemyCard.player.CmdSetActiveBlockPanel(enemyCard.player);
-                    //enemyCard.player.블록선택해주세요.SetActive(true);
-                    //target = 선택한 카드
-                    //Test 스타트코루틴(Wait대상)
-                    //Test target = 대상
-                    //attacker.combat.CmdBattle(attacker, target);
-
-                    attacker.StartCoroutine(attacker.DelayBattle(attacker, target));
-                    //상대가 버튼 누르면 대상 변경
-
 
                     break;
                 }
-                else
-                {
-                    Debug.Log("블록 타입 디지몬 카드 없음 일반 공격 실행");
-                    attacker.combat.CmdBattle(attacker, target);
-                }
-                //attacker.combat.CmdBattle(attacker, target);
+            }
+
+            if(!foundBlocker)
+            {
+                //블로커가 상대 필드에 없다면 일반 공격 진행
+                attacker.combat.CmdBattle(attacker, target);
             }
         }
         
@@ -109,11 +101,6 @@ public partial class CreatureCard : ScriptableCard
         {
             attacker.combat.CmdReduceSecurityAttack();
         }
-    }
-
-    public void ChangeTarget(FieldCard target)
-    {
-        target = target.player.blockCards[0];
     }
 
     public bool isSameColor(CreatureCard card1, CreatureCard card2)

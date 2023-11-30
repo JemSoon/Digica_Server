@@ -40,6 +40,7 @@ public abstract partial class Entity : NetworkBehaviour
         //isTargeting = true;
         Player player = Player.localPlayer;
         CmdSyncTargeting(player, true);
+        Player.gameManager.CmdSyncCaster(this); //모든 게임매니저에 입력
         //Debug.Log(player.username);
 
         Cursor.visible = false; //Hide cursor
@@ -86,6 +87,7 @@ public abstract partial class Entity : NetworkBehaviour
     {
         player.isTargeting = Targeting;
         isTargeting = Targeting;
+        
 
         CheckBuff(player);
         RpcOffBlockPanel(player);
@@ -111,18 +113,11 @@ public abstract partial class Entity : NetworkBehaviour
         if(player == Player.localPlayer && Player.gameManager.blockPanel.activeSelf)
         {
             Player.gameManager.blockPanel.SetActive(false);
+            //원래 공격대로 진행
+            Player.gameManager.caster.combat.CmdBattle(Player.gameManager.caster, Player.gameManager.target);
+            Player.gameManager.CmdSyncCaster(null);
+            Player.gameManager.CmdSyncTarget(null);
         }
     }
 
-    public IEnumerator DelayBattle(Entity attacker, Entity target)
-    {
-        yield return new WaitForSeconds(1.0f);//잠깐 쿨줘야함 안그럼 isTargeting인식 못함
-
-        while(((FieldCard)target).player.isTargeting)
-        {
-            //Debug.Log(((FieldCard)target).player.isTargeting);
-            yield return null;
-        }
-        attacker.combat.CmdBattle(attacker, target);
-    }
 }

@@ -49,7 +49,8 @@ public class GameManager : NetworkBehaviour
     [HideInInspector] public bool isHoveringField = false;
     [HideInInspector] public bool isSpawning = false;
 
-    /*[HideInInspector]*/ public Entity caster; // 타게팅 애로우 지우기용도
+    /*[HideInInspector]*/ public Entity caster; // 타게팅 애로우 지우기용도 + attacker저장
+    public Entity target; // target을 저장해두기
 
     //public SyncListPlayerInfo players = new SyncListPlayerInfo(); // Information of all players online. One is player, other is opponent.
 
@@ -209,7 +210,37 @@ public class GameManager : NetworkBehaviour
 
     public void OnButtonClick(int index)
     {
-        Debug.Log(index);
-        blockIndex = index;
+        Debug.Log(caster);
+        caster.combat.CmdBattle(caster,Player.localPlayer.blockCards[index]);
+        Player.localPlayer.CmdSyncTargeting(Player.localPlayer,false);
+        CmdSyncCaster(null);
+        CmdSyncTarget(null);
+        blockPanel.SetActive(false);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdSyncCaster(Entity caster)
+    {
+        Player.gameManager.caster = caster;
+        RpcSyncCaster(caster);
+        //attacker의 클라 말고 RPC로 target클라에도 동기화 해줘야
+        //target클라에서 블록 설정했을시 공격 가능
+    }
+    [ClientRpc]
+    public void RpcSyncCaster(Entity caster)
+    {
+        Player.gameManager.caster = caster;
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdSyncTarget(Entity target)
+    {
+        Player.gameManager.target = target;
+        RpcSyncTarget(target);
+    }
+    [ClientRpc]
+    public void RpcSyncTarget(Entity target)
+    {
+        Player.gameManager.target = target;
     }
 }

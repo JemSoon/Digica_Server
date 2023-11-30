@@ -364,22 +364,21 @@ public class Player : Entity
                 {
                     blockCards.Add(card);
 
+                    for (int j = blockCards.Count; j < Player.gameManager.blockImage.Count; ++j)
+                    {
+                        //사용하지 않는 버튼 비활성화
+                        Player.gameManager.blockImage[j].gameObject.SetActive(false);
+                    }
+
                     for (int j = 0; j < blockCards.Count; ++j)
                     {
+                        //사용하는 버튼 활성화
                         Player.gameManager.blockImage[j].sprite = creature.image;
                         Player.gameManager.blockImage[j].gameObject.SetActive(true);
                     }
                 }
             }
         }
-    }
-    [ClientRpc]
-    public void RPCOffBlockPanel(Player owner)
-    {
-        if (Player.gameManager.blockPanel.activeSelf && owner.isTargeting==false)
-        {
-            Player.gameManager.blockPanel.SetActive(false);
-        }   
     }
 
     public bool IsOurTurn() => gameManager.isOurTurn;

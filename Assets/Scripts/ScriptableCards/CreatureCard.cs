@@ -82,6 +82,11 @@ public partial class CreatureCard : ScriptableCard
                     //Test 스타트코루틴(Wait대상)
                     //Test target = 대상
                     //attacker.combat.CmdBattle(attacker, target);
+
+                    attacker.StartCoroutine(attacker.DelayBattle(attacker, target));
+                    //상대가 버튼 누르면 대상 변경
+
+
                     break;
                 }
                 else

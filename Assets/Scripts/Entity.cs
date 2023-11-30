@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using Mirror;
+using System.Collections;
 
 [Serializable]
 public abstract partial class Entity : NetworkBehaviour
@@ -87,6 +88,7 @@ public abstract partial class Entity : NetworkBehaviour
         isTargeting = Targeting;
 
         CheckBuff(player);
+        RpcOffBlockPanel(player);
     }
 
     [ClientRpc]
@@ -101,5 +103,26 @@ public abstract partial class Entity : NetworkBehaviour
             DestroyTargetingArrow();
             Player.gameManager.caster = null;
         }
+    }
+
+    [ClientRpc]
+    public void RpcOffBlockPanel(Player player)
+    {
+        if(player == Player.localPlayer && Player.gameManager.blockPanel.activeSelf)
+        {
+            Player.gameManager.blockPanel.SetActive(false);
+        }
+    }
+
+    public IEnumerator DelayBattle(Entity attacker, Entity target)
+    {
+        yield return new WaitForSeconds(1.0f);//Àá±ñ ÄðÁà¾ßÇÔ ¾È±×·³ isTargetingÀÎ½Ä ¸øÇÔ
+
+        while(((FieldCard)target).player.isTargeting)
+        {
+            //Debug.Log(((FieldCard)target).player.isTargeting);
+            yield return null;
+        }
+        attacker.combat.CmdBattle(attacker, target);
     }
 }

@@ -523,7 +523,7 @@ public class Deck : NetworkBehaviour
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
         }
 
-        StartCoroutine(DelayedBattle(attacker, boardCard, 1.5f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!
+        StartCoroutine(DelayBattle(attacker, boardCard, 1.5f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!
     }
 
     [ClientRpc]
@@ -551,7 +551,7 @@ public class Deck : NetworkBehaviour
         }
     }
 
-    private IEnumerator DelayedBattle(Entity attacker, GameObject boardCard, float time)
+    private IEnumerator DelayBattle(Entity attacker, GameObject boardCard, float time)
     {
         //세큐리티 카드 출현 후 잠시 뒤에 싸우게 하기용
         yield return new WaitForSeconds(time);

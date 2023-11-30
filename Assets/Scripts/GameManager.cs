@@ -210,5 +210,6 @@ public class GameManager : NetworkBehaviour
     public void OnButtonClick(int index)
     {
         Debug.Log(index);
+        blockIndex = index;
     }
 }

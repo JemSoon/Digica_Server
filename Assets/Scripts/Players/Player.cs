@@ -376,6 +376,8 @@ public class Player : Entity
                         Player.gameManager.blockImage[j].sprite = creature.image;
                         Player.gameManager.blockImage[j].gameObject.SetActive(true);
                     }
+                    Player.gameManager.attackerImage.sprite = ((FieldCard)Player.gameManager.caster).card.data.image;
+                    Player.gameManager.targetImage.sprite = ((FieldCard)Player.gameManager.target).card.data.image;
                 }
             }
         }

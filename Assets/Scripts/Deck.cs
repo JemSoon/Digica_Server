@@ -389,8 +389,11 @@ public class Deck : NetworkBehaviour
         if (Player.gameManager.isSpawning)
         {
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
-            if (boardCard.GetComponent<FieldCard>().card.data is CreatureCard)
-            { boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES; }
+            if (boardCard.GetComponent<FieldCard>().card.data is CreatureCard creatureCard)
+            { 
+                boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
+                creatureCard.AppearCast(boardCard.GetComponent<FieldCard>());
+            }
             else if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard)
             {
                 boardCard.GetComponent<FieldCard>().casterType = Target.MY_OPTION;
@@ -591,5 +594,11 @@ public class Deck : NetworkBehaviour
                 spellCard.FindTamerTarget(spawnCard);
             }
         }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdAddGraveyard(Player player, CardInfo card)
+    {
+        player.deck.graveyard.Add(card);
     }
 }

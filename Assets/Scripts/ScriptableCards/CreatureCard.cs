@@ -77,7 +77,7 @@ public partial class CreatureCard : ScriptableCard
                     Debug.Log("블록 타입 디지몬 카드 있음!");
                     enemyCard.CmdSyncTargeting(enemyCard.player, true);
 
-                    enemyCard.player.CmdSetActiveBlockPanel(enemyCard.player);
+                    enemyCard.player.CmdSetActiveBlockPanel(enemyCard.player,true);
 
                     break;
                 }
@@ -232,6 +232,33 @@ public partial class CreatureCard : ScriptableCard
                             target.CmdChangeSomeThing(evolutionBuff, false);
                             target.CmdRemoveBuff(evolutionBuff.cardname);
                         }
+                    }
+                }
+                break;
+        }
+    }
+
+    public void AppearCast(FieldCard caster)
+    {
+        switch(cardName)
+        {
+            case "스컬그레이몬":
+                GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
+                for (int i = 0; i < enemyField.transform.childCount; ++i)
+                {
+                    FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
+
+                    if (enemyCard == null) { return; }
+
+                    //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
+                    if (enemyCard.isUpperMostCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
+                    {
+                        Debug.Log("파괴 대상 디지몬 카드 있음!");
+                        caster.CmdSyncTargeting(caster.player, true);
+
+                        caster.player.CmdSetActiveDestroyPanel(caster.player, ((CreatureCard)enemyCard.card.data).hasBlocker);
+
+                        break;
                     }
                 }
                 break;

@@ -293,6 +293,12 @@ public class FieldCard : Entity
     }
 
     [Command(requiresAuthority = false)]
+    public void CmdDestroyCard(FieldCard card)
+    {
+        NetworkServer.Destroy(card.gameObject);
+    }
+
+    [Command(requiresAuthority = false)]
     public void CmdChangeAttacked(bool TorF)
     {
         attacked = TorF;

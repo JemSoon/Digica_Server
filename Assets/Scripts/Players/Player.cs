@@ -42,7 +42,7 @@ public class Player : Entity
     [Header("Buffs")]
     [SyncVar] public bool smashPotato;
 
-    public List<FieldCard> blockCards;
+    public List<FieldCard> UICardsList;
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
@@ -342,46 +342,125 @@ public class Player : Entity
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdSetActiveBlockPanel(Player owner)
+    public void CmdSetActiveBlockPanel(Player owner, bool isMyList)
     {
-        RPCSetActiveBlockPanel(owner);
+        RpcSetActiveBlockPanel(owner, isMyList);
     }
 
     [ClientRpc]
-    public void RPCSetActiveBlockPanel(Player owner)
+    public void RpcSetActiveBlockPanel(Player owner, bool isMyList)
     {
         if (owner == Player.localPlayer)
         {
             Player.gameManager.blockPanel.SetActive(true);
-            blockCards = new List<FieldCard>();
+            UICardsList = new List<FieldCard>();
 
-            int cardCount = Player.gameManager.playerField.content.childCount;
-            for (int i = 0; i < cardCount; ++i)
+            if(isMyList)
             {
-                FieldCard card = Player.gameManager.playerField.content.GetChild(i).GetComponent<FieldCard>();
-
-                if(card.isUpperMostCard && card.card.data is CreatureCard creature && creature.hasBlocker)
+                //나의 블록 카드 리스트를 보일거면
+                int cardCount = Player.gameManager.playerField.content.childCount;
+                for (int i = 0; i < cardCount; ++i)
                 {
-                    blockCards.Add(card);
+                    FieldCard card = Player.gameManager.playerField.content.GetChild(i).GetComponent<FieldCard>();
 
-                    for (int j = blockCards.Count; j < Player.gameManager.blockImage.Count; ++j)
+                    if (card.isUpperMostCard && card.card.data is CreatureCard creature && creature.hasBlocker)
                     {
-                        //사용하지 않는 버튼 비활성화
-                        Player.gameManager.blockImage[j].gameObject.SetActive(false);
-                    }
+                        UICardsList.Add(card);
 
-                    for (int j = 0; j < blockCards.Count; ++j)
-                    {
-                        //사용하는 버튼 활성화
-                        Player.gameManager.blockImage[j].sprite = creature.image;
-                        Player.gameManager.blockImage[j].gameObject.SetActive(true);
+                        for (int j = UICardsList.Count; j < Player.gameManager.blockButtonImage.Count; ++j)
+                        {
+                            //사용하지 않는 버튼 비활성화
+                            Player.gameManager.blockButtonImage[j].gameObject.SetActive(false);
+                        }
+
+                        for (int j = 0; j < UICardsList.Count; ++j)
+                        {
+                            //사용하는 버튼 활성화
+                            Player.gameManager.blockButtonImage[j].sprite = creature.image;
+                            Player.gameManager.blockButtonImage[j].gameObject.SetActive(true);
+                        }
+                        Player.gameManager.attackerImage.sprite = ((FieldCard)Player.gameManager.caster).card.data.image;
+                        Player.gameManager.targetImage.sprite = ((FieldCard)Player.gameManager.target).card.data.image;
                     }
-                    Player.gameManager.attackerImage.sprite = ((FieldCard)Player.gameManager.caster).card.data.image;
-                    Player.gameManager.targetImage.sprite = ((FieldCard)Player.gameManager.target).card.data.image;
                 }
+            }
+            
+            else
+            {
+                //상대 블록 카드 리스트를 나에게 보일거면
+                int cardCount = Player.gameManager.enemyField.content.childCount;
+                for(int i =0; i< cardCount; ++i)
+                {
+                    FieldCard card = Player.gameManager.enemyField.content.GetChild(i).GetComponent<FieldCard>();
+
+                    if (card.isUpperMostCard && card.card.data is CreatureCard creatureCard && creatureCard.hasBlocker)
+                    {
+                        UICardsList.Add(card);
+
+                        for (int j = UICardsList.Count; j < Player.gameManager.blockButtonImage.Count; ++j)
+                        {
+                            //사용하지 않는 버튼 비활성화
+                            Player.gameManager.blockButtonImage[j].gameObject.SetActive(false);
+                        }
+
+                        for (int j = 0; j < UICardsList.Count; ++j)
+                        {
+                            //사용하는 버튼 활성화
+                            Player.gameManager.blockButtonImage[j].sprite = creatureCard.image;
+                            Player.gameManager.blockButtonImage[j].gameObject.SetActive(true);
+                        }
+                        Player.gameManager.attackerImage.sprite = ((FieldCard)Player.gameManager.caster).card.data.image;
+                        Player.gameManager.targetImage.sprite = ((FieldCard)Player.gameManager.target).card.data.image;
+                    }
+                }
+                
             }
         }
     }
 
-    public bool IsOurTurn() => gameManager.isOurTurn;
+    [Command(requiresAuthority = false)]
+    public void CmdSetActiveDestroyPanel(Player owner, bool hasSomethig)
+    {
+        RpcSetActiveDestroyPanel(owner, hasSomethig);
+    }
+
+    [ClientRpc]
+    public void RpcSetActiveDestroyPanel(Player owner, bool hasSomething)
+    {
+        if (owner == Player.localPlayer)
+        {
+            Player.gameManager.destroyPanel.SetActive(true);
+            UICardsList = new List<FieldCard>();
+
+            //상대 블록 카드 리스트를 나에게 보일거면
+            int cardCount = Player.gameManager.enemyField.content.childCount;
+            for (int i = 0; i < cardCount; ++i)
+            {
+                FieldCard card = Player.gameManager.enemyField.content.GetChild(i).GetComponent<FieldCard>();
+
+                if (card.isUpperMostCard && card.card.data is CreatureCard creatureCard && creatureCard.hasBlocker==hasSomething)
+                {
+                    //hasSomething은 블록,관통,재밍 등등의 특성 대상자
+                    UICardsList.Add(card);
+
+                    for (int j = UICardsList.Count; j < Player.gameManager.destroyButtonImage.Count; ++j)
+                    {
+                        //사용하지 않는 버튼 비활성화
+                        Player.gameManager.destroyButtonImage[j].gameObject.SetActive(false);
+                    }
+
+                    for (int j = 0; j < UICardsList.Count; ++j)
+                    {
+                        //사용하는 버튼 활성화
+                        Player.gameManager.destroyButtonImage[j].sprite = creatureCard.image;
+                        Player.gameManager.destroyButtonImage[j].gameObject.SetActive(true);
+                    }
+                  
+                }
+            }
+        }
+
+    }
+
+        public bool IsOurTurn() => gameManager.isOurTurn;
 }

@@ -40,10 +40,16 @@ public class GameManager : NetworkBehaviour
     public GameObject waitingPanel;
     public Text panelText;
 
+    [Header("Block")]
     public GameObject blockPanel;
     public Image attackerImage;
     public Image targetImage;
-    public List<Image> blockImage;
+    public List<Image> blockButtonImage;
+
+    [Header("Destroy")]
+    public GameObject destroyPanel;
+    public List<Image> destroyButtonImage;
+
     // isHovering is only set to true on the Client that called the OnCardHover function.
     // We only want the hovering to appear on the enemy's Client, so we must exclude the OnCardHover caller from the Rpc call.
     [HideInInspector] public bool isHovering = false;
@@ -209,14 +215,32 @@ public class GameManager : NetworkBehaviour
 
     }
 
-    public void OnButtonClick(int index)
+    public void OnBlockButtonClick(int index)
     {
-        Debug.Log(caster);
-        caster.combat.CmdBattle(caster,Player.localPlayer.blockCards[index]);
+        caster.combat.CmdBattle(caster,Player.localPlayer.UICardsList[index]);
         Player.localPlayer.CmdSyncTargeting(Player.localPlayer,false);
         CmdSyncCaster(null);
         CmdSyncTarget(null);
         blockPanel.SetActive(false);
+    }
+    public void OnDestroyButtonClick(int index)
+    {
+        FieldCard destroyCard = Player.localPlayer.UICardsList[index];
+        while(destroyCard != destroyCard.isUnderMostCard)
+        {
+            destroyCard.player.deck.CmdAddGraveyard(destroyCard.player,destroyCard.card);
+            //NetworkServer.Destroy(destroyCard.gameObject);
+            destroyCard.CmdDestroyCard(destroyCard);
+            destroyCard = destroyCard.underCard;
+            //무덤에 추가해야..
+        }
+        //NetworkServer.Destroy(destroyCard.gameObject);
+        destroyCard.player.deck.CmdAddGraveyard(destroyCard.player, destroyCard.card);
+        destroyCard.CmdDestroyCard(destroyCard);
+        Player.localPlayer.CmdSyncTargeting(Player.localPlayer, false);
+        CmdSyncCaster(null);
+        CmdSyncTarget(null);
+        destroyPanel.SetActive(false);
     }
 
     [Command(requiresAuthority = false)]

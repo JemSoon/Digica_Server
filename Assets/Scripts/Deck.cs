@@ -199,35 +199,11 @@ public class Deck : NetworkBehaviour
             //아래가 될 카드가 버프가 있다면
             for(int i = underCard.buffs.Count-1; i>=0; i--)
             {
-                //전부 새로 올라갈 카드에 옮겨주고 버프를 빼고 제거
-                //newCard.CmdAddBuff(underCard.buffs[i]);
-                //newCard.CmdChangeSomeThing(underCard.buffs[i], true);
+                //전부 버프를 빼고 제거
                 underCard.CmdChangeSomeThing(underCard.buffs[i], false);
                 underCard.CmdRemoveBuff(i);
             } 
         }
-        //↓이걸 while로 under카드를 계속 아래카드를 체크해서 해당하는거면 넣게끔? ↑위에걸 지우고..
-        //만약 아래카드가 나의턴 진화원 효과가 있다면 즉시 새 카드에 추가
-        //FieldCard tempUnderCard = underCard;//언더카드의 언더카드를 받기용 더미 언더카드
-        //while(tempUnderCard.isUnderMostCard==false)
-        //{
-        //    if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
-        //    {
-        //        //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
-        //        //newCard.CmdAddBuff(((CreatureCard)tempUnderCard.card.data).evolutionBuff);
-        //        //newCard.CmdChangeSomeThing(((CreatureCard)tempUnderCard.card.data).evolutionBuff, true);
-        //        ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
-        //    }
-        //    tempUnderCard = tempUnderCard.underCard;
-        //}
-        ////마지막 isUnderMostCard가 true인 카드로 한번 더
-        //if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
-        //{
-        //    //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
-        //    //newCard.CmdAddBuff(((CreatureCard)tempUnderCard.card.data).evolutionBuff);
-        //    //newCard.CmdChangeSomeThing(((CreatureCard)tempUnderCard.card.data).evolutionBuff, true);
-        //    ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
-        //}
 
         // Remove card from hand
         hand.RemoveAt(index);
@@ -383,14 +359,6 @@ public class Deck : NetworkBehaviour
 
         while (fieldCard.isUpperMostCard == false)
         {
-            //최하단 부터 차례차례 나의 턴 진화원 효과가 있으면 최상단 카드에 넣어준다
-            if (((CreatureCard)fieldCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
-            {
-                //mostUpperCard.CmdAddBuff(((CreatureCard)fieldCard.card.data).evolutionBuff);
-                //mostUpperCard.CmdChangeSomeThing(((CreatureCard)fieldCard.card.data).evolutionBuff, true);
-                //((CreatureCard)fieldCard.card.data).MyTurnCast(fieldCard, mostUpperCard);
-            }
-
             if (isServer) RpcMoveRaiseToBattle(fieldCard, true);
             fieldCard = fieldCard.upperCard;
         }
@@ -457,8 +425,6 @@ public class Deck : NetworkBehaviour
                 if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
                 {
                     //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
-                    //newCard.CmdAddBuff(((CreatureCard)tempUnderCard.card.data).evolutionBuff);
-                    //newCard.CmdChangeSomeThing(((CreatureCard)tempUnderCard.card.data).evolutionBuff, true);
                     ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
                 }
                 tempUnderCard = tempUnderCard.underCard;
@@ -467,8 +433,6 @@ public class Deck : NetworkBehaviour
             if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
             {
                 //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
-                //newCard.CmdAddBuff(((CreatureCard)tempUnderCard.card.data).evolutionBuff);
-                //newCard.CmdChangeSomeThing(((CreatureCard)tempUnderCard.card.data).evolutionBuff, true);
                 ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
             }
 

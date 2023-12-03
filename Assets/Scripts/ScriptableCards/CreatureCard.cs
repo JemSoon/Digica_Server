@@ -225,8 +225,8 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
-                    if (target.buffs.Count > 0)
-                    {
+                    if (target.buffs.Count > 0 /*&& ((CreatureCard)target.card.data).hasSpear*/)
+                    {                               //이 부분은 CmdRemoveBuff에서 이름 없으면 알아서 리턴하게 설정
                         {
                             //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                             target.CmdChangeSomeThing(evolutionBuff, false);

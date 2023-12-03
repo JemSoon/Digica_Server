@@ -200,20 +200,34 @@ public class Deck : NetworkBehaviour
             for(int i = underCard.buffs.Count-1; i>=0; i--)
             {
                 //전부 새로 올라갈 카드에 옮겨주고 버프를 빼고 제거
-                newCard.CmdAddBuff(underCard.buffs[i]);
-                newCard.CmdChangeSomeThing(underCard.buffs[i], true);
+                //newCard.CmdAddBuff(underCard.buffs[i]);
+                //newCard.CmdChangeSomeThing(underCard.buffs[i], true);
                 underCard.CmdChangeSomeThing(underCard.buffs[i], false);
                 underCard.CmdRemoveBuff(i);
             } 
         }
-
+        //↓이걸 while로 under카드를 계속 아래카드를 체크해서 해당하는거면 넣게끔? ↑위에걸 지우고..
         //만약 아래카드가 나의턴 진화원 효과가 있다면 즉시 새 카드에 추가
-        if (((CreatureCard)underCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
-        {
-            //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
-            newCard.CmdAddBuff(((CreatureCard)underCard.card.data).evolutionBuff);
-            newCard.CmdChangeSomeThing(((CreatureCard)underCard.card.data).evolutionBuff, true);
-        }
+        //FieldCard tempUnderCard = underCard;//언더카드의 언더카드를 받기용 더미 언더카드
+        //while(tempUnderCard.isUnderMostCard==false)
+        //{
+        //    if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+        //    {
+        //        //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
+        //        //newCard.CmdAddBuff(((CreatureCard)tempUnderCard.card.data).evolutionBuff);
+        //        //newCard.CmdChangeSomeThing(((CreatureCard)tempUnderCard.card.data).evolutionBuff, true);
+        //        ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
+        //    }
+        //    tempUnderCard = tempUnderCard.underCard;
+        //}
+        ////마지막 isUnderMostCard가 true인 카드로 한번 더
+        //if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+        //{
+        //    //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
+        //    //newCard.CmdAddBuff(((CreatureCard)tempUnderCard.card.data).evolutionBuff);
+        //    //newCard.CmdChangeSomeThing(((CreatureCard)tempUnderCard.card.data).evolutionBuff, true);
+        //    ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
+        //}
 
         // Remove card from hand
         hand.RemoveAt(index);
@@ -372,14 +386,15 @@ public class Deck : NetworkBehaviour
             //최하단 부터 차례차례 나의 턴 진화원 효과가 있으면 최상단 카드에 넣어준다
             if (((CreatureCard)fieldCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
             {
-                mostUpperCard.CmdAddBuff(((CreatureCard)fieldCard.card.data).evolutionBuff);
-                mostUpperCard.CmdChangeSomeThing(((CreatureCard)fieldCard.card.data).evolutionBuff, true);
+                //mostUpperCard.CmdAddBuff(((CreatureCard)fieldCard.card.data).evolutionBuff);
+                //mostUpperCard.CmdChangeSomeThing(((CreatureCard)fieldCard.card.data).evolutionBuff, true);
+                //((CreatureCard)fieldCard.card.data).MyTurnCast(fieldCard, mostUpperCard);
             }
 
             if (isServer) RpcMoveRaiseToBattle(fieldCard, true);
             fieldCard = fieldCard.upperCard;
         }
-        //(한번 더)마지막 최상단 카드도.. while문은 최상단은 안해줌
+        //(한번 더)마지막 최상단 카드도..while문은 최상단은 안해줌
         if (isServer) RpcMoveRaiseToBattle(fieldCard, false);
     }
 
@@ -435,6 +450,28 @@ public class Deck : NetworkBehaviour
             FieldCard newCard = boardCard.GetComponent<FieldCard>();
             newCard.underCard = underCard;
             underCard.upperCard = newCard;
+
+            FieldCard tempUnderCard = underCard;//언더카드의 언더카드를 받기용 더미 언더카드
+            while (tempUnderCard.isUnderMostCard == false)
+            {
+                if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+                {
+                    //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
+                    //newCard.CmdAddBuff(((CreatureCard)tempUnderCard.card.data).evolutionBuff);
+                    //newCard.CmdChangeSomeThing(((CreatureCard)tempUnderCard.card.data).evolutionBuff, true);
+                    ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
+                }
+                tempUnderCard = tempUnderCard.underCard;
+            }
+            //마지막 isUnderMostCard가 true인 카드로 한번 더
+            if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+            {
+                //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
+                //newCard.CmdAddBuff(((CreatureCard)tempUnderCard.card.data).evolutionBuff);
+                //newCard.CmdChangeSomeThing(((CreatureCard)tempUnderCard.card.data).evolutionBuff, true);
+                ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
+            }
+
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
             boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
@@ -540,6 +577,25 @@ public class Deck : NetworkBehaviour
 
             if (isSpawning == false)
             {
+                FieldCard mostUpperCard = fieldCard.FindMostUpperCard();
+
+                while (fieldCard.isUnderMostCard == false)
+                {
+                    //최하단 카드 우선 가져오기
+                    fieldCard = fieldCard.underCard;
+                }
+
+                while (fieldCard.isUpperMostCard == false)
+                {
+                    //최하단 부터 차례차례 나의 턴 진화원 효과가 있으면 최상단 카드에 넣어준다
+                    if (((CreatureCard)fieldCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
+                    {
+                        //다 돌고 최종 마지막일때 버프 목록 아래부터 주르륵 훑기
+                        ((CreatureCard)fieldCard.card.data).MyTurnCast(fieldCard, mostUpperCard);
+                    }
+                    fieldCard = fieldCard.upperCard;
+                }
+
                 Player.gameManager.playerRaiseField.Spawnbutton.SetActive(true);
             }
         }

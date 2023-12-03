@@ -225,8 +225,8 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
-                    if (target.buffs.Count > 0 /*&& ((CreatureCard)target.card.data).hasSpear*/)
-                    {                               //이 부분은 CmdRemoveBuff에서 이름 없으면 알아서 리턴하게 설정
+                    if (target.buffs.Count > 0 && ((CreatureCard)target.card.data).hasSpear)
+                    {                              
                         {
                             //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                             target.CmdChangeSomeThing(evolutionBuff, false);
@@ -251,8 +251,9 @@ public partial class CreatureCard : ScriptableCard
                     if (enemyCard == null) { return; }
 
                     //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
-                    if (enemyCard.isUpperMostCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
+                    if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
                     {
+                        //상대 카드에 CreatureCard가 아닌 테이머나 스펠카드 있을수 있으므로 조건에 CreatureCard필수
                         Debug.Log("파괴 대상 디지몬 카드 있음!");
                         caster.CmdSyncTargeting(caster.player, true);
 

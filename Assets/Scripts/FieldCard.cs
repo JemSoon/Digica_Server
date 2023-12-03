@@ -201,9 +201,9 @@ public class FieldCard : Entity
     [Command(requiresAuthority = false)]
     public void CmdAddBuff(Buffs buff)
     {
-        Debug.Log(buff.cardname + " 의 버프 추가중..");
+        Debug.Log(player + "의 " + buff.cardname + " 의 버프 추가중..");
         buffs.Add(buff);
-        Debug.Log(buff.cardname + " 의 버프 추가 완료!");
+        Debug.Log(player + "의 " + buff.cardname + " 의 버프 추가 완료!");
     }
     [Command(requiresAuthority = false)]
     public void CmdRemoveBuff(int index)

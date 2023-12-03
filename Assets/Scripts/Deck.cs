@@ -419,13 +419,26 @@ public class Deck : NetworkBehaviour
             newCard.underCard = underCard;
             underCard.upperCard = newCard;
 
+            //여기서 메모리코스트 차감될때 상대 턴으로 넘어가는지 확인이 필요할거 같다......
             FieldCard tempUnderCard = underCard;//언더카드의 언더카드를 받기용 더미 언더카드
             while (tempUnderCard.isUnderMostCard == false)
             {
                 if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
                 {
-                    //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
-                    ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
+                    if(tempUnderCard.player.isServer==false)
+                    {
+                        //서버가 아닌 참가자 클라일때 턴이 넘어가는데도 버프가 부여되서 추가코드..
+                        if(MemoryChecker.Inst.memory + ((CreatureCard)newCard.card.data).Ecost<=0)
+                        {   
+                            //현 메모리에 새 진화카드 올린 코스트가 상대턴으로 안넘길때만 버프
+                            ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
+                        }
+                    }
+                    else
+                    {
+                        //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
+                        ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
+                    }
                 }
                 tempUnderCard = tempUnderCard.underCard;
             }

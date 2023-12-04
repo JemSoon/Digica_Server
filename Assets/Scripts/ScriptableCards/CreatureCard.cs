@@ -146,6 +146,28 @@ public partial class CreatureCard : ScriptableCard
                 target.CmdChangeSomeThing(evolutionBuff, true);
                 target.CmdAddBuff(evolutionBuff);
                 break;
+
+            case "그라우몬":
+                GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
+                for (int i = 0; i < enemyField.transform.childCount; ++i)
+                {
+                    FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
+
+                    if (enemyCard == null) { return; }
+
+                    //if(target의 플레이어 필드에 최상단 카드중 최종 DP가 2000이하면 소멸)
+                    if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).strength + enemyCard.tempBuff.buffDP<=2000)
+                    {
+                        //상대 카드에 CreatureCard가 아닌 테이머나 스펠카드 있을수 있으므로 조건에 CreatureCard필수
+                        Debug.Log("파괴 대상 디지몬 카드 있음!");
+                        caster.CmdSyncTargeting(caster.player, true);
+
+                        caster.player.CmdSetActiveDestroyPanel(caster.player,true);
+
+                        break;
+                    }
+                }
+                break;
         }
     }
 

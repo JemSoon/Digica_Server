@@ -438,7 +438,7 @@ public class Player : Entity
             {
                 FieldCard card = Player.gameManager.enemyField.content.GetChild(i).GetComponent<FieldCard>();
 
-                if (card.isUpperMostCard && card.card.data is CreatureCard creatureCard && creatureCard.hasBlocker==hasSomething)
+                if (card.isUpperMostCard && card.card.data is CreatureCard creatureCard && creatureCard.hasBlocker == hasSomething)
                 {
                     //hasSomething은 블록,관통,재밍 등등의 특성 대상자
                     UICardsList.Add(card);

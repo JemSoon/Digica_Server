@@ -419,29 +419,29 @@ public class Player : Entity
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdSetActiveDestroyPanel(Player owner, bool hasSomethig)
+    public void CmdSetActiveDestroyPanel(Player owner)
     {
-        RpcSetActiveDestroyPanel(owner, hasSomethig);
+        RpcSetActiveDestroyPanel(owner);
     }
 
     [ClientRpc]
-    public void RpcSetActiveDestroyPanel(Player owner, bool hasSomething)
+    public void RpcSetActiveDestroyPanel(Player owner)
     {
         if (owner == Player.localPlayer)
         {
             Player.gameManager.destroyPanel.SetActive(true);
-            UICardsList = new List<FieldCard>();
+            //UICardsList = new List<FieldCard>();
 
             //상대 블록 카드 리스트를 나에게 보일거면
-            int cardCount = Player.gameManager.enemyField.content.childCount;
-            for (int i = 0; i < cardCount; ++i)
-            {
-                FieldCard card = Player.gameManager.enemyField.content.GetChild(i).GetComponent<FieldCard>();
-
-                if (card.isUpperMostCard && card.card.data is CreatureCard creatureCard && creatureCard.hasBlocker == hasSomething)
+            //int cardCount = Player.gameManager.enemyField.content.childCount;
+            //for (int i = 0; i < cardCount; ++i)
+            //{
+            //    FieldCard card = Player.gameManager.enemyField.content.GetChild(i).GetComponent<FieldCard>();
+            //
+            //    if (card.isUpperMostCard && card.card.data is CreatureCard creatureCard)
                 {
                     //hasSomething은 블록,관통,재밍 등등의 특성 대상자
-                    UICardsList.Add(card);
+                    //UICardsList.Add(card);
 
                     for (int j = UICardsList.Count; j < Player.gameManager.destroyButtonImage.Count; ++j)
                     {
@@ -452,12 +452,12 @@ public class Player : Entity
                     for (int j = 0; j < UICardsList.Count; ++j)
                     {
                         //사용하는 버튼 활성화
-                        Player.gameManager.destroyButtonImage[j].sprite = creatureCard.image;
+                        Player.gameManager.destroyButtonImage[j].sprite = UICardsList[j].card.image;
                         Player.gameManager.destroyButtonImage[j].gameObject.SetActive(true);
                     }
                   
                 }
-            }
+            //}
         }
 
     }

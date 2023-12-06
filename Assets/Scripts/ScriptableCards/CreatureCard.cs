@@ -149,6 +149,7 @@ public partial class CreatureCard : ScriptableCard
 
             case "그라우몬":
                 GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
+                caster.player.UICardsList = new List<FieldCard>();
                 for (int i = 0; i < enemyField.transform.childCount; ++i)
                 {
                     FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
@@ -156,17 +157,16 @@ public partial class CreatureCard : ScriptableCard
                     if (enemyCard == null) { return; }
 
                     //if(target의 플레이어 필드에 최상단 카드중 최종 DP가 2000이하면 소멸)
-                    if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).strength + enemyCard.tempBuff.buffDP<=2000)
+                    if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && enemyCard.strength<=2000)
                     {
                         //상대 카드에 CreatureCard가 아닌 테이머나 스펠카드 있을수 있으므로 조건에 CreatureCard필수
+                        caster.player.UICardsList.Add(enemyCard);
                         Debug.Log("파괴 대상 디지몬 카드 있음!");
-                        caster.CmdSyncTargeting(caster.player, true);
-
-                        caster.player.CmdSetActiveDestroyPanel(caster.player,true);
-
-                        break;
+                        //break;
                     }
                 }
+                caster.CmdSyncTargeting(caster.player, true);
+                caster.player.CmdSetActiveDestroyPanel(caster.player);
                 break;
         }
     }
@@ -266,6 +266,7 @@ public partial class CreatureCard : ScriptableCard
         {
             case "스컬그레이몬":
                 GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
+                caster.player.UICardsList = new List<FieldCard>();
                 for (int i = 0; i < enemyField.transform.childCount; ++i)
                 {
                     FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
@@ -275,15 +276,18 @@ public partial class CreatureCard : ScriptableCard
                     //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
                     if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
                     {
+                        caster.player.UICardsList.Add(enemyCard);
                         //상대 카드에 CreatureCard가 아닌 테이머나 스펠카드 있을수 있으므로 조건에 CreatureCard필수
                         Debug.Log("파괴 대상 디지몬 카드 있음!");
-                        caster.CmdSyncTargeting(caster.player, true);
+                        //caster.CmdSyncTargeting(caster.player, true);
 
-                        caster.player.CmdSetActiveDestroyPanel(caster.player, ((CreatureCard)enemyCard.card.data).hasBlocker);
+                        //caster.player.CmdSetActiveDestroyPanel(caster.player);
 
-                        break;
+                        //break;
                     }
                 }
+                caster.CmdSyncTargeting(caster.player, true);
+                caster.player.CmdSetActiveDestroyPanel(caster.player);
                 break;
         }
     }

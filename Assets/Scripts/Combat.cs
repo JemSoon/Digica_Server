@@ -55,6 +55,31 @@ public class Combat : NetworkBehaviour
         ((FieldCard)entity).securityAttack--;
     }
 
+    [ClientRpc]
+    public void RpcBattleCast(Entity attacker, Entity target, Player player)
+    {
+        if(player == Player.localPlayer)
+        {
+            FieldCard card = attacker.GetComponent<FieldCard>();
+
+            while (card.isUnderMostCard == false)
+            {
+                card = card.underCard;
+                Debug.Log("진화원 도는중 " + card.card.data.cardName);
+                for (int i = 0; i < ((CreatureCard)card.card.data).evolutionType.Count; ++i)
+                {
+                    if (card.card.data is CreatureCard creatureCard && creatureCard.evolutionType[i] == EvolutionType.ATTACK)
+                    {
+                        //최상단 카드에 하단 카드들의 진화원 효과 버프를 더한다
+                        //CreatureCard도 버프를 가지고 있어야함 
+                        creatureCard.AttackCast(card, attacker.GetComponent<FieldCard>());
+                    }
+                }
+            }
+        }
+        
+    }
+
     [Command(requiresAuthority = false)]
     public void CmdBattle(Entity attacker, Entity target)
     {
@@ -71,22 +96,23 @@ public class Combat : NetworkBehaviour
         #endregion
 
         #region 진화원 효과 검색
-        FieldCard card = attacker.GetComponent<FieldCard>();
+        //FieldCard card = attacker.GetComponent<FieldCard>();
 
-        while (card.isUnderMostCard == false)
-        {
-            card = card.underCard;
+        //while (card.isUnderMostCard == false)
+        //{
+        //    card = card.underCard;
 
-            for (int i = 0; i < ((CreatureCard)card.card.data).evolutionType.Count; ++i)
-            {
-                if (card.card.data is CreatureCard creatureCard && creatureCard.evolutionType[i] == EvolutionType.ATTACK)
-                {
-                    //최상단 카드에 하단 카드들의 진화원 효과 버프를 더한다
-                    //CreatureCard도 버프를 가지고 있어야함 
-                    creatureCard.AttackCast(card, attacker.GetComponent<FieldCard>());
-                }
-            }
-        }
+        //    for (int i = 0; i < ((CreatureCard)card.card.data).evolutionType.Count; ++i)
+        //    {
+        //        if (card.card.data is CreatureCard creatureCard && creatureCard.evolutionType[i] == EvolutionType.ATTACK)
+        //        {
+        //            //최상단 카드에 하단 카드들의 진화원 효과 버프를 더한다
+        //            //CreatureCard도 버프를 가지고 있어야함 
+        //            creatureCard.AttackCast(card, attacker.GetComponent<FieldCard>());
+        //        }
+        //    }
+        //}
+        RpcBattleCast(attacker, target, ((FieldCard)attacker).player);//그라우몬..
         #endregion
 
         ((FieldCard)attacker).CmdRotation(((FieldCard)attacker), Quaternion.Euler(0, 0, -90));

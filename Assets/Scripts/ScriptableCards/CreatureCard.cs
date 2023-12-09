@@ -133,23 +133,31 @@ public partial class CreatureCard : ScriptableCard
 
     }
 
-    public void AttackCast(FieldCard caster, FieldCard target)
+    public void AttackCast(FieldCard caster, FieldCard buffTarget)
     {
-        switch(cardName)
+        //버프 타겟 최상단 설정
+        buffTarget = caster.upperCard;
+        while (buffTarget != buffTarget.isUpperMostCard)
+        {
+            buffTarget = buffTarget.upperCard;
+        }
+
+        switch (cardName)
         {
             case "어니몬":
-                target = caster.upperCard;
-                while(target!=target.isUpperMostCard)
-                {
-                    target = target.upperCard;
-                }
-                target.CmdChangeSomeThing(evolutionBuff, true);
-                target.CmdAddBuff(evolutionBuff);
+                
+                buffTarget.CmdChangeSomeThing(evolutionBuff, true);
+                buffTarget.CmdAddBuff(evolutionBuff);
+                //buffTarget.combat.CmdAfterBattle(caster, battleTarget);
                 break;
 
             case "그라우몬":
                 GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
                 caster.player.UICardsList = new List<FieldCard>();
+                Player player = caster.player;
+
+                bool DestroytargetOn = false;//대상 있는지 없는지 확인용 지역변수
+
                 for (int i = 0; i < enemyField.transform.childCount; ++i)
                 {
                     FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
@@ -162,12 +170,21 @@ public partial class CreatureCard : ScriptableCard
                         //상대 카드에 CreatureCard가 아닌 테이머나 스펠카드 있을수 있으므로 조건에 CreatureCard필수
                         caster.player.UICardsList.Add(enemyCard);
                         Debug.Log("파괴 대상 디지몬 카드 있음!");
-                        //break;
+                        DestroytargetOn = true;
                     }
                 }
-                caster.CmdSyncTargeting(caster.player, true);
-                caster.player.CmdSetActiveDestroyPanel(caster.player);
+                if(DestroytargetOn==false)
+                {
+                    Debug.Log("파괴 대상 디지몬 카드 없음");
+                    break;
+                }
+                player.CmdSyncTargeting(player, true);
+                player.CmdSetActiveDestroyPanel(player);
                 break;
+
+            //default:
+            //    buffTarget.combat.CmdAfterBattle(caster, battleTarget);
+            //    break;
         }
     }
 

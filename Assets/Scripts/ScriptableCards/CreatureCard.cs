@@ -182,9 +182,6 @@ public partial class CreatureCard : ScriptableCard
                 player.CmdSetActiveDestroyPanel(player);
                 break;
 
-            //default:
-            //    buffTarget.combat.CmdAfterBattle(caster, battleTarget);
-            //    break;
         }
     }
 
@@ -266,6 +263,36 @@ public partial class CreatureCard : ScriptableCard
                 {
                     if (target.buffs.Count > 0 && ((CreatureCard)target.card.data).hasSpear)
                     {                              
+                        {
+                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                            target.CmdChangeSomeThing(evolutionBuff, false);
+                            target.CmdRemoveBuff(evolutionBuff.cardname);
+                        }
+                    }
+                }
+                break;
+
+            case "길몬":
+                if (caster.upperCard == null) { return; }
+
+                target = caster.upperCard;
+                while (target != target.isUpperMostCard)
+                {
+                    target = target.upperCard;
+                }
+
+                if (caster.player.IsOurTurn())
+                {
+                    if (caster.player.enemyInfo.data.deck.graveyard.Count>=5)
+                    {
+                        target.CmdChangeSomeThing(evolutionBuff, true);
+                        target.CmdAddBuff(evolutionBuff);
+                    }
+                }
+                else
+                {
+                    if (target.buffs.Count > 0)
+                    {
                         {
                             //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                             target.CmdChangeSomeThing(evolutionBuff, false);

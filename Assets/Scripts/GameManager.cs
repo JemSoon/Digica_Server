@@ -86,8 +86,9 @@ public class GameManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdOnFieldCardHover(GameObject cardObject, bool activateShine, bool targeting)
     {
+        if (cardObject == null) { return; } // 혹시나 싶은 안전코드
         FieldCard card = cardObject.GetComponent<FieldCard>();
-        if (card == null) return; // 혹시나 싶은 안전코드
+        if (card == null) { return; }// 혹시나 싶은 안전코드
         card.shine.gameObject.SetActive(true);
         if (isServer) RpcFieldCardHover(cardObject, activateShine, targeting);
     }

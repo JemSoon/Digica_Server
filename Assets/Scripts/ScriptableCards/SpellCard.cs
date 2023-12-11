@@ -75,6 +75,41 @@ public partial class SpellCard : ScriptableCard
             }
         }
 
+        if (type == SpellType.DESTROY)
+        {
+            switch (cardName)
+            {
+                case "오블리비언 버드":
+                    GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
+                    //owner.UICardsList = new List<FieldCard>();
+                    owner.UICardsList.Clear();
+                    bool blockExist = false;
+                    for (int i = 0; i < enemyField.transform.childCount; ++i)
+                    {
+                        FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
+
+                        if (enemyCard == null) { return; }
+
+                        //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
+                        if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
+                        {
+                            owner.UICardsList.Add(enemyCard);
+                            
+                            //상대 카드에 CreatureCard가 아닌 테이머나 스펠카드 있을수 있으므로 조건에 CreatureCard필수
+                            Debug.Log("파괴 대상 디지몬 카드 있음!");
+                            blockExist= true;
+                        }
+                    }
+                    
+                    if(blockExist)
+                    {
+                        owner.CmdSyncTargeting(owner, true);
+                        owner.CmdSetActiveDestroyPanel(owner);
+                    }
+
+                    break;
+            }
+        }
     }
 
     public void AppearSecuritySpellCard(Player owner)
@@ -134,6 +169,42 @@ public partial class SpellCard : ScriptableCard
                     CardInfo cardInfo2 = new CardInfo();
                     cardInfo2.cardID = CardID;
                     owner.CmdDrawSpecificCard(cardInfo2, owner);
+                    break;
+            }
+        }
+
+        if (type == SpellType.DESTROY)
+        {
+            switch (cardName)
+            {
+                case "오블리비언 버드":
+                    GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
+                    //owner.UICardsList = new List<FieldCard>();
+                    owner.UICardsList.Clear();
+                    bool blockExist = false;
+                    for (int i = 0; i < enemyField.transform.childCount; ++i)
+                    {
+                        FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
+
+                        if (enemyCard == null) { return; }
+
+                        //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
+                        if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
+                        {
+                            owner.UICardsList.Add(enemyCard);
+
+                            //상대 카드에 CreatureCard가 아닌 테이머나 스펠카드 있을수 있으므로 조건에 CreatureCard필수
+                            Debug.Log("파괴 대상 디지몬 카드 있음!");
+                            blockExist = true;
+                        }
+                    }
+
+                    if (blockExist)
+                    {
+                        owner.CmdSyncTargeting(owner, true);
+                        owner.CmdSetActiveDestroyPanel(owner);
+                    }
+
                     break;
             }
         }

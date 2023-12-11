@@ -69,7 +69,7 @@ public partial class CreatureCard : ScriptableCard
 
 
                 //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
-                if (enemyCard.isUpperMostCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
+                if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
                 {
                     foundBlocker = true;
                     Player.gameManager.CmdSyncTarget(target);
@@ -153,7 +153,8 @@ public partial class CreatureCard : ScriptableCard
 
             case "그라우몬":
                 GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
-                caster.player.UICardsList = new List<FieldCard>();
+                //caster.player.UICardsList = new List<FieldCard>();
+                caster.player.UICardsList.Clear();
                 Player player = caster.player;
 
                 bool DestroytargetOn = false;//대상 있는지 없는지 확인용 지역변수
@@ -310,7 +311,8 @@ public partial class CreatureCard : ScriptableCard
         {
             case "스컬그레이몬":
                 GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
-                caster.player.UICardsList = new List<FieldCard>();
+                //caster.player.UICardsList = new List<FieldCard>();
+                caster.player.UICardsList.Clear();
                 for (int i = 0; i < enemyField.transform.childCount; ++i)
                 {
                     FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();

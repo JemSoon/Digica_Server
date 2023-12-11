@@ -149,7 +149,7 @@ public class Deck : NetworkBehaviour
 
             if (isServer) RpcPlayCard(boardCard, index);
 
-            spellCard.AppearSpellCard(owner);//스펠카드 필드 스폰시 바로 카드효과 실행시킴 서순!! 서순!! 서순!! RpcPlayCard에서 인덱스 정렬함!! 서순!! 하루 날림!!
+            //spellCard.AppearSpellCard(owner);//스펠카드 필드 스폰시 바로 카드효과 실행시킴 서순!! 서순!! 서순!! RpcPlayCard에서 인덱스 정렬함!! 서순!! 하루 날림!!
             
             if(!spellCard.isTamer)
             { 
@@ -330,7 +330,7 @@ public class Deck : NetworkBehaviour
 
             if (isServer) RpcPlaySecurityCard(boardCard, owner, attacker);
 
-            spellCard.AppearSecuritySpellCard(owner);
+            //spellCard.AppearSecuritySpellCard(owner);
         }
     }
 
@@ -392,6 +392,8 @@ public class Deck : NetworkBehaviour
                     spellCard.FindTamerTarget(Player.gameManager.playerField.content);
                     spellCard.FindTamerTarget(Player.gameManager.playerRaiseField.content);
                 }
+
+                spellCard.AppearSpellCard(boardCard.GetComponent<FieldCard>().player);//test
             }
 
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
@@ -517,8 +519,6 @@ public class Deck : NetworkBehaviour
     [ClientRpc]
     public void RpcPlaySecurityCard(GameObject boardCard, Player player, Entity attacker)
     {
-        // 크리쳐 카드 용
-
         if (player.isLocalPlayer)
         {
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
@@ -526,12 +526,16 @@ public class Deck : NetworkBehaviour
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
             Player.gameManager.isSpawning = false;
 
-            if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard &&
-                spellCard.hasSelectSecurityBuff)
+            if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard)
             {
-                Player player2 = boardCard.GetComponent<FieldCard>().player;
-                boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card, player2, true);
-                Player.gameManager.caster = boardCard.GetComponent<FieldCard>();
+                spellCard.AppearSecuritySpellCard(player);
+
+                if (spellCard.hasSelectSecurityBuff)
+                {
+                    Player player2 = boardCard.GetComponent<FieldCard>().player;
+                    boardCard.GetComponent<FieldCard>().SpawnTargetingArrow(boardCard.GetComponent<FieldCard>().card, player2, true);
+                    Player.gameManager.caster = boardCard.GetComponent<FieldCard>();
+                }
             }
         }
         else if (player.hasEnemy)

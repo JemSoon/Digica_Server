@@ -353,8 +353,8 @@ public class Player : Entity
         if (owner == Player.localPlayer)
         {
             Player.gameManager.blockPanel.SetActive(true);
-            UICardsList = new List<FieldCard>();
-
+            //UICardsList = new List<FieldCard>();
+            UICardsList.Clear();
             if(isMyList)
             {
                 //나의 블록 카드 리스트를 보일거면
@@ -462,5 +462,5 @@ public class Player : Entity
 
     }
 
-        public bool IsOurTurn() => gameManager.isOurTurn;
+    public bool IsOurTurn() => gameManager.isOurTurn;
 }

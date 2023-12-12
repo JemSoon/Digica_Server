@@ -268,6 +268,68 @@ public partial class SpellCard : ScriptableCard
                     }
 
                     break;
+
+                case "파이널 엘리시온":
+                    GameObject enemyField2 = Player.gameManager.enemyField.content.gameObject;
+                    GameObject playerField2 = Player.gameManager.playerField.content.gameObject;
+
+                    owner.UICardsList.Clear();
+                    bool isTamerExist = false;
+                    bool blockExist2 = false;
+
+                    for (int i = 0; i < playerField2.transform.childCount; ++i)
+                    {
+                        FieldCard myCard = playerField2.transform.GetChild(i).GetComponent<FieldCard>();
+
+                        if (myCard == null) { return; }
+
+                        //일단 나의 필드에 레드카드 테이머가 있는지 체크
+                        if (myCard.isUpperMostCard && myCard.card.data is SpellCard spellCard && spellCard.isTamer && (spellCard.color1 == CardColor.Red || spellCard.color2 == CardColor.Red))
+                        {
+                            //상대 카드에 CreatureCard가 아닌 테이머나 스펠카드 있을수 있으므로 조건에 CreatureCard필수
+                            Debug.Log("테이머 있음! 대상이 8000DP로 업!");
+                            isTamerExist = true;
+                        }
+                    }
+
+                    if (isTamerExist)
+                    {
+                        for (int i = 0; i < enemyField2.transform.childCount; ++i)
+                        {
+                            FieldCard enemyCard = enemyField2.transform.GetChild(i).GetComponent<FieldCard>();
+
+                            if (enemyCard == null) { return; }
+
+                            if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && enemyCard.strength <= 8000)
+                            {
+                                owner.UICardsList.Add(enemyCard);
+                                blockExist2 = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < enemyField2.transform.childCount; ++i)
+                        {
+                            FieldCard enemyCard = enemyField2.transform.GetChild(i).GetComponent<FieldCard>();
+
+                            if (enemyCard == null) { return; }
+
+                            if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && enemyCard.strength <= 5000)
+                            {
+                                owner.UICardsList.Add(enemyCard);
+                                blockExist2 = true;
+                            }
+                        }
+                    }
+
+                    if (blockExist2)
+                    {
+                        owner.CmdSyncTargeting(owner, true);
+                        owner.CmdSetActiveDestroyPanel(owner);
+                    }
+
+                    break;
             }
         }
     }

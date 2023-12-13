@@ -430,8 +430,9 @@ public class Deck : NetworkBehaviour
                     if(tempUnderCard.player.isServer==false)
                     {
                         //서버가 아닌 참가자 클라일때 턴이 넘어가는데도 버프가 부여되서 추가코드..
-                        if(MemoryChecker.Inst.memory + ((CreatureCard)newCard.card.data).Ecost<=0)
-                        {   
+                        if(MemoryChecker.Inst.memory /*+ ((CreatureCard)newCard.card.data).Ecost*/<=0)
+                        {
+                            //Debug.Log(MemoryChecker.Inst.memory + " + " + ((CreatureCard)newCard.card.data).Ecost);
                             //현 메모리에 새 진화카드 올린 코스트가 상대턴으로 안넘길때만 버프
                             ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
                         }

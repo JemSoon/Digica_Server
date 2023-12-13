@@ -43,7 +43,7 @@ MonoBehaviour:
     securityAttack: 0
     waitTurn: 0
     removeEvoCount: 0
-    buffTurn: 1
+    buffTurn: 2
     smashPotato: 0
   SecurityBuff:
     cardname: 

@@ -375,7 +375,7 @@ public class Deck : NetworkBehaviour
             if (boardCard.GetComponent<FieldCard>().card.data is CreatureCard creatureCard)
             { 
                 boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
-                creatureCard.AppearCast(boardCard.GetComponent<FieldCard>());
+                creatureCard.AppearDigimonCast(boardCard.GetComponent<FieldCard>());
             }
             else if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard)
             {

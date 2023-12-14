@@ -332,7 +332,7 @@ public partial class CreatureCard : ScriptableCard
         }
     }
 
-    public void AppearCast(FieldCard caster)
+    public void AppearDigimonCast(FieldCard caster)
     {
         switch(cardName)
         {
@@ -352,15 +352,13 @@ public partial class CreatureCard : ScriptableCard
                         caster.player.UICardsList.Add(enemyCard);
                         //상대 카드에 CreatureCard가 아닌 테이머나 스펠카드 있을수 있으므로 조건에 CreatureCard필수
                         Debug.Log("파괴 대상 디지몬 카드 있음!");
-                        //caster.CmdSyncTargeting(caster.player, true);
-
-                        //caster.player.CmdSetActiveDestroyPanel(caster.player);
-
-                        //break;
                     }
                 }
                 caster.CmdSyncTargeting(caster.player, true);
                 caster.player.CmdSetActiveDestroyPanel(caster.player);
+                break;
+
+            case "버드라몬":
                 break;
         }
     }

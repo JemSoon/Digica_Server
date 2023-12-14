@@ -64,6 +64,10 @@ public class Combat : NetworkBehaviour
         {
             FieldCard card = attacker.GetComponent<FieldCard>();
 
+            CreatureCard creatureCard1 = card.card.data as CreatureCard;
+
+            creatureCard1.AttackDigimonCast(card, null);
+
             while (card.isUnderMostCard == false)
             {
                 card = card.underCard;

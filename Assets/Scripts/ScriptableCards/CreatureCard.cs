@@ -133,7 +133,7 @@ public partial class CreatureCard : ScriptableCard
 
     }
 
-    public void AttackCast(FieldCard caster, FieldCard buffTarget)
+    public void AttackCast(FieldCard caster, FieldCard buffTarget)//진화원 캐스트
     {
         //버프 타겟 최상단 설정
         buffTarget = caster.upperCard;
@@ -182,7 +182,34 @@ public partial class CreatureCard : ScriptableCard
                 player.CmdSyncTargeting(player, true);
                 player.CmdSetActiveDestroyPanel(player);
                 break;
+        }
+    }
 
+    public void AttackDigimonCast(FieldCard caster, FieldCard target)//디지몬 캐스트
+    {
+        if(caster.isUpperMostCard==false)
+        { return; }
+
+        switch(cardName)
+        {
+            case "메탈그레이몬":
+                if (caster.player.isServer)
+                {
+                    if(caster.player.IsOurTurn())
+                    {
+                        MemoryChecker.Inst.buffMemory += 3;
+                        MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + 3);
+                    }
+                }
+                else
+                {
+                    if (caster.player.IsOurTurn())
+                    {
+                        MemoryChecker.Inst.buffMemory -= 3;
+                        MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory - 3);
+                    }
+                }
+                break;
         }
     }
 

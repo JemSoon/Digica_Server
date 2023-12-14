@@ -10,6 +10,9 @@ public class MemoryChecker : NetworkBehaviour
     [SyncVar]
     public int memory;
 
+    [SyncVar]
+    public int buffMemory;
+
     public void memoryCheckerPos()
     {
         //if (Player.localPlayer != null && Player.localPlayer.isLocalPlayer)

@@ -38,7 +38,7 @@ public class ArrowHead : MonoBehaviour
 
             bool canTarget;
 
-            if (((FieldCard)caster).CanAttack() || (IsAbility && ((FieldCard)caster).isSecurity==false))
+            if (((FieldCard)caster).CanAttack() || (((FieldCard)caster).card.data is SpellCard && IsAbility && ((FieldCard)caster).isSecurity==false))
             { 
                 //통상 크리쳐카드거나 스펠카드중 Security가 아니라면
                 canTarget = target.casterType.CanTarget(card.acceptableTargets);
@@ -53,6 +53,12 @@ public class ArrowHead : MonoBehaviour
             {
                 //캐스터가 시큐리티 카드인 경우
                 canTarget = target.casterType.CanTarget(((SpellCard)card.data).acceptableSecurityTargets);
+            }
+            else if (((FieldCard)caster).card.data is CreatureCard creatureCard&& IsAbility)
+            {
+                //크리쳐 카드인데 isAbility가 true로 발동된다면
+                //buffTarget리스트 안에 내용물로 타게팅
+                canTarget = creatureCard.buffTargets.Contains(target.casterType);
             }
             else
             { 
@@ -77,7 +83,7 @@ public class ArrowHead : MonoBehaviour
                     //}
                     else 
                     { 
-                        ((SpellCard)card.data).StartCast(caster, target);
+                        ((ScriptableCard)card.data).StartCast(caster, target);
                     }
                 }
             }

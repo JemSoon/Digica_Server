@@ -278,6 +278,7 @@ public class FieldCard : Entity
         if(Count == -1)
         {
             FieldCard fieldCard = this;
+            FieldCard upperMostCard = fieldCard.FindMostUpperCard();
 
             if (fieldCard.isUnderMostCard && fieldCard.isUpperMostCard) { return; } //최상단겸 최하단(단 한장)이면 리턴
 
@@ -290,6 +291,9 @@ public class FieldCard : Entity
             {
                 //무덤 보내기
                 fieldCard.player.deck.graveyard.Add(fieldCard.card);
+                //제거되는 카드이름의 버프 제거
+                upperMostCard.CmdChangeSomeThing(((CreatureCard)fieldCard.card.data).evolutionBuff, false);
+                upperMostCard.CmdRemoveBuff(((CreatureCard)fieldCard.card.data).evolutionBuff.cardname);
                 //차례로 아래서부터 모두 파괴
                 Destroy(fieldCard.gameObject);
                 fieldCard = fieldCard.upperCard;

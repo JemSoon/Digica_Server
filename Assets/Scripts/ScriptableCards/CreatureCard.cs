@@ -372,6 +372,10 @@ public partial class CreatureCard : ScriptableCard
             case "버드라몬":
 
                 //버드라몬을 냈을때 상대턴으로 넘어가면 실행안함
+                if(MemoryChecker.Inst.memory < 0 && caster.player.isServer)
+                { return; }
+                else if(MemoryChecker.Inst.memory > 0 && !caster.player.isServer)
+                { return; }
                 caster.SpawnTargetingArrow(caster.card, true);
 
                 break;

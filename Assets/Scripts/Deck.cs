@@ -439,7 +439,6 @@ public class Deck : NetworkBehaviour
                     }
                     else
                     {
-                        //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
                         ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
                     }
                 }
@@ -448,8 +447,20 @@ public class Deck : NetworkBehaviour
             //마지막 isUnderMostCard가 true인 카드로 한번 더
             if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
             {
-                //진화카드 올릴때 메모리가 상대에게 안넘어간다면 실행
-                ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
+                if (tempUnderCard.player.isServer == false)
+                {
+                    //서버가 아닌 참가자 클라일때 턴이 넘어가는데도 버프가 부여되서 추가코드..
+                    if (MemoryChecker.Inst.memory /*+ ((CreatureCard)newCard.card.data).Ecost*/<= 0)
+                    {
+                        //Debug.Log(MemoryChecker.Inst.memory + " + " + ((CreatureCard)newCard.card.data).Ecost);
+                        //현 메모리에 새 진화카드 올린 코스트가 상대턴으로 안넘길때만 버프
+                        ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
+                    }
+                }
+                else
+                {
+                    ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
+                }
             }
 
             //진화한 최상단 카드의 디지몬 효과 발동

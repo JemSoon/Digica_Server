@@ -452,6 +452,9 @@ public class Deck : NetworkBehaviour
                 ((CreatureCard)tempUnderCard.card.data).MyTurnCast(tempUnderCard, newCard);
             }
 
+            //진화한 최상단 카드의 디지몬 효과 발동
+            ((CreatureCard)newCard.card.data).EvoDigimonCast(newCard);
+
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
             boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);

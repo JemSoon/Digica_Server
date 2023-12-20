@@ -541,7 +541,9 @@ public class Deck : NetworkBehaviour
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
             Player.gameManager.isSpawning = false;
 
-            if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard)
+            CreatureCard attackerCreature = (CreatureCard)attacker.GetComponent<FieldCard>().card.data;
+            //어태커의 특성이 세큐리티 무효화가 아니라면(예:워그레이몬은 세큐리티 무효화함)
+            if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard && attackerCreature.makeSecurityEffectNull==false)
             {
                 spellCard.AppearSecuritySpellCard(player);
 

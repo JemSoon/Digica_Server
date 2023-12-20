@@ -31,6 +31,7 @@ public partial class CreatureCard : ScriptableCard
     public bool hasBlocker = false;
     public bool hasSpear = false;
     public bool hasJamming = false;
+    public bool makeSecurityEffectNull = false;
 
     [Header("Death Abilities")]
     public List<CardAbility> deathcrys = new List<CardAbility>();
@@ -438,6 +439,8 @@ public partial class CreatureCard : ScriptableCard
             case "듀크몬":
                 break;
             case "워그레이몬":
+                caster.CmdChangeSomeThing(buff, true);
+                caster.CmdAddBuff(this.buff);
                 break;
         }
     }

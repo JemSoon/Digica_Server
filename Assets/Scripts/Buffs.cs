@@ -14,6 +14,7 @@ public class Buffs
 
     public int removeEvoCount;//지울 카드가 -1이면 진화원 전부 나머지는 개수대로
     public int buffTurn = 1;
+    public int howMany = 1;//몇명에게 버프를 주는가
 
     public bool smashPotato; //특수효과 스매시 포타토 Player전용 버프
 }

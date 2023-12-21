@@ -16,8 +16,8 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 367bfa009ce23ed4fb243354976ad3e3, type: 3}
   color1: 0
   color2: 0
-  cardName: 3
-  cost: 0
+  cardName: "\uC591\uB0A0\uAC80"
+  cost: 3
   category: 
   intiatives: []
   hasInitiative: 0
@@ -25,6 +25,40 @@ MonoBehaviour:
   targeted: 0
   healthChange: 0
   strengthChange: 0
+  memoryChange: 0
   cardDraw: 0
   untilEndOfTurn: 0
+  isTamer: 0
+  type: 4
+  hasSelectBuff: 1
+  hasSelectSecurityBuff: 0
+  if_Security_Go_Hand: 0
+  buff:
+    cardname: "\uC591\uB0A0\uAC80"
+    buffDP: 0
+    isJamming: 0
+    isBlock: 0
+    breakEvo: 0
+    isFix: 0
+    securityAttack: 1
+    waitTurn: 0
+    removeEvoCount: 0
+    buffTurn: 1
+    howMany: 2
+    smashPotato: 0
+  SecurityBuff:
+    cardname: 
+    buffDP: 0
+    isJamming: 0
+    isBlock: 0
+    breakEvo: 0
+    isFix: 0
+    securityAttack: 0
+    waitTurn: 0
+    removeEvoCount: 0
+    buffTurn: 1
+    howMany: 1
+    smashPotato: 0
   cardPrefab: {fileID: 7582166961649262295, guid: 27801e35bdc329143b17b015777515b9, type: 3}
+  acceptableTargets: 02
+  acceptableSecurityTargets: 

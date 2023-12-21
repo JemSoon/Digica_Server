@@ -46,7 +46,8 @@ public class FieldCard : Entity
 
     [Header("Buffs")]
     [SyncVar] public int securityAttack = 0;
-    [Header("Test")]
+    public int buffTargetCount = 1;
+    [Header("Dragging")]
     public FieldCardHover cardDragHover;
 
     // Update is called once per frame

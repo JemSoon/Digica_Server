@@ -405,8 +405,10 @@ public partial class SpellCard : ScriptableCard
             target.GetComponent<FieldCard>().CmdChangeSomeThing(SecurityBuff, true);
             target.GetComponent<FieldCard>().CmdAddBuff(SecurityBuff);
         }
+        --caster.GetComponent<FieldCard>().buffTargetCount;
 
-        caster.DestroyTargetingArrow();
+        if (caster.GetComponent<FieldCard>().buffTargetCount == 0)
+        { caster.DestroyTargetingArrow(); }
     }
     public override void EndCast(Entity caster, Entity target)
     {

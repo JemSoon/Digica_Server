@@ -390,15 +390,15 @@ public partial class CreatureCard : ScriptableCard
             case "메가로그라우몬":
                 caster.player.UICardsList.Clear();
 
-                GameObject enemyField2 = Player.gameManager.enemyField.content.gameObject;
-                GameObject playerField2 = Player.gameManager.playerField.content.gameObject;
+                GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
+                GameObject playerField = Player.gameManager.playerField.content.gameObject;
 
                 bool isTamerExist = false;
                 bool destroyExist = false;
 
-                for (int i = 0; i < playerField2.transform.childCount; ++i)
+                for (int i = 0; i < playerField.transform.childCount; ++i)
                 {
-                    FieldCard myCard = playerField2.transform.GetChild(i).GetComponent<FieldCard>();
+                    FieldCard myCard = playerField.transform.GetChild(i).GetComponent<FieldCard>();
 
                     if (myCard == null) { return; }
 
@@ -414,9 +414,9 @@ public partial class CreatureCard : ScriptableCard
                 if (isTamerExist)
                 {
                     //테이머가 존재하면 3천이하 디지몬 1마리 소멸
-                    for (int i = 0; i < enemyField2.transform.childCount; ++i)
+                    for (int i = 0; i < enemyField.transform.childCount; ++i)
                     {
-                        FieldCard enemyCard = enemyField2.transform.GetChild(i).GetComponent<FieldCard>();
+                        FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
 
                         if (enemyCard == null) { return; }
 
@@ -437,6 +437,52 @@ public partial class CreatureCard : ScriptableCard
                 break;
 
             case "듀크몬":
+                caster.player.UICardsList.Clear();
+
+                GameObject enemyField2 = Player.gameManager.enemyField.content.gameObject;
+                GameObject playerField2 = Player.gameManager.playerField.content.gameObject;
+
+                bool isTamerExist2 = false;
+                bool destroyExist2 = false;
+
+                for (int i = 0; i < playerField2.transform.childCount; ++i)
+                {
+                    FieldCard myCard = playerField2.transform.GetChild(i).GetComponent<FieldCard>();
+
+                    if (myCard == null) { return; }
+
+                    //일단 나의 필드에 레드카드 테이머가 있는지 체크
+                    if (myCard.isUpperMostCard && myCard.card.data is SpellCard spellCard && spellCard.isTamer && (spellCard.color1 == CardColor.Red || spellCard.color2 == CardColor.Red))
+                    {
+                        //상대 카드에 CreatureCard가 아닌 테이머나 스펠카드 있을수 있으므로 조건에 CreatureCard필수
+                        isTamerExist2 = true;
+                        break;
+                    }
+                }
+
+                if (isTamerExist2)
+                {
+                    //테이머가 존재하면 6천이하 디지몬 1마리 소멸
+                    for (int i = 0; i < enemyField2.transform.childCount; ++i)
+                    {
+                        FieldCard enemyCard = enemyField2.transform.GetChild(i).GetComponent<FieldCard>();
+
+                        if (enemyCard == null) { return; }
+
+                        if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && enemyCard.strength <= 6000)
+                        {
+                            caster.player.UICardsList.Add(enemyCard);
+                            destroyExist2 = true;
+                        }
+                    }
+                }
+
+                if (destroyExist2)
+                {
+                    caster.player.CmdSyncTargeting(caster.player, true);
+                    caster.player.CmdSetActiveDestroyPanel(caster.player);
+                }
+
                 break;
             case "워그레이몬":
                 caster.CmdChangeSomeThing(buff, true);

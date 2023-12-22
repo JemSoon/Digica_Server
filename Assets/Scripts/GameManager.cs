@@ -245,13 +245,13 @@ public class GameManager : NetworkBehaviour
         {
             destroyCard.player.deck.CmdAddGraveyard(destroyCard.player,destroyCard.card);
             //NetworkServer.Destroy(destroyCard.gameObject);
-            destroyCard.CmdDestroyCard(destroyCard);
+            destroyCard.CmdServerDestroyCard(destroyCard);
             destroyCard = destroyCard.underCard;
             //무덤에 추가해야..
         }
         //NetworkServer.Destroy(destroyCard.gameObject);
         destroyCard.player.deck.CmdAddGraveyard(destroyCard.player, destroyCard.card);
-        destroyCard.CmdDestroyCard(destroyCard);
+        destroyCard.CmdServerDestroyCard(destroyCard);
         Player.localPlayer.CmdSyncTargeting(Player.localPlayer, false);
         CmdSyncCaster(null);
         CmdSyncTarget(null);

@@ -2,6 +2,7 @@
 // below to load our items into a cache so we can easily reference them.
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 
 public enum CreatureType : byte { ATTACK, EVO,  }
 public enum EvolutionType : byte { ATTACK, EVO, MYTURN, }
@@ -379,6 +380,32 @@ public partial class CreatureCard : ScriptableCard
                 { return; }
                 caster.SpawnTargetingArrow(caster.card, true);
 
+                break;
+
+            case "볼케닉드라몬":
+                GameObject enemyField2 = Player.gameManager.enemyField.content.gameObject;
+
+                for (int i = 0; i < enemyField2.transform.childCount; ++i)
+                {
+                    FieldCard enemyCard = enemyField2.transform.GetChild(i).GetComponent<FieldCard>();
+
+                    if (enemyCard == null) { return; }
+
+                    //일단 나의 필드에 레드카드 테이머가 있는지 체크
+                    if (enemyCard.isUpperMostCard && enemyCard.strength<=4000)
+                    {
+                        while(!enemyCard.isUnderMostCard)
+                        {
+                            //진화원 차례대로 위에서부터 삭제
+                            enemyCard.player.deck.CmdAddGraveyard(enemyCard.player, enemyCard.card);
+                            enemyCard.CmdDestroyCard(enemyCard);
+                            enemyCard = enemyCard.underCard;
+                        }
+                        //마지막 최하단 카드도 삭제
+                        enemyCard.player.deck.CmdAddGraveyard(enemyCard.player, enemyCard.card);
+                        enemyCard.CmdDestroyCard(enemyCard);
+                    }
+                }
                 break;
         }
     }

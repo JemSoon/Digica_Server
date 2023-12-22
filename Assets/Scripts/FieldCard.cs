@@ -306,9 +306,20 @@ public class FieldCard : Entity
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdDestroyCard(FieldCard card)
+    public void CmdServerDestroyCard(FieldCard card)
     {
         NetworkServer.Destroy(card.gameObject);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdDestroyCard(FieldCard card)
+    {
+        if(isServer) { RpcDestroyCard(card); }
+    }
+    [ClientRpc]
+    public void RpcDestroyCard(FieldCard card)
+    {
+        Destroy(card.gameObject);
     }
 
     [Command(requiresAuthority = false)]

@@ -530,6 +530,10 @@ public partial class CreatureCard : ScriptableCard
                     caster.CmdAddBuff(this.evolutionBuff);
                 }
                 break;
+
+            case "가루다몬":
+                caster.player.CmdDrawDeck(1);
+                break;
         }
     }
 }

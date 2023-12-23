@@ -344,6 +344,17 @@ public class Deck : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdEndTurn()
     {
+        GameObject playerField = Player.gameManager.playerField.content.gameObject;
+
+        for (int i = 0; i < playerField.transform.childCount; ++i)
+        {
+            FieldCard myCard = playerField.transform.GetChild(i).GetComponent<FieldCard>();
+
+            if (myCard == null) { return; }
+
+            //내 필드의 모든 카드 block초기화 
+            myCard.blocked = false;
+        }
     }
 
     [Command]

@@ -232,6 +232,17 @@ public class GameManager : NetworkBehaviour
 
     public void OnBlockButtonClick(int index)
     {
+        //FieldCard card = caster.GetComponent<FieldCard>();
+
+        //while (card.GetComponent<FieldCard>().isUnderMostCard == false)
+        //{
+        //    //블록당할시 진화원 효과 발동 효과 발동
+        //    card = card.underCard;
+        //    CreatureCard creatureCard = (CreatureCard)card.card.data;
+        //    creatureCard.BlockedCast(card);
+        //}
+        caster.GetComponent<FieldCard>().CmdSyncBlocked(true); //블록 당했다!
+        Debug.Log("블록당했다!");
         caster.combat.CmdBattle(caster,Player.localPlayer.UICardsList[index]);
         Player.localPlayer.CmdSyncTargeting(Player.localPlayer,false);
         CmdSyncCaster(null);

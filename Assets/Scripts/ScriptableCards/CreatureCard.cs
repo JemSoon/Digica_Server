@@ -517,4 +517,19 @@ public partial class CreatureCard : ScriptableCard
                 break;
         }
     }
+
+    public void BlockedCast(FieldCard caster)
+    {
+        //블록 당했을때의 진화원 캐스팅
+        switch (cardName)
+        {
+            case "피요몬":
+                //if (caster.player.IsOurTurn())
+                {
+                    caster.CmdChangeSomeThing(evolutionBuff, true);
+                    caster.CmdAddBuff(this.evolutionBuff);
+                }
+                break;
+        }
+    }
 }

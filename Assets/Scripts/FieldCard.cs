@@ -49,6 +49,8 @@ public class FieldCard : Entity
     public int buffTargetCount = 1;
     [Header("Dragging")]
     public FieldCardHover cardDragHover;
+    [Header("Status")]
+    [SyncVar] public bool blocked = false; //블록 "당했는가"?
 
     // Update is called once per frame
     public override void Update()
@@ -334,6 +336,12 @@ public class FieldCard : Entity
         card.GetComponent<RectTransform>().rotation = rotation;
         card.cardHover.GetComponent<RectTransform>().rotation = Quaternion.identity;
         RpcRotation(card, rotation);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdSyncBlocked(bool TorF)
+    {
+        this.blocked = TorF;
     }
 
     [ClientRpc]

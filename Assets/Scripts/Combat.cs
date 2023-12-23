@@ -80,6 +80,13 @@ public class Combat : NetworkBehaviour
                         //CreatureCard도 버프를 가지고 있어야함 
                         creatureCard.AttackCast(card, attacker.GetComponent<FieldCard>());
                     }
+
+                    if (attacker.GetComponent<FieldCard>().blocked)
+                    {
+                        Debug.Log("블록 진화원 버프 발동!");
+                        //최상단 카드가 블록당했다면 블록ed캐스트도 실행
+                        ((CreatureCard)card.card.data).BlockedCast(attacker.GetComponent<FieldCard>());
+                    }
                 }
             }
 

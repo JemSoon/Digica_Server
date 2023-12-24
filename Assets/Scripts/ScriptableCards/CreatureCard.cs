@@ -542,22 +542,22 @@ public partial class CreatureCard : ScriptableCard
         switch(cardName)
         {
             case "볼케닉드라몬":
-                //if (caster.player.IsOurTurn())
+                if (caster.player.IsOurTurn())
                 {
                     caster.CmdChangeSomeThing(buff, true);
                     caster.CmdAddBuff(buff);
                 }
-                //else
-                //{
-                //    if (caster.buffs.Count > 0)
-                //    {
-                //        {
-                //            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
-                //            caster.CmdChangeSomeThing(buff, false);
-                //            caster.CmdRemoveBuff(buff.cardname);
-                //        }
-                //    }
-                //}
+                else
+                {
+                    if (caster.buffs.Count > 0)
+                    {
+                        {
+                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                            caster.CmdChangeSomeThing(buff, false);
+                            caster.CmdRemoveBuff(buff.cardname);
+                        }
+                    }
+                }
                 break;
         }
     }

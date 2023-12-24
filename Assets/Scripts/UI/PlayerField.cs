@@ -132,7 +132,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
             //    //테이머 턴 개시시 효과 발동
             //    creatureCard.DigimonCast(card);
             //}
-            card.CmdDigimonCast();
+            //card.CmdDigimonCast();
 
             card.CmdUpdateWaitTurn();
         }
@@ -230,6 +230,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
         }
 
         UpdateTurnEvoEffect();
+        UpdateDigimonEffect();
     }
 
     public int GetFieldCardCount()

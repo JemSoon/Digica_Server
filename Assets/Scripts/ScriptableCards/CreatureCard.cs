@@ -32,7 +32,7 @@ public partial class CreatureCard : ScriptableCard
     public bool hasBlocker = false;
     public bool hasSpear = false;
     public bool hasJamming = false;
-    public bool makeSecurityEffectNull = false;
+    public bool makeSecurityEffectNull = false;//워그레이몬같이 세큐리티 무효화시 확인하는
 
     [Header("Death Abilities")]
     public List<CardAbility> deathcrys = new List<CardAbility>();
@@ -536,4 +536,30 @@ public partial class CreatureCard : ScriptableCard
                 break;
         }
     }
+
+    public void DigimonCast(FieldCard caster)
+    {
+        switch(cardName)
+        {
+            case "볼케닉드라몬":
+                //if (caster.player.IsOurTurn())
+                {
+                    caster.CmdChangeSomeThing(buff, true);
+                    caster.CmdAddBuff(buff);
+                }
+                //else
+                //{
+                //    if (caster.buffs.Count > 0)
+                //    {
+                //        {
+                //            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                //            caster.CmdChangeSomeThing(buff, false);
+                //            caster.CmdRemoveBuff(buff.cardname);
+                //        }
+                //    }
+                //}
+                break;
+        }
+    }
+
 }

@@ -127,6 +127,13 @@ public class PlayerField : MonoBehaviour, IDropHandler
             //    creatureCard.MyTurnCast(card, card.upperCard);
             //}
 
+            //if (card.card.data is CreatureCard creatureCard && card.isUpperMostCard)
+            //{
+            //    //테이머 턴 개시시 효과 발동
+            //    creatureCard.DigimonCast(card);
+            //}
+            card.CmdDigimonCast();
+
             card.CmdUpdateWaitTurn();
         }
     }
@@ -158,6 +165,21 @@ public class PlayerField : MonoBehaviour, IDropHandler
             if (card.card.data is CreatureCard creatureCard && creatureCard.evolutionType.Exists(evo => evo == EvolutionType.MYTURN) && card.upperCard!=null)
             {
                 creatureCard.MyTurnCast(card, card.upperCard);
+            }
+        }
+    }
+
+    public void UpdateDigimonEffect()
+    {
+        int cardCount = content.childCount;
+        for (int i = 0; i < cardCount; ++i)
+        {
+            FieldCard card = content.GetChild(i).GetComponent<FieldCard>();
+            if (card == null) { return; }
+
+            if (card.card.data is CreatureCard creatureCard && card.isUpperMostCard)
+            {
+                creatureCard.DigimonCast(card);
             }
         }
     }

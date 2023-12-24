@@ -477,6 +477,8 @@ public class Deck : NetworkBehaviour
 
             //진화한 최상단 카드의 디지몬 효과 발동
             ((CreatureCard)newCard.card.data).EvoDigimonCast(newCard);
+            //최상단 카드의 오리지널 디지몬 효과 발동
+            ((CreatureCard)newCard.card.data).DigimonCast(newCard);
 
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
             boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
@@ -605,6 +607,10 @@ public class Deck : NetworkBehaviour
                     }
                     fieldCard = fieldCard.upperCard;
                 }
+                //최상단 카드의 오리지널 디지몬 효과 발동
+                ((CreatureCard)mostUpperCard.card.data).DigimonCast(mostUpperCard);
+                //육성존에서 진화하는데도 발동되야함?? 혹시몰라 일단 주석
+                //((CreatureCard)mostUpperCard.card.data).EvoDigimonCast(mostUpperCard);
 
                 Player.gameManager.playerRaiseField.Spawnbutton.SetActive(true);
             }

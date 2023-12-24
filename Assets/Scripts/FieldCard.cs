@@ -344,6 +344,20 @@ public class FieldCard : Entity
         this.blocked = TorF;
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdDigimonCast()
+    {
+        RpcDigimonCast();
+    }
+    [ClientRpc]
+    public void RpcDigimonCast()
+    {
+        if (Player.localPlayer == player && card.data is CreatureCard creatureCard && isUpperMostCard)
+        {
+            creatureCard.DigimonCast(this);
+        }
+    }
+
     [ClientRpc]
     public void RpcRotation(FieldCard card, Quaternion rotation)
     {

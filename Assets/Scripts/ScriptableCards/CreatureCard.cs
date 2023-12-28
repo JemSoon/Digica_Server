@@ -2,7 +2,7 @@
 // below to load our items into a cache so we can easily reference them.
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
+using System.Linq;
 
 public enum CreatureType : byte { ATTACK, EVO,  }
 public enum EvolutionType : byte { ATTACK, EVO, MYTURN, }
@@ -241,17 +241,24 @@ public partial class CreatureCard : ScriptableCard
                 }
                 if (caster.player.IsOurTurn())
                 {
-                    target.CmdChangeSomeThing(evolutionBuff, true);
-                    target.CmdAddBuff(evolutionBuff);
+                    if(!target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname) && caster.isMyTurnEvoCastingActive==false)
+                    {
+                        //버프목록에 없으면 추가
+                        target.CmdChangeSomeThing(evolutionBuff, true);
+                        target.CmdAddBuff(evolutionBuff);
+                        caster.isMyTurnEvoCastingActive = true;
+                    }
                 }
                 else
                 {
-                    if (target.buffs.Count > 0)
+                    //if (target.buffs.Count > 0)
+                    if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         {
                             //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                             target.CmdChangeSomeThing(evolutionBuff, false);
                             target.CmdRemoveBuff(evolutionBuff.cardname);
+                            caster.isMyTurnEvoCastingActive = false;
                         }
                     }
                 }
@@ -267,17 +274,23 @@ public partial class CreatureCard : ScriptableCard
                 }
                 if (caster.player.IsOurTurn())
                 {
-                    target.CmdChangeSomeThing(evolutionBuff, true);
-                    target.CmdAddBuff(evolutionBuff);
+                    if (!target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
+                    {
+                        //버프목록에 없으면 추가
+                        target.CmdChangeSomeThing(evolutionBuff, true);
+                        target.CmdAddBuff(evolutionBuff);
+                        caster.isMyTurnEvoCastingActive = true;
+                    }
                 }
                 else
                 {
-                    if (target.buffs.Count > 0)
+                    if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         {
                             //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                             target.CmdChangeSomeThing(evolutionBuff, false);
                             target.CmdRemoveBuff(evolutionBuff.cardname);
+                            caster.isMyTurnEvoCastingActive = false;
                         }
                     }
                 }
@@ -293,21 +306,23 @@ public partial class CreatureCard : ScriptableCard
                 }
                 if (caster.player.IsOurTurn())
                 {
-                    if (((CreatureCard)target.card.data).hasSpear)
+                    if (((CreatureCard)target.card.data).hasSpear && (!target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname)))
                     {
                         //FieldCard에 CreatureCard의 isSpear정보를 따로 bool로 받아야함 
                         target.CmdChangeSomeThing(evolutionBuff, true);
                         target.CmdAddBuff(evolutionBuff);
+                        caster.isMyTurnEvoCastingActive = true;
                     }
                 }
                 else
                 {
-                    if (target.buffs.Count > 0 && ((CreatureCard)target.card.data).hasSpear)
+                    if (((CreatureCard)target.card.data).hasSpear && target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         {
                             //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                             target.CmdChangeSomeThing(evolutionBuff, false);
                             target.CmdRemoveBuff(evolutionBuff.cardname);
+                            caster.isMyTurnEvoCastingActive = false;
                         }
                     }
                 }
@@ -326,19 +341,130 @@ public partial class CreatureCard : ScriptableCard
                 {
                     if (caster.player.enemyInfo.data.deck.graveyard.Count >= 5)
                     {
-                        target.CmdChangeSomeThing(evolutionBuff, true);
-                        target.CmdAddBuff(evolutionBuff);
+                        //상대 트래시가 5장 이상일때 발동
+                        if(!target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
+                        {
+                            target.CmdChangeSomeThing(evolutionBuff, true);
+                            target.CmdAddBuff(evolutionBuff);
+                            caster.isMyTurnEvoCastingActive = true;
+                        }
+                    }
+                    else
+                    {
+                        //상대 트래시가 5장 미만이 되었다면 줬던 버프 제거
+                        if(target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
+                        {
+                            target.CmdChangeSomeThing(evolutionBuff, false);
+                            target.CmdRemoveBuff(evolutionBuff.cardname);
+                            caster.isMyTurnEvoCastingActive = false;
+                        }
                     }
                 }
                 else
                 {
-                    if (target.buffs.Count > 0)
+                    if(target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
+                        target.CmdChangeSomeThing(evolutionBuff, false);
+                        target.CmdRemoveBuff(evolutionBuff.cardname);
+                        caster.isMyTurnEvoCastingActive = false;
+                    }
+                }
+                break;
+
+            case "메가로그라우몬":
+                if (caster.upperCard == null) { return; }
+
+                target = caster.upperCard;
+                while (target != target.isUpperMostCard)
+                {
+                    target = target.upperCard;
+                }
+
+                if (caster.player.IsOurTurn())
+                {
+                    if (caster.player.enemyInfo.data.deck.graveyard.Count >= 5)
+                    {
+                        //상대 트래시가 5장 이상일때 발동
+                        if (!target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                         {
-                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                            target.CmdChangeSomeThing(evolutionBuff, true);
+                            target.CmdAddBuff(evolutionBuff);
+                            caster.isMyTurnEvoCastingActive = true;
+                        }
+                    }
+                    else
+                    {
+                        //상대 트래시가 5장 미만이 되었다면 줬던 버프 제거
+                        if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
+                        {
                             target.CmdChangeSomeThing(evolutionBuff, false);
                             target.CmdRemoveBuff(evolutionBuff.cardname);
+                            caster.isMyTurnEvoCastingActive = false;
                         }
+                    }
+                }
+                else
+                {
+                    if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
+                    {
+                        target.CmdChangeSomeThing(evolutionBuff, false);
+                        target.CmdRemoveBuff(evolutionBuff.cardname);
+                        caster.isMyTurnEvoCastingActive = false;
+                    }
+                }
+                break;
+        }
+    }
+
+    public void MyTurnDigimonCast(FieldCard caster, FieldCard target)
+    {
+        switch (cardName)
+        {
+            case "화염리자몬":
+                if(!caster.isUpperMostCard) { return; }//최상단 카드가 아니면 리턴
+
+                if (caster.player.IsOurTurn())
+                {
+                    if (caster.player.firstPlayer)
+                    {
+                        if (MemoryChecker.Inst.memory >= 3 && !target.buffs.Any(buffs => buffs.cardname == buff.cardname) && caster.isMyTurnDigimonCastingActive == false)
+                        {
+                            //서버 호스트이고 메모리가 3이상이라면
+                            target.CmdChangeSomeThing(buff, true);
+                            target.CmdAddBuff(buff);
+                            caster.isMyTurnDigimonCastingActive = true;
+                        }
+                        else if(MemoryChecker.Inst.memory < 3 && target.buffs.Any(buffs => buffs.cardname == buff.cardname) && caster.isMyTurnDigimonCastingActive)
+                        {
+                            target.CmdChangeSomeThing(buff, false);
+                            target.CmdRemoveBuff(buff.cardname);
+                            caster.isMyTurnEvoCastingActive = false;
+                        }
+                    }
+                    else
+                    {
+                        //참가자 호스트이고 메모리가 -3보다 작다면 버프부여
+                        if (MemoryChecker.Inst.memory <= -3 && !target.buffs.Any(buffs => buffs.cardname == buff.cardname) && caster.isMyTurnDigimonCastingActive == false)
+                        {
+                            target.CmdChangeSomeThing(buff, true);
+                            target.CmdAddBuff(buff);
+                            caster.isMyTurnDigimonCastingActive = true;
+                        }
+                        else if(MemoryChecker.Inst.memory > -3 && target.buffs.Any(buffs => buffs.cardname == buff.cardname) && caster.isMyTurnDigimonCastingActive)
+                        {
+                            target.CmdChangeSomeThing(buff, false);
+                            target.CmdRemoveBuff(buff.cardname);
+                            caster.isMyTurnEvoCastingActive = false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (target.buffs.Any(buffs => buffs.cardname == buff.cardname))
+                    {
+                        target.CmdChangeSomeThing(buff, false);
+                        target.CmdRemoveBuff(buff.cardname);
+                        caster.isMyTurnEvoCastingActive = false;
                     }
                 }
                 break;

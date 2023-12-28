@@ -47,6 +47,8 @@ public class FieldCard : Entity
     [Header("Buffs")]
     [SyncVar] public int securityAttack = 0;
     public int buffTargetCount = 1;
+    public bool isMyTurnDigimonCastingActive = false;
+    public bool isMyTurnEvoCastingActive = false;//진화원 버프가 한번 들어왔는가?(매 프레임 찰나로 인한 중복 들어옴 방지)
     [Header("Dragging")]
     public FieldCardHover cardDragHover;
     [Header("Status")]
@@ -89,6 +91,17 @@ public class FieldCard : Entity
                 cardDragHover.canDrag = true; //player.deck.CanPlayCard(manaCost); //원래는 마나 총량 넘으면 못내게 했는데 ECost라는 다른 루트땜에 일단 낼 수 있게함
             }
         }    
+
+        if(player == Player.localPlayer && player.IsOurTurn() /*&& isMyTurnEvoCastingActive == false*/)
+        {
+            ((CreatureCard)card.data).MyTurnCast(this,FindMostUpperCard());
+            //isMyTurnCastingActive = true;
+        }
+        if (player == Player.localPlayer && player.IsOurTurn() /*&& isMyTurnDigimonCastingActive == false*/)
+        {
+            ((CreatureCard)card.data).MyTurnDigimonCast(this, this);
+            //isMyTurnCastingActive = true;
+        }
     }
 
     [Command(requiresAuthority = false)]

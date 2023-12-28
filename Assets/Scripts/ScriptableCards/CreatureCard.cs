@@ -438,7 +438,7 @@ public partial class CreatureCard : ScriptableCard
                         {
                             target.CmdChangeSomeThing(buff, false);
                             target.CmdRemoveBuff(buff.cardname);
-                            caster.isMyTurnEvoCastingActive = false;
+                            caster.isMyTurnDigimonCastingActive = false;
                         }
                     }
                     else
@@ -454,7 +454,7 @@ public partial class CreatureCard : ScriptableCard
                         {
                             target.CmdChangeSomeThing(buff, false);
                             target.CmdRemoveBuff(buff.cardname);
-                            caster.isMyTurnEvoCastingActive = false;
+                            caster.isMyTurnDigimonCastingActive = false;
                         }
                     }
                 }
@@ -464,7 +464,7 @@ public partial class CreatureCard : ScriptableCard
                     {
                         target.CmdChangeSomeThing(buff, false);
                         target.CmdRemoveBuff(buff.cardname);
-                        caster.isMyTurnEvoCastingActive = false;
+                        caster.isMyTurnDigimonCastingActive = false;
                     }
                 }
                 break;

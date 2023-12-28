@@ -49,7 +49,7 @@ MonoBehaviour:
     securityAttack: 1
     waitTurn: 0
     removeEvoCount: 0
-    buffTurn: 1
+    buffTurn: -1
     howMany: 1
     smashPotato: 0
   evolutionBuff:

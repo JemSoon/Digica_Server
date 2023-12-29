@@ -226,28 +226,28 @@ public partial class CreatureCard : ScriptableCard
             case "메탈그레이몬(청)":
                 if (caster.player.isServer)
                 {
-                    if (caster.player.IsOurTurn())
+                    if (caster.player.IsOurTurn() && caster.isMyTurnDigimonCastingActive == false)
                     {
-                        MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory - 5);
-                        
-                        //공격시 메모리-5로 인해 상대 메모리로 넘어갔다면 턴 넘김
-                        if(MemoryChecker.Inst.memory - 5 < 0 )
-                        {
-                            Player.gameManager.CmdEndTurn();
-                        }
+                        MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory - 5);
+                        caster.isMyTurnDigimonCastingActive = true;
+
+                        //if (MemoryChecker.Inst.memory < 0 )
+                        //{
+                        //    Player.gameManager.CmdEndTurn();
+                        //}
                     }
                 }
                 else
                 {
-                    if (caster.player.IsOurTurn())
+                    if (caster.player.IsOurTurn() && caster.isMyTurnDigimonCastingActive == false)
                     {
-                        MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + 5);
+                        MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory + 5);
+                        caster.isMyTurnDigimonCastingActive = true;
 
-                        //공격시 메모리-5로 인해 상대 메모리로 넘어갔다면 턴 넘김
-                        if (MemoryChecker.Inst.memory + 5 > 0)
-                        {
-                            Player.gameManager.CmdEndTurn();
-                        }
+                        //if (MemoryChecker.Inst.memory > 0)
+                        //{
+                        //    Player.gameManager.CmdEndTurn();
+                        //}
                     }
                 }
                 break;

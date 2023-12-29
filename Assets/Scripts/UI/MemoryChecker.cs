@@ -173,4 +173,35 @@ public class MemoryChecker : NetworkBehaviour
         Inst.memory = memory;
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdChangeMemorySameSync(int memory)
+    {
+        //호스트와 참가자 클라이언트 간의 싱크 오차를 줄이기 위해 RPC를 이용하기 위한 함수
+        //RPC에서 실행시켜서 같은 타이밍에 발동되게함
+        //원래 memory가 SyncVar라서 Cmd에서만 처리해도 됬지만
+        //이러면 호스트는 빠르게 바뀐값이 입력되고 참가자는 느려서 바뀌기 전 값이 입력되서 오차 업애기 위해 작성
+        RpcChangeMemorySameSync(memory);
+    }
+
+    [ClientRpc]
+    public void RpcChangeMemorySameSync(int memory)
+    {
+        //호스트와 참가자 클라이언트 간의 싱크 오차를 줄이기 위해 RPC를 이용하기 위한 함수
+        Inst.memory = memory;
+
+        if (Player.localPlayer.isServer)
+        {
+            if (MemoryChecker.Inst.memory < 0)
+            {
+                Player.gameManager.CmdEndTurn();
+            }
+        }
+        else
+        {
+            if (MemoryChecker.Inst.memory > 0)
+            {
+                Player.gameManager.CmdEndTurn();
+            }
+        }
+    }
 }

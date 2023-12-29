@@ -174,7 +174,7 @@ public partial class SpellCard : ScriptableCard
         }
     }
 
-    public void AppearSecuritySpellCard(Player owner)
+    public void AppearSecuritySpellCard(Player owner, FieldCard card)
     {
         if (type == SpellType.MEMORY)
         {
@@ -183,6 +183,11 @@ public partial class SpellCard : ScriptableCard
                 case "그래비티 프레스":
                     //세큐 효과 없음
                     break;
+
+                //case "신태일":
+                //    card.isSecurity = false;
+                //    StartTamerCast(card.player);
+                //    break;
             }
         }
 

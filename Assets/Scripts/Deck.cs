@@ -559,7 +559,7 @@ public class Deck : NetworkBehaviour
             //어태커의 특성이 세큐리티 무효화가 아니라면(예:워그레이몬은 세큐리티 무효화함)
             if(boardCard.GetComponent<FieldCard>().card.data is SpellCard spellCard && attackerCreature.makeSecurityEffectNull==false)
             {
-                spellCard.AppearSecuritySpellCard(player);
+                spellCard.AppearSecuritySpellCard(player, boardCard.GetComponent<FieldCard>());
 
                 if (spellCard.hasSelectSecurityBuff)
                 {

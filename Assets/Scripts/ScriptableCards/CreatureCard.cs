@@ -223,6 +223,34 @@ public partial class CreatureCard : ScriptableCard
                     }
                 }
                 break;
+            case "메탈그레이몬(청)":
+                if (caster.player.isServer)
+                {
+                    if (caster.player.IsOurTurn())
+                    {
+                        MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory - 5);
+                        
+                        //공격시 메모리-5로 인해 상대 메모리로 넘어갔다면 턴 넘김
+                        if(MemoryChecker.Inst.memory - 5 < 0 )
+                        {
+                            Player.gameManager.CmdEndTurn();
+                        }
+                    }
+                }
+                else
+                {
+                    if (caster.player.IsOurTurn())
+                    {
+                        MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + 5);
+
+                        //공격시 메모리-5로 인해 상대 메모리로 넘어갔다면 턴 넘김
+                        if (MemoryChecker.Inst.memory + 5 > 0)
+                        {
+                            Player.gameManager.CmdEndTurn();
+                        }
+                    }
+                }
+                break;
         }
     }
 
@@ -668,6 +696,25 @@ public partial class CreatureCard : ScriptableCard
         switch(cardName)
         {
             case "볼케닉드라몬":
+                if (caster.player.IsOurTurn())
+                {
+                    caster.CmdChangeSomeThing(buff, true);
+                    caster.CmdAddBuff(buff);
+                }
+                else
+                {
+                    if (caster.buffs.Count > 0)
+                    {
+                        {
+                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                            caster.CmdChangeSomeThing(buff, false);
+                            caster.CmdRemoveBuff(buff.cardname);
+                        }
+                    }
+                }
+                break;
+
+            case "메탈그레이몬(청)":
                 if (caster.player.IsOurTurn())
                 {
                     caster.CmdChangeSomeThing(buff, true);

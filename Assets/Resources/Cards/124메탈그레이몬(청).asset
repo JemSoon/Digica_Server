@@ -27,6 +27,7 @@ MonoBehaviour:
   Ecost: 3
   level: 5
   acceptableTargets: 0301
+  buffTargets: 
   creatureType: 
   evolutionType: 02
   hasCharge: 0
@@ -34,20 +35,22 @@ MonoBehaviour:
   hasBlocker: 0
   hasSpear: 0
   hasJamming: 0
+  makeSecurityEffectNull: 0
   deathcrys: []
   hasDeathCry: 0
   cardPrefab: {fileID: 7582166961649262295, guid: 27801e35bdc329143b17b015777515b9, type: 3}
   buff:
-    cardname: 
+    cardname: "\uBA54\uD0C8\uADF8\uB808\uC774\uBAAC(\uCCAD)"
     buffDP: 0
     isJamming: 0
     isBlock: 0
     breakEvo: 0
     isFix: 0
-    securityAttack: 0
+    securityAttack: 2
     waitTurn: 0
     removeEvoCount: 0
-    buffTurn: 1
+    buffTurn: -1
+    howMany: 1
     smashPotato: 0
   evolutionBuff:
     cardname: "\uBA54\uD0C8\uADF8\uB808\uC774\uBAAC(\uCCAD)"
@@ -60,4 +63,5 @@ MonoBehaviour:
     waitTurn: 0
     removeEvoCount: 0
     buffTurn: -1
+    howMany: 1
     smashPotato: 0

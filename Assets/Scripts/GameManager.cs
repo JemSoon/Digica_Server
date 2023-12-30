@@ -3,6 +3,7 @@ using Mirror;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GameManager : NetworkBehaviour
 {
@@ -49,6 +50,11 @@ public class GameManager : NetworkBehaviour
     [Header("Destroy")]
     public GameObject destroyPanel;
     public List<Image> destroyButtonImage;
+
+    [Header("Revive")]
+    public GameObject revivePanel;
+    public List<Image> reviveButtonImage;
+    public Image reviveSelectedImage;
 
     // isHovering is only set to true on the Client that called the OnCardHover function.
     // We only want the hovering to appear on the enemy's Client, so we must exclude the OnCardHover caller from the Rpc call.
@@ -268,6 +274,31 @@ public class GameManager : NetworkBehaviour
         CmdSyncTarget(null);
         destroyPanel.SetActive(false);
     }
+    public void OnReviveButtonClick(int index)
+    {
+        //if(caster.GetComponent<FieldCard>().player == Player.localPlayer)
+        {
+            Player owner = caster.GetComponent<FieldCard>().player;
+            //카드정보를 받고, 핸드카드로 새로 팝시키고, 무덤에 해당 카드 삭제
+            CardInfo reviveCard = owner.UICardInfoList[index];
+            owner.CmdDrawSpecificCard(reviveCard, owner);
+            owner.CmdRemoveGraveyard(reviveCard);
+
+            for(int i =0; i< reviveButtonImage.Count; i++)
+            {
+                reviveButtonImage[i].gameObject.SetActive(false); 
+            }
+
+            CmdSetSelectedCardImage(reviveCard);
+            StartCoroutine(WaitForSec(owner, 1.5f));
+
+            //owner.CmdSyncTargeting(owner, false);
+            //CmdSyncCaster(null);//캐스터 초기화
+            //CmdSyncTarget(null);
+            ////revivePanel.SetActive(false);
+            //owner.CmdSetActiveRevivePanel(owner, false);
+        }
+    }
 
     [Command(requiresAuthority = false)]
     public void CmdSyncCaster(Entity caster)
@@ -293,5 +324,26 @@ public class GameManager : NetworkBehaviour
     public void RpcSyncTarget(Entity target)
     {
         Player.gameManager.target = target;
+    }
+
+    IEnumerator WaitForSec(Player owner, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        owner.CmdSyncTargeting(owner, false);
+        CmdSyncCaster(null);//캐스터 초기화
+        CmdSyncTarget(null);
+        //revivePanel.SetActive(false);
+        owner.CmdSetActiveRevivePanel(owner, false);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdSetSelectedCardImage(CardInfo card)
+    {
+        RpcSetSelectedCardImage(card);
+    }
+    [ClientRpc]
+    public void RpcSetSelectedCardImage(CardInfo card) 
+    {
+        reviveSelectedImage.gameObject.SetActive(true);
+        reviveSelectedImage.sprite = card.image;
     }
 }

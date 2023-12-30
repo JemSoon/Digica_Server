@@ -223,6 +223,7 @@ public partial class CreatureCard : ScriptableCard
                     }
                 }
                 break;
+
             case "메탈그레이몬(청)":
                 if (caster.player.isServer)
                 {
@@ -230,11 +231,6 @@ public partial class CreatureCard : ScriptableCard
                     {
                         MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory - 5);
                         caster.isMyTurnDigimonCastingActive = true;
-
-                        //if (MemoryChecker.Inst.memory < 0 )
-                        //{
-                        //    Player.gameManager.CmdEndTurn();
-                        //}
                     }
                 }
                 else
@@ -243,13 +239,13 @@ public partial class CreatureCard : ScriptableCard
                     {
                         MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory + 5);
                         caster.isMyTurnDigimonCastingActive = true;
-
-                        //if (MemoryChecker.Inst.memory > 0)
-                        //{
-                        //    Player.gameManager.CmdEndTurn();
-                        //}
                     }
                 }
+                break;
+
+            case "듀크몬":
+                int Count = caster.player.enemyInfo.graveCount / 10;
+
                 break;
         }
     }
@@ -560,6 +556,19 @@ public partial class CreatureCard : ScriptableCard
                         enemyCard.CmdDestroyCard(enemyCard);
                     }
                 }
+                break;
+
+            case "아구몬 박사":
+                List<CardInfo> filteredGraveyard = caster.player.deck.graveyard.Where(card => card.data.name.Contains("아구몬")).ToList();
+                caster.player.UICardInfoList.Clear();
+                
+                for(int i =0; i< filteredGraveyard.Count; ++i)
+                {
+                    caster.player.UICardInfoList.Add(filteredGraveyard[i]);
+                }
+                caster.CmdSyncTargeting(caster.player, true);
+                Player.gameManager.CmdSyncCaster(caster);
+                caster.player.CmdSetActiveRevivePanel(caster.player);
                 break;
         }
     }

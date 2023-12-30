@@ -42,7 +42,8 @@ public class Player : Entity
     [Header("Buffs")]
     [SyncVar] public bool smashPotato;
 
-    public List<FieldCard> UICardsList;
+    public List<FieldCard> UICardsList; //필드의 카드를 버튼으로 직접 지목할때
+    public List<CardInfo> UICardInfoList; //무덤이나 덱 등의 카드를 지목할때
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
@@ -460,6 +461,70 @@ public class Player : Entity
             //}
         }
 
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdSetActiveRevivePanel(Player owner)
+    {
+        RpcSetActiveRevivePanel(owner);
+    }
+
+    [ClientRpc]
+    public void RpcSetActiveRevivePanel(Player owner)
+    {
+        //if (owner == Player.localPlayer)
+        {
+            Player.gameManager.reviveSelectedImage.gameObject.SetActive(false);
+            Player.gameManager.revivePanel.SetActive(true);
+            
+            for (int j = UICardInfoList.Count; j < Player.gameManager.reviveButtonImage.Count; ++j)
+            {
+                //사용하지 않는 버튼 비활성화
+                Player.gameManager.reviveButtonImage[j].gameObject.SetActive(false);
+            }
+
+            for (int j = 0; j < UICardInfoList.Count; ++j)
+            {
+                //사용하는 버튼 활성화
+                Player.gameManager.reviveButtonImage[j].sprite = UICardInfoList[j].image;
+                Player.gameManager.reviveButtonImage[j].gameObject.SetActive(true);
+            }
+
+        }
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdSetActiveRevivePanel(Player owner, bool active)
+    {
+        RpcSetActiveRevivePanel(owner, active);
+    }
+
+    [ClientRpc]
+    public void RpcSetActiveRevivePanel(Player owner, bool active)
+    {
+        //if (owner == Player.localPlayer)
+        {
+            Player.gameManager.revivePanel.SetActive(active);
+
+            for (int j = UICardInfoList.Count; j < Player.gameManager.reviveButtonImage.Count; ++j)
+            {
+                //사용하지 않는 버튼 비활성화
+                Player.gameManager.reviveButtonImage[j].gameObject.SetActive(false);
+            }
+
+            for (int j = 0; j < UICardInfoList.Count; ++j)
+            {
+                //사용하는 버튼 활성화
+                Player.gameManager.reviveButtonImage[j].sprite = UICardInfoList[j].image;
+                Player.gameManager.reviveButtonImage[j].gameObject.SetActive(true);
+            }
+
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdRemoveGraveyard(CardInfo card)
+    {
+        deck.graveyard.Remove(card);
     }
 
     public bool IsOurTurn() => gameManager.isOurTurn;

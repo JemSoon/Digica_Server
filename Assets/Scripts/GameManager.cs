@@ -276,11 +276,12 @@ public class GameManager : NetworkBehaviour
     }
     public void OnReviveButtonClick(int index)
     {
-        //if(caster.GetComponent<FieldCard>().player == Player.localPlayer)
+        Player owner = caster.GetComponent<FieldCard>().player;
+        //카드정보를 받고, 핸드카드로 새로 팝시키고, 무덤에 해당 카드 삭제
+        CardInfo reviveCard = owner.UICardInfoList[index];
+
+        if (DemandReviveButtonClick(reviveCard))
         {
-            Player owner = caster.GetComponent<FieldCard>().player;
-            //카드정보를 받고, 핸드카드로 새로 팝시키고, 무덤에 해당 카드 삭제
-            CardInfo reviveCard = owner.UICardInfoList[index];
             owner.CmdDrawSpecificCard(reviveCard, owner);
             owner.CmdRemoveGraveyard(reviveCard);
 
@@ -291,13 +292,31 @@ public class GameManager : NetworkBehaviour
 
             CmdSetSelectedCardImage(reviveCard);
             StartCoroutine(WaitForSec(owner, 1.5f));
-
-            //owner.CmdSyncTargeting(owner, false);
-            //CmdSyncCaster(null);//캐스터 초기화
-            //CmdSyncTarget(null);
-            ////revivePanel.SetActive(false);
-            //owner.CmdSetActiveRevivePanel(owner, false);
         }
+    }
+
+    private bool DemandReviveButtonClick(CardInfo card)
+    {
+        // 원하는 조건에 따라 클릭 여부를 결정
+        // 예: return true; // 항상 실행
+        // 예: return someCondition; // 특정 조건을 만족할 때만 실행
+        bool someCondition = false;
+
+        switch (caster.GetComponent<FieldCard>().card.data.cardName)
+        {
+            case "아구몬 박사":
+                someCondition = true;
+                break;
+
+            case "아구몬":
+                someCondition = card.data is SpellCard spellCard && spellCard.isTamer;
+                break;
+            default:
+                someCondition = false;
+                break;
+        }
+
+        return someCondition; // 기본적으로 항상 실행
     }
 
     [Command(requiresAuthority = false)]

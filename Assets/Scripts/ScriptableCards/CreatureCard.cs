@@ -572,7 +572,7 @@ public partial class CreatureCard : ScriptableCard
                     }
                     caster.CmdSyncTargeting(caster.player, true);
                     Player.gameManager.CmdSyncCaster(caster);
-                    caster.player.CmdSetActiveRevivePanel(caster.player);
+                    caster.player.CmdSetActiveRevivePanel(caster.player, true);
                 }
                 break;
 
@@ -581,11 +581,12 @@ public partial class CreatureCard : ScriptableCard
 
                 for (int i =0; i<5; ++i)
                 {
-                    caster.player.UICardInfoList.Add(caster.player.deck.deckList[i]);
+                    caster.player.CmdAddUICardInfo(caster.player.deck.deckList[0]);
+                    caster.player.CmdRemoveDeckList(0);//꺼내온것들 덱리스트에 삭제
                 }
                 caster.CmdSyncTargeting(caster.player, true);
                 Player.gameManager.CmdSyncCaster(caster);
-                caster.player.CmdSetActiveRevivePanel(caster.player);
+                caster.player.CmdSetActivePickUpPanel(caster.player);
                 break;
         }
     }

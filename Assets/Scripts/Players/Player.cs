@@ -464,13 +464,13 @@ public class Player : Entity
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdSetActiveRevivePanel(Player owner)
+    public void CmdSetActiveRevivePanel(Player owner, bool active)
     {
-        RpcSetActiveRevivePanel(owner);
+        RpcSetActiveRevivePanel(owner,active);
     }
 
     [ClientRpc]
-    public void RpcSetActiveRevivePanel(Player owner)
+    public void RpcSetActiveRevivePanel(Player owner, bool active)
     {
         for(int i =0; i<8; ++i) 
         {
@@ -479,8 +479,7 @@ public class Player : Entity
 
         if (owner == Player.localPlayer)
         {
-            //Player.gameManager.reviveSelectedImage.gameObject.SetActive(false);
-            Player.gameManager.revivePanel.SetActive(true);
+            Player.gameManager.revivePanel.SetActive(active);
             
             for (int j = UICardInfoList.Count; j < Player.gameManager.reviveButtonImage.Count; ++j)
             {
@@ -499,7 +498,7 @@ public class Player : Entity
         else
         {
             //상대가 보는 패널
-            Player.gameManager.revivePanel.SetActive(true);
+            Player.gameManager.revivePanel.SetActive(active);
             for(int i =0; i<8; ++i)
             {
                 //구경꾼은 버튼을 전부 끈다
@@ -513,32 +512,54 @@ public class Player : Entity
             }
         }
     }
+
     [Command(requiresAuthority = false)]
-    public void CmdSetActiveRevivePanel(Player owner, bool active)
+    public void CmdSetActivePickUpPanel(Player owner)
     {
-        RpcSetActiveRevivePanel(owner, active);
+        RpcSetActivePickUpPanel(owner);
     }
 
     [ClientRpc]
-    public void RpcSetActiveRevivePanel(Player owner, bool active)
+    public void RpcSetActivePickUpPanel(Player owner)
     {
-        //if (owner == Player.localPlayer)
+        for (int i = 0; i < 8; ++i)
         {
-            Player.gameManager.revivePanel.SetActive(active);
+            Player.gameManager.pickUpUIImage[i].gameObject.SetActive(false);
+        }
 
-            for (int j = UICardInfoList.Count; j < Player.gameManager.reviveButtonImage.Count; ++j)
+        if (owner == Player.localPlayer)
+        {
+            Player.gameManager.pickUpPanel.SetActive(true);
+
+            for (int j = UICardInfoList.Count; j < Player.gameManager.pickUpButtonImage.Count; ++j)
             {
                 //사용하지 않는 버튼 비활성화
-                Player.gameManager.reviveButtonImage[j].gameObject.SetActive(false);
+                Player.gameManager.pickUpButtonImage[j].gameObject.SetActive(false);
             }
 
             for (int j = 0; j < UICardInfoList.Count; ++j)
             {
                 //사용하는 버튼 활성화
-                Player.gameManager.reviveButtonImage[j].sprite = UICardInfoList[j].image;
-                Player.gameManager.reviveButtonImage[j].gameObject.SetActive(true);
+                Player.gameManager.pickUpButtonImage[j].sprite = UICardInfoList[j].image;
+                Player.gameManager.pickUpButtonImage[j].gameObject.SetActive(true);
             }
 
+        }
+        else
+        {
+            //상대가 보는 패널
+            Player.gameManager.pickUpPanel.SetActive(true);
+            for (int i = 0; i < 8; ++i)
+            {
+                //구경꾼은 버튼을 전부 끈다
+                Player.gameManager.pickUpButtonImage[i].gameObject.SetActive(false);
+            }
+
+            for (int j = 0; j < UICardInfoList.Count; ++j)
+            {
+                Player.gameManager.pickUpUIImage[j].sprite = UICardInfoList[j].image;
+                Player.gameManager.pickUpUIImage[j].gameObject.SetActive(true);
+            }
         }
     }
 
@@ -556,6 +577,11 @@ public class Player : Entity
     public void CmdClearUICardInfo()
     {
         UICardInfoList.Clear();
+    }
+    [Command(requiresAuthority =false)]
+    public void CmdRemoveDeckList(int index)
+    {
+        deck.deckList.RemoveAt(index);
     }
 
     public bool IsOurTurn() => gameManager.isOurTurn;

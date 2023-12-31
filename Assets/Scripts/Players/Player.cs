@@ -578,8 +578,11 @@ public class Player : Entity
     public void CmdAddUICardInfoAndRemoveDeckList()
     {
         //싱크를 위해 한번에 순서대로 처리하는 함수
-        UICardInfoList.Add(deck.deckList[0]);
-        CmdRemoveDeckList(0);
+        if(deck.deckList.Count>0)
+        {
+            UICardInfoList.Add(deck.deckList[0]);
+            CmdRemoveDeckList(0);
+        }
     }
     [Command(requiresAuthority = false)]
     public void CmdClearUICardInfo()

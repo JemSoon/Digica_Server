@@ -579,16 +579,19 @@ public partial class CreatureCard : ScriptableCard
             case "¾Æ±¸¸ó":
                 caster.player.CmdClearUICardInfo();
 
-                for (int i =0; i<5; ++i)
+                if(caster.player.deck.deckList.Count > 0 )
                 {
-                    if (caster.player.deck.deckList.Count <= 0) 
-                    { return; }
-
-                    caster.player.CmdAddUICardInfoAndRemoveDeckList();
+                    for (int i = 0; i < 5; ++i)
+                    {
+                        if (caster.player.deck.deckList.Count > 0)
+                        {
+                            caster.player.CmdAddUICardInfoAndRemoveDeckList();
+                        }
+                    }
+                    caster.CmdSyncTargeting(caster.player, true);
+                    Player.gameManager.CmdSyncCaster(caster);
+                    caster.player.CmdSetActivePickUpPanel(caster.player, true);
                 }
-                caster.CmdSyncTargeting(caster.player, true);
-                Player.gameManager.CmdSyncCaster(caster);
-                caster.player.CmdSetActivePickUpPanel(caster.player, true);
                 break;
         }
     }

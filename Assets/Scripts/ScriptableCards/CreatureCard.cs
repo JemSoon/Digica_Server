@@ -560,14 +560,15 @@ public partial class CreatureCard : ScriptableCard
 
             case "아구몬 박사":
                 List<CardInfo> filteredGraveyard = caster.player.deck.graveyard.Where(card => card.data.name.Contains("아구몬")).ToList();
-                caster.player.UICardInfoList.Clear();
+                caster.player.CmdClearUICardInfo();
                 
                 if( filteredGraveyard.Count > 0 )
                 {
                     //무덤에 아구몬 카드가 1장 이상이라면
                     for (int i = 0; i < filteredGraveyard.Count; ++i)
                     {
-                        caster.player.UICardInfoList.Add(filteredGraveyard[i]);
+                        //caster.player.UICardInfoList.Add(filteredGraveyard[i]);
+                        caster.player.CmdAddUICardInfo(filteredGraveyard[i]);
                     }
                     caster.CmdSyncTargeting(caster.player, true);
                     Player.gameManager.CmdSyncCaster(caster);
@@ -576,9 +577,9 @@ public partial class CreatureCard : ScriptableCard
                 break;
 
             case "아구몬":
-                caster.player.UICardInfoList.Clear();
+                caster.player.CmdClearUICardInfo();
 
-                for(int i =0; i<5; ++i)
+                for (int i =0; i<5; ++i)
                 {
                     caster.player.UICardInfoList.Add(caster.player.deck.deckList[i]);
                 }

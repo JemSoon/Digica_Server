@@ -54,7 +54,7 @@ public class GameManager : NetworkBehaviour
     [Header("Revive")]
     public GameObject revivePanel;
     public List<Image> reviveButtonImage;
-    public Image reviveSelectedImage;
+    public List<Image> reviveUIImage;
 
     // isHovering is only set to true on the Client that called the OnCardHover function.
     // We only want the hovering to appear on the enemy's Client, so we must exclude the OnCardHover caller from the Rpc call.
@@ -362,7 +362,16 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     public void RpcSetSelectedCardImage(CardInfo card) 
     {
-        reviveSelectedImage.gameObject.SetActive(true);
-        reviveSelectedImage.sprite = card.image;
+        //reviveSelectedImage.gameObject.SetActive(true);
+        //reviveSelectedImage.sprite = card.image;
+        for(int i =0; i<8; i++)
+        {
+            //전부다 끄고
+            reviveUIImage[i].sprite = null;
+            reviveUIImage[i].gameObject.SetActive(false);
+        }
+        //선택된 카드만 연출
+        reviveUIImage[0].sprite = card.image;
+        reviveUIImage[0].gameObject.SetActive(true);
     }
 }

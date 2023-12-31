@@ -43,7 +43,7 @@ public class Player : Entity
     [SyncVar] public bool smashPotato;
 
     public List<FieldCard> UICardsList; //필드의 카드를 버튼으로 직접 지목할때
-    public List<CardInfo> UICardInfoList; //무덤이나 덱 등의 카드를 지목할때
+    readonly public SyncList<CardInfo> UICardInfoList = new SyncList<CardInfo>(); //무덤이나 덱 등의 카드를 지목할때
     public override void OnStartLocalPlayer()
     {
         localPlayer = this;
@@ -472,9 +472,14 @@ public class Player : Entity
     [ClientRpc]
     public void RpcSetActiveRevivePanel(Player owner)
     {
-        //if (owner == Player.localPlayer)
+        for(int i =0; i<8; ++i) 
         {
-            Player.gameManager.reviveSelectedImage.gameObject.SetActive(false);
+            Player.gameManager.reviveUIImage[i].gameObject.SetActive(false);
+        }
+
+        if (owner == Player.localPlayer)
+        {
+            //Player.gameManager.reviveSelectedImage.gameObject.SetActive(false);
             Player.gameManager.revivePanel.SetActive(true);
             
             for (int j = UICardInfoList.Count; j < Player.gameManager.reviveButtonImage.Count; ++j)
@@ -490,6 +495,22 @@ public class Player : Entity
                 Player.gameManager.reviveButtonImage[j].gameObject.SetActive(true);
             }
 
+        }
+        else
+        {
+            //상대가 보는 패널
+            Player.gameManager.revivePanel.SetActive(true);
+            for(int i =0; i<8; ++i)
+            {
+                //구경꾼은 버튼을 전부 끈다
+                Player.gameManager.reviveButtonImage[i].gameObject.SetActive(false);
+            }
+
+            for (int j = 0; j < UICardInfoList.Count; ++j)
+            {
+                Player.gameManager.reviveUIImage[j].sprite = UICardInfoList[j].image;
+                Player.gameManager.reviveUIImage[j].gameObject.SetActive(true);
+            }
         }
     }
     [Command(requiresAuthority = false)]
@@ -525,6 +546,16 @@ public class Player : Entity
     public void CmdRemoveGraveyard(CardInfo card)
     {
         deck.graveyard.Remove(card);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdAddUICardInfo(CardInfo card)
+    {
+        UICardInfoList.Add(card);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdClearUICardInfo()
+    {
+        UICardInfoList.Clear();
     }
 
     public bool IsOurTurn() => gameManager.isOurTurn;

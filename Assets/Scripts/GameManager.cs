@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+public enum PanelType : byte { Revive, PickUp, }
 
 public class GameManager : NetworkBehaviour
 {
@@ -295,8 +296,38 @@ public class GameManager : NetworkBehaviour
                 reviveButtonImage[i].gameObject.SetActive(false); 
             }
 
-            CmdSetSelectedCardImage(reviveCard);
-            StartCoroutine(WaitForSec(owner, 1.5f));
+            CmdSetSelectedCardImage(reviveCard,PanelType.Revive, true);
+            StartCoroutine(WaitForSec(owner, 1.5f , PanelType.Revive));
+        }
+    }
+
+    public void OnPickUpButtonClick(int index)
+    {
+        Player owner = caster.GetComponent<FieldCard>().player;
+        CardInfo pickCard = owner.UICardInfoList[index];
+
+        if (DemandReviveButtonClick(pickCard))
+        {
+            owner.CmdDrawSpecificCard(pickCard, owner);
+
+            for (int i = 0; i < reviveButtonImage.Count; i++)
+            {
+                pickUpButtonImage[i].gameObject.SetActive(false);
+            }
+
+            CmdSetSelectedCardImage(pickCard, PanelType.PickUp, true);
+            StartCoroutine(WaitForSec(owner, 1.5f, PanelType.PickUp));
+        }
+        else
+        {
+            //고를게 없는데 아무거나 누르면
+            for (int i = 0; i < reviveButtonImage.Count; i++)
+            {
+                pickUpButtonImage[i].gameObject.SetActive(false);
+            }
+
+            CmdSetSelectedCardImage(pickCard, PanelType.PickUp, false);
+            StartCoroutine(WaitForSec(owner, 1.5f, PanelType.PickUp));
         }
     }
 
@@ -350,31 +381,78 @@ public class GameManager : NetworkBehaviour
         Player.gameManager.target = target;
     }
 
-    IEnumerator WaitForSec(Player owner, float seconds)
+    IEnumerator WaitForSec(Player owner, float seconds, PanelType panel)
     {
         yield return new WaitForSeconds(seconds);
         owner.CmdSyncTargeting(owner, false);
         CmdSyncCaster(null);//캐스터 초기화
         CmdSyncTarget(null);
-        //revivePanel.SetActive(false);
-        owner.CmdSetActiveRevivePanel(owner, false);
+        
+        switch(panel)
+        {
+            case PanelType.Revive:
+                owner.CmdSetActiveRevivePanel(owner, false);
+                break;
+
+            case PanelType.PickUp:
+                owner.CmdSetActivePickUpPanel(owner, false);
+                break;
+        }
+        
     }
     [Command(requiresAuthority = false)]
-    public void CmdSetSelectedCardImage(CardInfo card)
+    public void CmdSetSelectedCardImage(CardInfo card , PanelType type, bool isActive)
     {
-        RpcSetSelectedCardImage(card);
+        RpcSetSelectedCardImage(card, type, isActive);
     }
     [ClientRpc]
-    public void RpcSetSelectedCardImage(CardInfo card) 
+    public void RpcSetSelectedCardImage(CardInfo card, PanelType type, bool isActive) 
     {
-        for(int i =0; i<8; i++)
+        switch(type)
         {
-            //전부다 끄고
-            reviveUIImage[i].sprite = null;
-            reviveUIImage[i].gameObject.SetActive(false);
+            case PanelType.Revive:
+                for (int i = 0; i < 8; i++)
+                {
+                    //전부다 끄고
+                    reviveUIImage[i].sprite = null;
+                    reviveUIImage[i].gameObject.SetActive(false);
+                }
+                //선택된 카드만 연출
+                reviveUIImage[0].sprite = card.image;
+                reviveUIImage[0].gameObject.SetActive(true);
+
+                break;
+
+            case PanelType.PickUp:
+                for (int i = 0; i < 8; i++)
+                {
+                    //전부다 끄고
+                    pickUpUIImage[i].sprite = null;
+                    pickUpUIImage[i].gameObject.SetActive(false);
+                }
+
+                if (isActive)
+                {
+                    //선택된 카드만 연출
+                    pickUpUIImage[0].sprite = card.image;
+                    pickUpUIImage[0].gameObject.SetActive(true);
+
+                    //뽑은카드 UICardInfo리스트에서 제거
+                    caster.GetComponent<FieldCard>().player.CmdRemoveUICardInfo(card);
+                }
+
+                if(caster.GetComponent<FieldCard>().player == Player.localPlayer)
+                {
+                    //권한 있는 플레이어한테만 나머지 덱 넣어주기
+                    for (int i = 0; i < caster.GetComponent<FieldCard>().player.UICardInfoList.Count; ++i)
+                    {
+                        //남은 UICardInfo리스트 덱에 다시 넣어주기
+                        caster.GetComponent<FieldCard>().player.CmdAddDeckList(caster.GetComponent<FieldCard>().player.UICardInfoList[i]);
+                    }
+                }
+
+                break;
         }
-        //선택된 카드만 연출
-        reviveUIImage[0].sprite = card.image;
-        reviveUIImage[0].gameObject.SetActive(true);
+        
     }
 }

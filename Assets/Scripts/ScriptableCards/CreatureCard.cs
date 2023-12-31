@@ -581,12 +581,14 @@ public partial class CreatureCard : ScriptableCard
 
                 for (int i =0; i<5; ++i)
                 {
-                    caster.player.CmdAddUICardInfo(caster.player.deck.deckList[0]);
-                    caster.player.CmdRemoveDeckList(0);//꺼내온것들 덱리스트에 삭제
+                    if (caster.player.deck.deckList.Count <= 0) 
+                    { return; }
+
+                    caster.player.CmdAddUICardInfoAndRemoveDeckList();
                 }
                 caster.CmdSyncTargeting(caster.player, true);
                 Player.gameManager.CmdSyncCaster(caster);
-                caster.player.CmdSetActivePickUpPanel(caster.player);
+                caster.player.CmdSetActivePickUpPanel(caster.player, true);
                 break;
         }
     }

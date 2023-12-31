@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Mirror;
 using System.Collections.Generic;
+using System.Collections;
 
 //Useful for UI. Whether the player is, well, a player or an enemy.
 public enum PlayerType { PLAYER, ENEMY };
@@ -514,13 +515,13 @@ public class Player : Entity
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdSetActivePickUpPanel(Player owner)
+    public void CmdSetActivePickUpPanel(Player owner, bool active)
     {
-        RpcSetActivePickUpPanel(owner);
+        RpcSetActivePickUpPanel(owner,active);
     }
 
     [ClientRpc]
-    public void RpcSetActivePickUpPanel(Player owner)
+    public void RpcSetActivePickUpPanel(Player owner, bool active)
     {
         for (int i = 0; i < 8; ++i)
         {
@@ -529,7 +530,7 @@ public class Player : Entity
 
         if (owner == Player.localPlayer)
         {
-            Player.gameManager.pickUpPanel.SetActive(true);
+            Player.gameManager.pickUpPanel.SetActive(active);
 
             for (int j = UICardInfoList.Count; j < Player.gameManager.pickUpButtonImage.Count; ++j)
             {
@@ -548,7 +549,7 @@ public class Player : Entity
         else
         {
             //상대가 보는 패널
-            Player.gameManager.pickUpPanel.SetActive(true);
+            Player.gameManager.pickUpPanel.SetActive(active);
             for (int i = 0; i < 8; ++i)
             {
                 //구경꾼은 버튼을 전부 끈다
@@ -574,6 +575,13 @@ public class Player : Entity
         UICardInfoList.Add(card);
     }
     [Command(requiresAuthority = false)]
+    public void CmdAddUICardInfoAndRemoveDeckList()
+    {
+        //싱크를 위해 한번에 순서대로 처리하는 함수
+        UICardInfoList.Add(deck.deckList[0]);
+        CmdRemoveDeckList(0);
+    }
+    [Command(requiresAuthority = false)]
     public void CmdClearUICardInfo()
     {
         UICardInfoList.Clear();
@@ -583,6 +591,20 @@ public class Player : Entity
     {
         deck.deckList.RemoveAt(index);
     }
-
+    [Command(requiresAuthority = false)]
+    public void CmdRemoveDeckList(CardInfo card)
+    {
+        deck.deckList.Remove(card);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdRemoveUICardInfo(CardInfo card)
+    {
+        UICardInfoList.Remove(card);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdAddDeckList(CardInfo card)
+    {
+        deck.deckList.Add(card);
+    }
     public bool IsOurTurn() => gameManager.isOurTurn;
 }

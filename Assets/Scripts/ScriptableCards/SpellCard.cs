@@ -436,12 +436,10 @@ public partial class SpellCard : ScriptableCard
             if(player.firstPlayer && MemoryChecker.Inst.memory <=2)
             {
                 MemoryChecker.Inst.CmdChangeMemory(3);
-                Debug.Log("서버클라의 변경값 주기 직후 메모리 "+MemoryChecker.Inst.memory);
             }
             else if(!player.firstPlayer && MemoryChecker.Inst.memory>=-2)
             {
                 MemoryChecker.Inst.CmdChangeMemory(-3);
-                Debug.Log(MemoryChecker.Inst.memory);
             }
         }
     }

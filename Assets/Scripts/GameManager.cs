@@ -148,27 +148,36 @@ public class GameManager : NetworkBehaviour
             playerRaiseField.UpdateRaiseCards();
             Player.localPlayer.deck.CmdStartNewTurn();
         }
-        else //내 턴이 아니게 된 플레이어는 CmdEndTurn함수를 통해 정돈할것 정돈
+        else 
         {
+            //내 턴이 아니게 된 플레이어는 CmdEndTurn함수를 통해 정돈할것 정돈
             playerField.UpdateTamerEffect();//턴 끝날때 버프 제거하는 함수
             Player.localPlayer.deck.CmdEndTurn();
             Player.gameManager.isDigitamaOpenOrMove = false; // 턴 끝나면서 디지타마 오픈 상태 초기화
 
             //디지몬 효과로 인한 메모리 땡김(ex:메탈그레이몬)정돈
-            if(Player.localPlayer.isServer)
+            if (Player.localPlayer.isServer)
             {
                 MemoryChecker.Inst.CmdChangeMemory((MemoryChecker.Inst.memory) - (MemoryChecker.Inst.buffMemory));
+                if (MemoryChecker.Inst.memory < -10) 
+                { MemoryChecker.Inst.CmdChangeMemory(-10); }
+                else if(MemoryChecker.Inst.memory > 10)
+                { MemoryChecker.Inst.CmdChangeMemory(10); }
             }
             else
             {
                 //Debug.Log(MemoryChecker.Inst.buffMemory);
                 //헷갈리지만 빼주는게 맞네..?
+                //Debug.Log("변경값 준 뒤 디버프 메모리 처리할 때 의 메모리" + MemoryChecker.Inst.memory);
                 MemoryChecker.Inst.CmdChangeMemory((MemoryChecker.Inst.memory) - (MemoryChecker.Inst.buffMemory));
+                if (MemoryChecker.Inst.memory > 10)
+                { MemoryChecker.Inst.CmdChangeMemory(10); }
+                else if (MemoryChecker.Inst.memory < -10)
+                { MemoryChecker.Inst.CmdChangeMemory(-10); }
             }
             MemoryChecker.Inst.buffMemory = 0;
         }
         playerField.EndBuffTurnSpellCards();
-        //playerField.UpdateTurnEvoEffect();
     }
 
     [ClientRpc]
@@ -178,7 +187,7 @@ public class GameManager : NetworkBehaviour
         { MemoryChecker.Inst.CmdChangeMemory(-3 - (MemoryChecker.Inst.buffMemory)); }
         
         else if(!Player.localPlayer.firstPlayer && isOurTurn)
-        { MemoryChecker.Inst.CmdChangeMemory(3 + (MemoryChecker.Inst.buffMemory)); }
+        { MemoryChecker.Inst.CmdChangeMemory(3 - (MemoryChecker.Inst.buffMemory)); }
 
         // If isOurTurn was true, set it false. If it was false, set it true.
         isOurTurn = !isOurTurn;

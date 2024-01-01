@@ -135,12 +135,17 @@ public class Combat : NetworkBehaviour
 
         if (((FieldCard)target).card.data is SpellCard spellCard)
         {
+            if (spellCard.isTamer)
+            {
+                //테이머 카드는 죽지 않는다
+                return;
+            }
+
             if (spellCard.if_Security_Go_Hand == false)
             {
                 //스펠카드가 if_Security_Go_Hand가 true라면 무덤에 가는게 아니라 손으로 돌아간 것
                 target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
             }
-
             target.IsDead = true;
             Destroy(target.gameObject);
         }

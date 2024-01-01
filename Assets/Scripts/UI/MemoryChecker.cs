@@ -1,6 +1,5 @@
 using UnityEngine;
 using Mirror;
-using System;
 
 public class MemoryChecker : NetworkBehaviour
 {
@@ -203,5 +202,10 @@ public class MemoryChecker : NetworkBehaviour
                 Player.gameManager.CmdEndTurn();
             }
         }
+    }
+
+    private void Update()
+    {
+        //Debug.Log(memory);
     }
 }

@@ -269,6 +269,15 @@ public class Deck : NetworkBehaviour
         // Spawn it
         NetworkServer.Spawn(boardCard);
 
+        if(underCard.buffs.Count>0)
+        {
+            for(int i =underCard.buffs.Count-1; i>=0; i--)
+            {
+                underCard.CmdChangeSomeThing(underCard.buffs[i], false);
+                underCard.CmdRemoveBuff(i);
+            }
+        }
+
         // Remove card from hand
         hand.RemoveAt(index);
 
@@ -595,6 +604,8 @@ public class Deck : NetworkBehaviour
                 {
                     //최하단 카드 우선 가져오기
                     fieldCard = fieldCard.underCard;
+                    fieldCard.isMyTurnEvoCastingActive = false;
+                    fieldCard.isMyTurnDigimonCastingActive = false;
                 }
 
                 while (fieldCard.isUpperMostCard == false)

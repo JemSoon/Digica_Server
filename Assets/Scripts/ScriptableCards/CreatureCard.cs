@@ -263,6 +263,9 @@ public partial class CreatureCard : ScriptableCard
                 {
                     target = target.upperCard;
                 }
+
+                if (target.casterType == Target.MY_BABY) { return; }
+
                 if (caster.player.IsOurTurn())
                 {
                     if(!target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname) && caster.isMyTurnEvoCastingActive==false)
@@ -296,6 +299,9 @@ public partial class CreatureCard : ScriptableCard
                 {
                     target = target.upperCard;
                 }
+
+                if (target.casterType == Target.MY_BABY) { return; }
+
                 if (caster.player.IsOurTurn())
                 {
                     if (!target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
@@ -328,6 +334,9 @@ public partial class CreatureCard : ScriptableCard
                 {
                     target = target.upperCard;
                 }
+
+                if (target.casterType == Target.MY_BABY) { return; }
+
                 if (caster.player.IsOurTurn())
                 {
                     if (((CreatureCard)target.card.data).hasSpear && (!target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname)))
@@ -360,6 +369,8 @@ public partial class CreatureCard : ScriptableCard
                 {
                     target = target.upperCard;
                 }
+
+                if (target.casterType == Target.MY_BABY) { return; }
 
                 if (caster.player.IsOurTurn())
                 {
@@ -403,6 +414,8 @@ public partial class CreatureCard : ScriptableCard
                 {
                     target = target.upperCard;
                 }
+
+                if (target.casterType == Target.MY_BABY) { return; }
 
                 if (caster.player.IsOurTurn())
                 {

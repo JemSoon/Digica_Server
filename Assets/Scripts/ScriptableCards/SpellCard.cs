@@ -45,6 +45,12 @@ public partial class SpellCard : ScriptableCard
                     else
                     {  MemoryChecker.Inst.memory -= 2;}
                     break;
+                case "신태일":
+                    if (owner == Player.localPlayer)
+                    {
+                        FindTamerTarget(Player.gameManager.playerField.content);
+                    }
+                    break;
             }
         }
 
@@ -184,10 +190,14 @@ public partial class SpellCard : ScriptableCard
                     //세큐 효과 없음
                     break;
 
-                //case "신태일":
-                //    card.isSecurity = false;
-                //    StartTamerCast(card.player);
-                //    break;
+                case "신태일":
+                    card.CmdMakeSecurity(false);
+                    //StartTamerCast(card.player);
+                    if(owner == Player.localPlayer)
+                    {
+                        FindTamerTarget(Player.gameManager.playerField.content);
+                    }
+                    break;
             }
         }
 
@@ -423,13 +433,15 @@ public partial class SpellCard : ScriptableCard
     {
         if(cardName=="신태일")
         {
-            if(player.isServer && MemoryChecker.Inst.memory <=2)
+            if(player.firstPlayer && MemoryChecker.Inst.memory <=2)
             {
-                 MemoryChecker.Inst.CmdChangeMemory(3);
+                MemoryChecker.Inst.CmdChangeMemory(3);
+                Debug.Log("서버클라의 변경값 주기 직후 메모리 "+MemoryChecker.Inst.memory);
             }
-            else if(!player.isServer && MemoryChecker.Inst.memory>=-2)
+            else if(!player.firstPlayer && MemoryChecker.Inst.memory>=-2)
             {
                 MemoryChecker.Inst.CmdChangeMemory(-3);
+                Debug.Log(MemoryChecker.Inst.memory);
             }
         }
     }

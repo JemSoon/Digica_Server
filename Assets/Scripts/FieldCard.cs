@@ -94,12 +94,18 @@ public class FieldCard : Entity
 
         if(player == Player.localPlayer && player.IsOurTurn() /*&& isMyTurnEvoCastingActive == false*/)
         {
-            ((CreatureCard)card.data).MyTurnCast(this,FindMostUpperCard());
+            if(card.data is CreatureCard)
+            {
+                ((CreatureCard)card.data).MyTurnCast(this, FindMostUpperCard());
+            }
             //isMyTurnCastingActive = true;
         }
         if (player == Player.localPlayer && player.IsOurTurn() /*&& isMyTurnDigimonCastingActive == false*/)
         {
-            ((CreatureCard)card.data).MyTurnDigimonCast(this, this);
+            if (card.data is CreatureCard)
+            {
+                ((CreatureCard)card.data).MyTurnDigimonCast(this, this);
+            }
             //isMyTurnCastingActive = true;
         }
     }
@@ -383,5 +389,11 @@ public class FieldCard : Entity
     {
         fieldCard.underCard = null;
         fieldCard.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; //y축 정렬용 x축은 Update로 자동 정렬됨
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdMakeSecurity(bool Tof)
+    {
+        isSecurity = Tof;
     }
 }

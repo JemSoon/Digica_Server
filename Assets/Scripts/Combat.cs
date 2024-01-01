@@ -135,9 +135,9 @@ public class Combat : NetworkBehaviour
 
         if (((FieldCard)target).card.data is SpellCard spellCard)
         {
-            if (spellCard.isTamer)
+            if (spellCard.isTamer && ((FieldCard)target).isSecurity==false)
             {
-                //테이머 카드는 죽지 않는다
+                //테이머+세큐가 아닌 카드는 소멸 안되게끔
                 return;
             }
 

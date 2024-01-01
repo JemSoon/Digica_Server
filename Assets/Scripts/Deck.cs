@@ -363,6 +363,9 @@ public class Deck : NetworkBehaviour
 
             //내 필드의 모든 카드 block초기화 
             myCard.blocked = false;
+
+            myCard.isMyTurnEvoCastingActive = false;
+            myCard.isMyTurnDigimonCastingActive = false;
         }
     }
 

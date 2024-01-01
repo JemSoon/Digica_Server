@@ -217,7 +217,7 @@ public class PlayerField : MonoBehaviour, IDropHandler
                 for(int j = card.buffs.Count - 1; j >= 0; j--)//0번부터 시작하면 꼬임 마지막 인덱스부터 ㄱㄱ
                 {
                     card.buffs[j].buffTurn--;
-                    Debug.Log(card.buffs[j].buffTurn);
+                    Debug.Log(card.buffs[j].buffTurn + card.buffs[j].cardname);
                     if (card.buffs[j].buffTurn == 0)
                     {
                         card.CmdChangeSomeThing(card.buffs[j],false);//딜뻥 버프 제거

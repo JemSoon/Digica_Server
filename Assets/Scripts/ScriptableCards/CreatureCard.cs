@@ -159,8 +159,12 @@ public partial class CreatureCard : ScriptableCard
         {
             case "어니몬":
 
-                buffTarget.CmdChangeSomeThing(evolutionBuff, true);
-                buffTarget.CmdAddBuff(evolutionBuff);
+                if(caster.isMyTurnEvoCastingActive==false)
+                {
+                    buffTarget.CmdChangeSomeThing(evolutionBuff, true);
+                    buffTarget.CmdAddBuff(evolutionBuff);
+                    caster.isMyTurnEvoCastingActive = true;
+                }
                 //buffTarget.combat.CmdAfterBattle(caster, battleTarget);
                 break;
 
@@ -278,6 +282,7 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
+                    //caster.isMyTurnEvoCastingActive = false;
                     //if (target.buffs.Count > 0)
                     if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
@@ -285,7 +290,7 @@ public partial class CreatureCard : ScriptableCard
                             //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                             target.CmdChangeSomeThing(evolutionBuff, false);
                             target.CmdRemoveBuff(evolutionBuff.cardname);
-                            caster.isMyTurnEvoCastingActive = false;
+                            
                         }
                     }
                 }
@@ -314,13 +319,14 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
+                    //caster.isMyTurnEvoCastingActive = false;
                     if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         {
                             //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                             target.CmdChangeSomeThing(evolutionBuff, false);
                             target.CmdRemoveBuff(evolutionBuff.cardname);
-                            caster.isMyTurnEvoCastingActive = false;
+                            
                         }
                     }
                 }
@@ -349,13 +355,13 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
+                    //caster.isMyTurnEvoCastingActive = false;
                     if (((CreatureCard)target.card.data).hasSpear && target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         {
                             //내 턴이 아닌동안 그레이몬 버프 찾아 제거
                             target.CmdChangeSomeThing(evolutionBuff, false);
-                            target.CmdRemoveBuff(evolutionBuff.cardname);
-                            caster.isMyTurnEvoCastingActive = false;
+                            target.CmdRemoveBuff(evolutionBuff.cardname); 
                         }
                     }
                 }
@@ -386,22 +392,22 @@ public partial class CreatureCard : ScriptableCard
                     }
                     else
                     {
+                        caster.isMyTurnEvoCastingActive = false;
                         //상대 트래시가 5장 미만이 되었다면 줬던 버프 제거
-                        if(target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
+                        if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                         {
                             target.CmdChangeSomeThing(evolutionBuff, false);
                             target.CmdRemoveBuff(evolutionBuff.cardname);
-                            caster.isMyTurnEvoCastingActive = false;
                         }
                     }
                 }
                 else
                 {
-                    if(target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
+                    //caster.isMyTurnEvoCastingActive = false;
+                    if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         target.CmdChangeSomeThing(evolutionBuff, false);
                         target.CmdRemoveBuff(evolutionBuff.cardname);
-                        caster.isMyTurnEvoCastingActive = false;
                     }
                 }
                 break;
@@ -431,22 +437,22 @@ public partial class CreatureCard : ScriptableCard
                     }
                     else
                     {
+                        caster.isMyTurnEvoCastingActive = false;
                         //상대 트래시가 5장 미만이 되었다면 줬던 버프 제거
                         if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                         {
                             target.CmdChangeSomeThing(evolutionBuff, false);
                             target.CmdRemoveBuff(evolutionBuff.cardname);
-                            caster.isMyTurnEvoCastingActive = false;
                         }
                     }
                 }
                 else
                 {
+                    //caster.isMyTurnEvoCastingActive = false;
                     if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         target.CmdChangeSomeThing(evolutionBuff, false);
                         target.CmdRemoveBuff(evolutionBuff.cardname);
-                        caster.isMyTurnEvoCastingActive = false;
                     }
                 }
                 break;

@@ -124,7 +124,7 @@ public class GameManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdEndTurn()
     {
-        RpcSetTurn();
+        RpcSetEndTurn();
     }
 
     [Command(requiresAuthority = false)]
@@ -133,22 +133,27 @@ public class GameManager : NetworkBehaviour
         RpcSetPass();
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdStartTurn()
+    {
+        RpcSetStartTurn();
+    }
+
     [ClientRpc]
-    public void RpcSetTurn()
+    public void RpcSetEndTurn()
     {
         // If isOurTurn was true, set it false. If it was false, set it true.
         isOurTurn = !isOurTurn;
         endTurnButton.SetActive(isOurTurn);
         ++turnCount;
-
         // If isOurTurn (after updating the bool above)
-        if (isOurTurn)
-        {
-            playerField.UpdateFieldCards();
-            playerRaiseField.UpdateRaiseCards();
-            Player.localPlayer.deck.CmdStartNewTurn();
-        }
-        else 
+        //if (isOurTurn)
+        //{
+        //    playerField.UpdateFieldCards();
+        //    playerRaiseField.UpdateRaiseCards();
+        //    Player.localPlayer.deck.CmdStartNewTurn();
+        //}
+        if (!isOurTurn) 
         {
             //내 턴이 아니게 된 플레이어는 CmdEndTurn함수를 통해 정돈할것 정돈
             playerField.UpdateTamerEffect();//턴 끝날때 버프 제거하는 함수
@@ -176,8 +181,11 @@ public class GameManager : NetworkBehaviour
                 { MemoryChecker.Inst.CmdChangeMemory(-10); }
             }
             MemoryChecker.Inst.buffMemory = 0;
+            CmdStartTurn();
         }
         playerField.EndBuffTurnSpellCards();
+        //끝나는 턴의 효과들을 마무리 한 후 넘어간 턴의 시작
+        
     }
 
     [ClientRpc]
@@ -221,6 +229,18 @@ public class GameManager : NetworkBehaviour
 
         playerField.EndBuffTurnSpellCards();
         //playerField.UpdateTurnEvoEffect();
+    }
+
+    [ClientRpc]
+    public void RpcSetStartTurn()
+    {
+        //If isOurTurn(after updating the bool above)
+        if (isOurTurn)
+        {
+            playerField.UpdateFieldCards();
+            playerRaiseField.UpdateRaiseCards();
+            Player.localPlayer.deck.CmdStartNewTurn();
+        }
     }
 
     public void StartGame()

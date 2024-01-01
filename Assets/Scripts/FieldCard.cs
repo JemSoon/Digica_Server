@@ -230,7 +230,12 @@ public class FieldCard : Entity
     [Command(requiresAuthority = false)]
     public void CmdRemoveBuff(int index)
     {
-        if (buffs.Count <= index) { return; }
+        if (buffs.Count <= index) 
+        { 
+            //안전장치
+            Debug.Log("버프개수 : "+buffs.Count + "제거하려는 인덱스 : "+ index); 
+            return; 
+        }
         Debug.Log(player + "의 " + card.data.cardName + "의 버프인 " + buffs[index].cardname + " 제거 진행중");
         buffs.RemoveAt(index);
         Debug.Log("버프 인덱스로 제거 완료");

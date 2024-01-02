@@ -282,7 +282,7 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
-                    //caster.isMyTurnEvoCastingActive = false;
+                    caster.isMyTurnEvoCastingActive = false;
                     //if (target.buffs.Count > 0)
                     if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
@@ -309,7 +309,7 @@ public partial class CreatureCard : ScriptableCard
 
                 if (caster.player.IsOurTurn())
                 {
-                    if (!target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
+                    if (!target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname) && caster.isMyTurnEvoCastingActive == false)
                     {
                         //버프목록에 없으면 추가
                         target.CmdChangeSomeThing(evolutionBuff, true);
@@ -319,7 +319,7 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
-                    //caster.isMyTurnEvoCastingActive = false;
+                    caster.isMyTurnEvoCastingActive = false;
                     if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         {
@@ -355,7 +355,7 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
-                    //caster.isMyTurnEvoCastingActive = false;
+                    caster.isMyTurnEvoCastingActive = false;
                     if (((CreatureCard)target.card.data).hasSpear && target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         {
@@ -403,7 +403,7 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
-                    //caster.isMyTurnEvoCastingActive = false;
+                    caster.isMyTurnEvoCastingActive = false;
                     if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         target.CmdChangeSomeThing(evolutionBuff, false);
@@ -448,7 +448,7 @@ public partial class CreatureCard : ScriptableCard
                 }
                 else
                 {
-                    //caster.isMyTurnEvoCastingActive = false;
+                    caster.isMyTurnEvoCastingActive = false;
                     if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         target.CmdChangeSomeThing(evolutionBuff, false);

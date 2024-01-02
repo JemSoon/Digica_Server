@@ -364,8 +364,9 @@ public class Deck : NetworkBehaviour
             //내 필드의 모든 카드 block초기화 
             myCard.blocked = false;
 
-            myCard.isMyTurnEvoCastingActive = false;
-            myCard.isMyTurnDigimonCastingActive = false;
+            //싱크바 아닌 변수라 서버에서 변동해도 클라에서 변동안됨 하려면 Rpc로전달
+            //myCard.isMyTurnEvoCastingActive = false;
+            //myCard.isMyTurnDigimonCastingActive = false;
         }
     }
 
@@ -449,6 +450,8 @@ public class Deck : NetworkBehaviour
             FieldCard tempUnderCard = underCard;//언더카드의 언더카드를 받기용 더미 언더카드
             while (tempUnderCard.isUnderMostCard == false)
             {
+                tempUnderCard.isMyTurnEvoCastingActive = false;
+
                 if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
                 {
                     if(tempUnderCard.player.isServer==false)
@@ -471,6 +474,8 @@ public class Deck : NetworkBehaviour
             //마지막 isUnderMostCard가 true인 카드로 한번 더
             if (((CreatureCard)tempUnderCard.card.data).evolutionType.Exists(evo => evo == EvolutionType.MYTURN))
             {
+                tempUnderCard.isMyTurnEvoCastingActive = false;
+
                 if (tempUnderCard.player.isServer == false)
                 {
                     //서버가 아닌 참가자 클라일때 턴이 넘어가는데도 버프가 부여되서 추가코드..

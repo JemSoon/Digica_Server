@@ -38,16 +38,25 @@ public class ArrowHead : MonoBehaviour
 
             bool canTarget;
 
-            if (((FieldCard)caster).CanAttack() || (((FieldCard)caster).card.data is SpellCard && IsAbility && ((FieldCard)caster).isSecurity==false))
+            if (((FieldCard)caster).CanAttack())
             { 
-                //통상 크리쳐카드거나 스펠카드중 Security가 아니라면
-                canTarget = target.casterType.CanTarget(card.acceptableTargets);
+                //통상 크리쳐카드가 공격하는거라면 
+                if(target is Player)
+                {
+                    //플레이어라면 그냥타겟 ㄱㄱ
+                    canTarget = target.casterType.CanTarget(card.acceptableTargets);
+                }
+                else
+                {
+                    //필드카드라면 레스트 상태인 적만 공격
+                    canTarget = (target.casterType.CanTarget(card.acceptableTargets) && target.GetComponent<FieldCard>().attacked);
+                }
                 //Debug.Log(((FieldCard)caster).isSecurity + ((FieldCard)caster).card.name);
             }
-            else if (((FieldCard)caster).CantAttack() && ((FieldCard)caster).securityAttack > 0) 
-            { 
-                //통상 크리쳐카드가 공격은 못해도 세큐리티 어택이 가능한 경우
-                canTarget = (target.casterType == Target.OPPONENT); 
+            else if (((FieldCard)caster).card.data is SpellCard && IsAbility && ((FieldCard)caster).isSecurity == false)
+            {
+                //통상 스펠카드가 마법부여하는거라면
+                canTarget = target.casterType.CanTarget(card.acceptableTargets);
             }
             else if ((IsAbility && ((FieldCard)caster).isSecurity))
             {

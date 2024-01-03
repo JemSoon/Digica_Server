@@ -135,7 +135,7 @@ public class Combat : NetworkBehaviour
         {
             attacker = attacker.GetComponent<FieldCard>().upperCard;
         }
-        Debug.Log("지금 타겟카드의 최상단 카드 확인중");
+        //Debug.Log("지금 타겟카드의 최상단 카드 확인중");
         while (target.GetComponent<FieldCard>().isUpperMostCard == false)
         {
             target = target.GetComponent<FieldCard>().upperCard;

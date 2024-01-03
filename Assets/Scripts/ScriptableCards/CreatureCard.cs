@@ -47,6 +47,8 @@ public partial class CreatureCard : ScriptableCard
 
     public virtual void Attack(Entity attacker, Entity target)
     {
+        //어태커의 타게팅 애로우 먼저 삭제(나중에 삭제하는데 어태커가 죽으면 다시 애로우 생길때 타게팅이 안됨) 
+        attacker.DestroyTargetingArrow();
         //먼저 블로커가 있는지 확인
         GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
         bool foundBlocker = false; // 추가: 블록 타입 디지몬 카드를 찾았는지 여부
@@ -90,28 +92,6 @@ public partial class CreatureCard : ScriptableCard
 
         else
         {
-            //GameObject enemyField = ((FieldCard)target).transform.parent.gameObject;
-            //bool foundBlocker = false; // 추가: 블록 타입 디지몬 카드를 찾았는지 여부
-            //for (int i = 0; i < enemyField.transform.childCount; ++i)
-            //{
-            //    FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
-
-
-            //    //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
-            //    if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
-            //    {
-            //        foundBlocker = true;
-            //        Player.gameManager.CmdSyncTarget(target);
-            //        //블록타임
-            //        Debug.Log("블록 타입 디지몬 카드 있음!");
-            //        enemyCard.CmdSyncTargeting(enemyCard.player, true);
-
-            //        enemyCard.player.CmdSetActiveBlockPanel(enemyCard.player, true);
-
-            //        break;
-            //    }
-            //}
-
             if (!foundBlocker || ((FieldCard)target).isSecurity)
             {
                 //블로커가 상대 필드에 없다거나 시큐공격으로 나온 타겟카드면 이미 블록여부를 확인한것이기에 일반 공격 진행
@@ -119,7 +99,7 @@ public partial class CreatureCard : ScriptableCard
             }
         }
 
-        attacker.DestroyTargetingArrow();
+        //attacker.DestroyTargetingArrow();//원래 위치였던것..
 
         if (attacker.CanAttack())
         {

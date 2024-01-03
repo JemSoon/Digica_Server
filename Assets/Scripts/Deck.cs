@@ -650,9 +650,6 @@ public class Deck : NetworkBehaviour
 
     private IEnumerator DelayBattle(Entity attacker, GameObject boardCard, float time)
     {
-        FieldCard target = boardCard.GetComponent<FieldCard>();//위로 끌어옴
-        Debug.Log(target.card.data.cardName);
-        Debug.Log("잠깐 " + time + " 만큼 대기");
         //세큐리티 카드 출현 후 잠시 뒤에 싸우게 하기용
         yield return new WaitForSeconds(time);
         //while문을 이 다음에 써야함 안그럼 isTargeting인식 못함
@@ -664,14 +661,11 @@ public class Deck : NetworkBehaviour
             yield return null;
         }
 
-        //if (boardCard.IsDestroyed() == false)//왜인진 모르겠지만 두번들어와서 터짐 파괴됬는지 확인해둬서 방어함
+        FieldCard target = boardCard.GetComponent<FieldCard>();
+        if (target.player.isLocalPlayer)
         {
-            //FieldCard target = boardCard.GetComponent<FieldCard>();
-            if (target.player.isLocalPlayer)
-            {
-                //Debug.Log("타깃을 Player에서 새로 스폰된 시큐 카드로 변경됩니다");
-                attacker.combat.CmdBattle(attacker, target);
-            }
+            //Debug.Log("타깃을 Player에서 새로 스폰된 시큐 카드로 변경됩니다");
+            attacker.combat.CmdBattle(attacker, target);
         }
     }
 

@@ -591,11 +591,9 @@ public class Deck : NetworkBehaviour
             boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
         }
+
         //Debug.Log("지금 딜레이 배틀 시작");
-        if (isServer)
-        {
-            StartCoroutine(DelayBattle(attacker, boardCard, 1.5f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!
-        }
+        StartCoroutine(DelayBattle(attacker, boardCard, 1.5f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!        
     }
 
     [ClientRpc]
@@ -661,11 +659,14 @@ public class Deck : NetworkBehaviour
             yield return null;
         }
 
-        FieldCard target = boardCard.GetComponent<FieldCard>();
-        if (target.player.isLocalPlayer)
+        if (boardCard.IsDestroyed() == false)
         {
-            //Debug.Log("타깃을 Player에서 새로 스폰된 시큐 카드로 변경됩니다");
-            attacker.combat.CmdBattle(attacker, target);
+            FieldCard target = boardCard.GetComponent<FieldCard>();
+            if (target.player.isLocalPlayer)
+            {
+                //Debug.Log("타깃을 Player에서 새로 스폰된 시큐 카드로 변경됩니다");
+                attacker.combat.CmdBattle(attacker, target);
+            }
         }
     }
 

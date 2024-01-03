@@ -288,7 +288,7 @@ public class Deck : NetworkBehaviour
     public void CmdPlaySecurityCard(CardInfo card, Player owner, Entity attacker)
     {
         // 이 카드는 크리쳐 카드일지 옵션,테이머 카드일지 알 수 없다
-
+        Debug.Log("지금 세큐리티 오픈 시작됩니다");
         if (card.data is CreatureCard)
         {
             CreatureCard creature = (CreatureCard)card.data;
@@ -310,7 +310,7 @@ public class Deck : NetworkBehaviour
 
             // Spawn it
             NetworkServer.Spawn(boardCard);
-
+            Debug.Log("세큐리티 서버 스폰");
             // 대상자의 세큐리티 카드를 스폰시켰으니 제거
             owner.deck.securityCard.RemoveAt(0);
 
@@ -591,8 +591,11 @@ public class Deck : NetworkBehaviour
             boardCard.GetComponent<FieldCard>().casterType = Target.ENEMIES;
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
         }
-
-        StartCoroutine(DelayBattle(attacker, boardCard, 1.5f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!
+        Debug.Log("지금 딜레이 배틀 시작");
+        if (isServer)
+        {
+            StartCoroutine(DelayBattle(attacker, boardCard, 1.5f)); //스타트 코루틴 맨날 까먹어 맨날!! 그러고 왜 안되지? 이러고 있어!!
+        }
     }
 
     [ClientRpc]
@@ -647,6 +650,9 @@ public class Deck : NetworkBehaviour
 
     private IEnumerator DelayBattle(Entity attacker, GameObject boardCard, float time)
     {
+        FieldCard target = boardCard.GetComponent<FieldCard>();//위로 끌어옴
+        Debug.Log(target.card.data.cardName);
+        Debug.Log("잠깐 " + time + " 만큼 대기");
         //세큐리티 카드 출현 후 잠시 뒤에 싸우게 하기용
         yield return new WaitForSeconds(time);
         //while문을 이 다음에 써야함 안그럼 isTargeting인식 못함
@@ -658,11 +664,12 @@ public class Deck : NetworkBehaviour
             yield return null;
         }
 
-        if (boardCard.IsDestroyed() == false)//왜인진 모르겠지만 두번들어와서 터짐 파괴됬는지 확인해둬서 방어함
+        //if (boardCard.IsDestroyed() == false)//왜인진 모르겠지만 두번들어와서 터짐 파괴됬는지 확인해둬서 방어함
         {
-            FieldCard target = boardCard.GetComponent<FieldCard>();
+            //FieldCard target = boardCard.GetComponent<FieldCard>();
             if (target.player.isLocalPlayer)
             {
+                Debug.Log("타깃을 Player에서 새로 스폰된 시큐 카드로 변경됩니다");
                 attacker.combat.CmdBattle(attacker, target);
                 //((FieldCard)attacker).CmdRotation(((FieldCard)attacker), Quaternion.Euler(0, 0, -90));
             }

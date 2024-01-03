@@ -97,23 +97,34 @@ public class Combat : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdBattle(Entity attacker, Entity target)
     {
-        #region 최상단 카드 가져오기
-        while (attacker.GetComponent<FieldCard>().isUpperMostCard==false)
+        #region 공격자 최상단 카드 가져오기
+        while (attacker.GetComponent<FieldCard>().isUpperMostCard == false)
         {
             attacker = attacker.GetComponent<FieldCard>().upperCard;
         }
+        #endregion
 
-        while(target.GetComponent<FieldCard>().isUpperMostCard == false)
+        if (target is Player)
         {
-            target = target.GetComponent<FieldCard>().upperCard;
+            if(((Player)target).deck.securityCard.Count>0)
+            {
+                ((Player)target).deck.CmdPlaySecurityCard(((Player)target).deck.securityCard[0], ((Player)target), attacker);
+            }
+
         }
-        #endregion
+        else
+        {
+            #region 타겟 최상단 카드 가져오기
+            while (target.GetComponent<FieldCard>().isUpperMostCard == false)
+            {
+                target = target.GetComponent<FieldCard>().upperCard;
+            }
+            #endregion
 
-        #region 진화원 효과 검색
-
-        RpcBattleCast(attacker, target, ((FieldCard)attacker).player);//그라우몬..
-        #endregion
-
+            #region 어태커의 진화원 효과 검색
+            RpcBattleCast(attacker, target, ((FieldCard)attacker).player);//그라우몬..
+            #endregion
+        }
     }
 
     [Command(requiresAuthority = false)]
@@ -124,7 +135,7 @@ public class Combat : NetworkBehaviour
         {
             attacker = attacker.GetComponent<FieldCard>().upperCard;
         }
-
+        Debug.Log("지금 타겟카드의 최상단 카드 확인중");
         while (target.GetComponent<FieldCard>().isUpperMostCard == false)
         {
             target = target.GetComponent<FieldCard>().upperCard;

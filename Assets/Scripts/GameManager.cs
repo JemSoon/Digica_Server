@@ -284,6 +284,9 @@ public class GameManager : NetworkBehaviour
         //}
         caster.GetComponent<FieldCard>().CmdSyncBlocked(true); //블록 당했다!
         Debug.Log("블록당했다!");
+        Player.localPlayer.UICardsList[index].CmdChangeAttacked(true); //공격한 상태로 변경
+        Player.localPlayer.UICardsList[index].combat.CmdIncreaseWaitTurn(); //대기시간 추가
+        Player.localPlayer.UICardsList[index].CmdRotation(Player.localPlayer.UICardsList[index], Quaternion.Euler(0, 0, -90));//레스트로 돌린다
         caster.combat.CmdBattle(caster,Player.localPlayer.UICardsList[index]);
         Player.localPlayer.CmdSyncTargeting(Player.localPlayer,false);
         CmdSyncCaster(null);

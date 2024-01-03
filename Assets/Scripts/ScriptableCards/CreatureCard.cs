@@ -56,7 +56,7 @@ public partial class CreatureCard : ScriptableCard
 
 
             //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
-            if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
+            if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker && !enemyCard.attacked)
             {
                 foundBlocker = true;
                 Player.gameManager.CmdSyncTarget(target);
@@ -112,9 +112,9 @@ public partial class CreatureCard : ScriptableCard
             //    }
             //}
 
-            if (!foundBlocker)
+            if (!foundBlocker || ((FieldCard)target).isSecurity)
             {
-                //블로커가 상대 필드에 없다면 일반 공격 진행
+                //블로커가 상대 필드에 없다거나 시큐공격으로 나온 타겟카드면 이미 블록여부를 확인한것이기에 일반 공격 진행
                 attacker.combat.CmdBattle(attacker, target);
             }
         }

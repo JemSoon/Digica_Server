@@ -47,44 +47,70 @@ public partial class CreatureCard : ScriptableCard
 
     public virtual void Attack(Entity attacker, Entity target)
     {
+        //먼저 블로커가 있는지 확인
+        GameObject enemyField = Player.gameManager.enemyField.content.gameObject;
+        bool foundBlocker = false; // 추가: 블록 타입 디지몬 카드를 찾았는지 여부
+        for (int i = 0; i < enemyField.transform.childCount; ++i)
+        {
+            FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
+
+
+            //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
+            if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
+            {
+                foundBlocker = true;
+                Player.gameManager.CmdSyncTarget(target);
+                //블록타임
+                Debug.Log("블록 타입 디지몬 카드 있음!");
+                enemyCard.CmdSyncTargeting(enemyCard.player, true);
+
+                enemyCard.player.CmdSetActiveBlockPanel(enemyCard.player, true);
+
+                break;
+            }
+        }
+
         if (target is Player user)
         {
-            //공격대상이 플레이어라면 세큐리티 카드[0]스폰 및 그것과 전투
-            Debug.Log("세큐리티 카드 오픈");
-            if (user.deck.securityCard.Count > 0)
+            if(!foundBlocker)
             {
-                user.deck.CmdPlaySecurityCard(user.deck.securityCard[0], user, attacker);
-            }
-            else
-            {
-                //게임 종료 attacker의 승리
-                Debug.Log("게임 종료 " + attacker.GetComponentInParent<FieldCard>().player.username + "의 승리!");
+                //공격대상이 플레이어라면 세큐리티 카드[0]스폰 및 그것과 전투
+                Debug.Log("세큐리티 카드 오픈");
+                if (user.deck.securityCard.Count > 0)
+                {
+                    user.deck.CmdPlaySecurityCard(user.deck.securityCard[0], user, attacker);
+                }
+                else
+                {
+                    //게임 종료 attacker의 승리
+                    Debug.Log("게임 종료 " + attacker.GetComponentInParent<FieldCard>().player.username + "의 승리!");
+                }
             }
         }
 
         else
         {
-            GameObject enemyField = ((FieldCard)target).transform.parent.gameObject;
-            bool foundBlocker = false; // 추가: 블록 타입 디지몬 카드를 찾았는지 여부
-            for (int i = 0; i < enemyField.transform.childCount; ++i)
-            {
-                FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
+            //GameObject enemyField = ((FieldCard)target).transform.parent.gameObject;
+            //bool foundBlocker = false; // 추가: 블록 타입 디지몬 카드를 찾았는지 여부
+            //for (int i = 0; i < enemyField.transform.childCount; ++i)
+            //{
+            //    FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
 
 
-                //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
-                if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
-                {
-                    foundBlocker = true;
-                    Player.gameManager.CmdSyncTarget(target);
-                    //블록타임
-                    Debug.Log("블록 타입 디지몬 카드 있음!");
-                    enemyCard.CmdSyncTargeting(enemyCard.player, true);
+            //    //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
+            //    if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker)
+            //    {
+            //        foundBlocker = true;
+            //        Player.gameManager.CmdSyncTarget(target);
+            //        //블록타임
+            //        Debug.Log("블록 타입 디지몬 카드 있음!");
+            //        enemyCard.CmdSyncTargeting(enemyCard.player, true);
 
-                    enemyCard.player.CmdSetActiveBlockPanel(enemyCard.player, true);
+            //        enemyCard.player.CmdSetActiveBlockPanel(enemyCard.player, true);
 
-                    break;
-                }
-            }
+            //        break;
+            //    }
+            //}
 
             if (!foundBlocker)
             {

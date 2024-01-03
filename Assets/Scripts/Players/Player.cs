@@ -381,8 +381,18 @@ public class Player : Entity
                             Player.gameManager.blockButtonImage[j].sprite = creature.image;
                             Player.gameManager.blockButtonImage[j].gameObject.SetActive(true);
                         }
+                        
                         Player.gameManager.attackerImage.sprite = ((FieldCard)Player.gameManager.caster).card.data.image;
-                        Player.gameManager.targetImage.sprite = ((FieldCard)Player.gameManager.target).card.data.image;
+                        
+                        if(Player.gameManager.target is FieldCard)
+                        {
+                            Player.gameManager.targetImage.sprite = ((FieldCard)Player.gameManager.target).card.data.image;
+                        }
+                        else
+                        {
+                            //타겟이 Player일수도 있다 이땐 뒷면으로 그냥 두자
+                            Player.gameManager.targetImage.sprite = Player.localPlayer.cardback;
+                        }
                     }
                 }
             }

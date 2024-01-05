@@ -204,6 +204,18 @@ public class MemoryChecker : NetworkBehaviour
         }
     }
 
+    public void OnMemoryClick()
+    {
+        if(Player.localPlayer.isServer)
+        {
+            CmdChangeMemory(10);
+        }
+        else
+        {
+            CmdChangeMemory(-10);
+        }
+    }
+
     private void Update()
     {
         //Debug.Log(memory);

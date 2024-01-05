@@ -57,8 +57,8 @@ public partial class CreatureCard : ScriptableCard
             FieldCard enemyCard = enemyField.transform.GetChild(i).GetComponent<FieldCard>();
 
 
-            //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있으면 블록 타임)
-            if (enemyCard.isUpperMostCard && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker && !enemyCard.attacked)
+            //if(target의 플레이어 필드에 최상단 카드중 hasBlock이 있고 시큐아니고 타겟!=블록카드 라면 블록 타임)
+            if (enemyCard.isUpperMostCard && !enemyCard.isSecurity && enemyCard.card.data is CreatureCard && ((CreatureCard)enemyCard.card.data).hasBlocker && !enemyCard.attacked && target!=enemyCard)
             {
                 foundBlocker = true;
                 Player.gameManager.CmdSyncTarget(target);
@@ -66,7 +66,7 @@ public partial class CreatureCard : ScriptableCard
                 Debug.Log("블록 타입 디지몬 카드 있음!");
                 enemyCard.CmdSyncTargeting(enemyCard.player, true);
 
-                enemyCard.player.CmdSetActiveBlockPanel(enemyCard.player, true);
+                enemyCard.player.CmdSetActiveBlockPanel(enemyCard.player, attacker, target);
 
                 break;
             }

@@ -110,7 +110,6 @@ public class Combat : NetworkBehaviour
             {
                 ((Player)target).deck.CmdPlaySecurityCard(((Player)target).deck.securityCard[0], ((Player)target), attacker);
             }
-
         }
         else
         {

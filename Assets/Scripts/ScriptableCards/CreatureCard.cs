@@ -255,7 +255,15 @@ public partial class CreatureCard : ScriptableCard
 
             case "µàÅ©¸ó":
                 int Count = caster.player.enemyInfo.graveCount / 10;
-
+                Debug.Log("µàÅ©¸ó ½ÇÇà");
+                Debug.Log(Count);
+                for (int i = 0; i < Count; ++i)
+                {
+                    if (caster.player.enemyInfo.graveCount >= 0)
+                    { 
+                        caster.player.enemyInfo.data.deck.CmdBreakSecurityCard(caster.player.enemyInfo.data.deck.securityCard[0], caster.player.enemyInfo.data); 
+                    }
+                }
                 break;
         }
     }

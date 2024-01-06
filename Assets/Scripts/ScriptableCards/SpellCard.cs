@@ -198,6 +198,10 @@ public partial class SpellCard : ScriptableCard
                         FindTamerTarget(Player.gameManager.playerField.content);
                     }
                     break;
+
+                case "ÇÑ¼Ò¶ó":
+                    card.CmdMakeSecurity(false);
+                    break;
             }
         }
 

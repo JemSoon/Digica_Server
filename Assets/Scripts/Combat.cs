@@ -1,7 +1,5 @@
 using UnityEngine;
 using Mirror;
-using static UnityEngine.GraphicsBuffer;
-using UnityEditor.Experimental.GraphView;
 
 public class Combat : NetworkBehaviour
 {
@@ -66,7 +64,7 @@ public class Combat : NetworkBehaviour
 
             CreatureCard creatureCard1 = card.card.data as CreatureCard;
 
-            creatureCard1.AttackDigimonCast(card, null);
+            //creatureCard1.AttackDigimonCast(card, null);
 
             while (card.isUnderMostCard == false)
             {
@@ -90,7 +88,12 @@ public class Combat : NetworkBehaviour
                 }
             }
 
-            CmdAfterBattle(attacker, target);
+            //if(creatureCard1.cardName!="듀크몬")
+            {
+                CmdAfterBattle(attacker, target);
+            }
+            
+            //StartCoroutine(CmdDelayAfterBattle(attacker, target, 0.1f));
         }
     }
 
@@ -106,7 +109,7 @@ public class Combat : NetworkBehaviour
 
         if (target is Player)
         {
-            if(((Player)target).deck.securityCard.Count>0)
+            if (((Player)target).deck.securityCard.Count > 0)
             {
                 ((Player)target).deck.CmdPlaySecurityCard(((Player)target).deck.securityCard[0], ((Player)target), attacker);
             }
@@ -119,7 +122,7 @@ public class Combat : NetworkBehaviour
                 target = target.GetComponent<FieldCard>().upperCard;
             }
             #endregion
-
+            Debug.Log("실제 전투 상대 : "+target.GetComponent<FieldCard>().card.data.cardName);
             #region 어태커의 진화원 효과 검색
             RpcBattleCast(attacker, target, ((FieldCard)attacker).player);//그라우몬..
             #endregion

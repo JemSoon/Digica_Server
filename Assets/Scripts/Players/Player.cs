@@ -136,6 +136,7 @@ public class Player : Entity
             CardInfo card = deck.deckList[0];//기억하십시오 0번째를 빼면 1번이 다시 0번으로 당겨진다
             if (deck.securityCard.Count < 5)
             {
+                Debug.Log("세큐리티 " + i + "번 : " + card.data.cardName);
                 deck.securityCard.Add(new CardInfo(card.data, 1));//손으로 카드 보내고
                 deck.deckList.Remove(card);//덱 리스트에선 제거
             }
@@ -146,7 +147,7 @@ public class Player : Entity
         {
             CardInfo card = deck.deckList[0];//기억하십시오 0번째를 빼면 1번이 다시 0번으로 당겨진다
             if (deck.hand.Count < 5)
-            { 
+            {
                 deck.hand.Add(new CardInfo(card.data, 1));//손으로 카드 보내고
                 deck.deckList.Remove(card);//덱 리스트에선 제거
             }

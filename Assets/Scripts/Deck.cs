@@ -288,7 +288,7 @@ public class Deck : NetworkBehaviour
     public void CmdPlaySecurityCard(CardInfo card, Player owner, Entity attacker)
     {
         // 이 카드는 크리쳐 카드일지 옵션,테이머 카드일지 알 수 없다
-        //Debug.Log("지금 세큐리티 오픈 시작됩니다");
+        Debug.Log("지금 세큐리티 파기말고 오픈 시작됩니다");
         if (card.data is CreatureCard)
         {
             CreatureCard creature = (CreatureCard)card.data;
@@ -312,6 +312,7 @@ public class Deck : NetworkBehaviour
             NetworkServer.Spawn(boardCard);
             //Debug.Log("세큐리티 서버 스폰");
             // 대상자의 세큐리티 카드를 스폰시켰으니 제거
+            Debug.Log("세큐리티 오픈의 0번째 카드 : "+owner.deck.securityCard[0].data.cardName);
             owner.deck.securityCard.RemoveAt(0);
 
             if (isServer) RpcPlaySecurityCard(boardCard, owner, attacker);
@@ -370,9 +371,11 @@ public class Deck : NetworkBehaviour
             // Spawn it
             NetworkServer.Spawn(boardCard);
             //Debug.Log("세큐리티 서버 스폰");
+
+            Debug.Log("지우기 전 시큐 0번 : "+owner.deck.securityCard[0].data.cardName);
             // 대상자의 세큐리티 카드를 스폰시켰으니 제거
             owner.deck.securityCard.RemoveAt(0);
-
+            Debug.Log("지운 후 시큐 0번 : " + owner.deck.securityCard[0].data.cardName);
             if (isServer) RpcBreakSecurityCard(boardCard, owner);
         }
         else if (card.data is SpellCard)
@@ -657,8 +660,10 @@ public class Deck : NetworkBehaviour
     [ClientRpc]
     public void RpcBreakSecurityCard(GameObject boardCard, Player player)
     {
+        Debug.Log("파기될 세큐리티 카드이름 : "+boardCard.GetComponent<FieldCard>().card.data.cardName);
         if (player.isLocalPlayer)
         {
+            Debug.Log("지운 후Rpc 시큐 0번 : " + player.deck.securityCard[0].data.cardName);
             // Set our FieldCard as a FRIENDLY creature for our local player, and ENEMY for our opponent.
             boardCard.GetComponent<FieldCard>().casterType = Target.FRIENDLIES;
             boardCard.transform.SetParent(Player.gameManager.playerField.content, false);
@@ -670,10 +675,12 @@ public class Deck : NetworkBehaviour
             boardCard.transform.SetParent(Player.gameManager.enemyField.content, false);
         }
 
-        if(isServer)
+        if(boardCard.gameObject.IsDestroyed()==false)
         {
             //Debug.Log("지금 딜레이 배틀 시작");
+            Debug.Log("실제 삭제된 카드 : "+boardCard.GetComponent<FieldCard>().card.data.cardName);
             StartCoroutine(DelayGoTrash(boardCard, 1.5f));
+            //GoTrash(boardCard);
         }
     }
 
@@ -762,6 +769,13 @@ public class Deck : NetworkBehaviour
         destroyCard.player.deck.CmdAddGraveyard(destroyCard.player, destroyCard.card);
         Destroy(boardCard.gameObject);
     }
+    public void GoTrash(GameObject boardCard)
+    {
+        FieldCard destroyCard = boardCard.GetComponent<FieldCard>();
+
+        destroyCard.player.deck.CmdAddGraveyard(destroyCard.player, destroyCard.card);
+        Destroy(boardCard.gameObject);
+    }
 
     public void CheckTamerInField(FieldCard spawnCard)
     {
@@ -785,5 +799,10 @@ public class Deck : NetworkBehaviour
     public void CmdAddGraveyard(Player player, CardInfo card)
     {
         player.deck.graveyard.Add(card);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdRemoveSecurity(Player player, int index)
+    {
+        player.deck.securityCard.RemoveAt(index);
     }
 }

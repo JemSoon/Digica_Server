@@ -80,7 +80,11 @@ public partial class CreatureCard : ScriptableCard
                 Debug.Log("세큐리티 카드 오픈");
                 if (user.deck.securityCard.Count > 0)
                 {
-                    user.deck.CmdPlaySecurityCard(user.deck.securityCard[0], user, attacker);
+                    Debug.Log("디지몬 효과 돌기전 상대 시큐카드 개수 : "+user.deck.securityCard.Count);
+                    AttackDigimonCast(attacker.GetComponent<FieldCard>(),null);//1월7일 테스트
+                    Debug.Log("디지몬 효과 돈 후(AttckDigimonCast지난 후) 상대 시큐카드 개수 : " + user.deck.securityCard.Count);
+                    //user.deck.CmdPlaySecurityCard(user.deck.securityCard[0], user, attacker);
+                    attacker.combat.CmdBattle(attacker, target);//이건 잘받아 오네..?
                 }
                 else
                 {
@@ -255,8 +259,7 @@ public partial class CreatureCard : ScriptableCard
 
             case "듀크몬":
                 int Count = caster.player.enemyInfo.graveCount / 10;
-                Debug.Log("듀크몬 실행");
-                Debug.Log(Count);
+
                 for (int i = 0; i < Count; ++i)
                 {
                     if (caster.player.enemyInfo.graveCount >= 0)
@@ -799,5 +802,4 @@ public partial class CreatureCard : ScriptableCard
                 break;
         }
     }
-
 }

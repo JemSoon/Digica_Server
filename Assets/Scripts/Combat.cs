@@ -109,6 +109,7 @@ public class Combat : NetworkBehaviour
 
         if (target is Player)
         {
+            //★이거 주석하면 안됨!! CmdPlaySecurityCard를 여기서 스폰시켜야 참가자클라가 안꼬임!★
             if (((Player)target).deck.securityCard.Count > 0)
             {
                 ((Player)target).deck.CmdPlaySecurityCard(((Player)target).deck.securityCard[0], ((Player)target), attacker);

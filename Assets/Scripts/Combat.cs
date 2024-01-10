@@ -163,7 +163,6 @@ public class Combat : NetworkBehaviour
             target.IsDead = true;
             Destroy(target.gameObject);
 
-            //이거 혹시 서버에서하니까 자꾸 참가자클라에 블로커가 적의걸로 뜨는건가?RPC로 옮겨봐야할듯
             if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack > 0 && target.GetComponent<FieldCard>().isSecurity)
             {
                 //공격자가 세큐리티 어택을 해서 살아남았고 추가 세큐리티 체크가 있다면 또 세큐리티 어택
@@ -270,6 +269,29 @@ public class Combat : NetworkBehaviour
 
             else//둘다 공격력이 같을때
             {
+                if (attackerCreatureCard.hasJamming && ((FieldCard)target).isSecurity)
+                {
+                    //어택커의 최상단 카드가 재밍이면 소멸하지 않음 return시켜야 함
+                    //근데 타겟은 시큐리티니까 무덤으로
+                    target.GetComponent<FieldCard>().player.deck.graveyard.Add(target.GetComponent<FieldCard>().card);
+                    Destroy(target.gameObject);
+
+                    //재밍 어태커 추가 세큐체크 있으면 실행
+                    if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack > 0 && target.GetComponent<FieldCard>().isSecurity)
+                    {
+                        //공격자가 세큐리티 어택을 해서 살아남았고 추가 세큐리티 체크가 있다면 또 세큐리티 어택
+                        attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
+                        if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
+                        {
+                            attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
+                        }
+                        //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).Attack(attacker, ((FieldCard)target).player);
+                        RpcAfterBattle(attacker, ((FieldCard)target).player);
+                    }
+
+                    return;
+                }
+
                 while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
                 {
                     attacker.IsDead = true;

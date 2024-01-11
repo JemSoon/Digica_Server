@@ -74,16 +74,18 @@ public partial class CreatureCard : ScriptableCard
 
         if (target is Player user)
         {
+            //여기에 스타트? 코루틴으로 한소라 효과체크
+            //attacker.combat.StartCoroutine(attacker.combat.DelayBattle(attacker, target));
+
             if(!foundBlocker)
             {
                 //공격대상이 플레이어라면 세큐리티 카드[0]스폰 및 그것과 전투
                 Debug.Log("세큐리티 카드 오픈");
                 if (user.deck.securityCard.Count > 0)
                 {
-                    Debug.Log("디지몬 효과 돌기전 상대 시큐카드 개수 : "+user.deck.securityCard.Count);
+                    //Debug.Log("디지몬 효과 돌기전 상대 시큐카드 개수 : "+user.deck.securityCard.Count);
                     AttackDigimonCast(attacker.GetComponent<FieldCard>(),null);//1월7일 테스트
-                    Debug.Log("디지몬 효과 돈 후(AttckDigimonCast지난 후) 상대 시큐카드 개수 : " + user.deck.securityCard.Count);
-                    //user.deck.CmdPlaySecurityCard(user.deck.securityCard[0], user, attacker);
+                    //Debug.Log("디지몬 효과 돈 후(AttckDigimonCast지난 후) 상대 시큐카드 개수 : " + user.deck.securityCard.Count);
                     attacker.combat.CmdBattle(attacker, target);//이건 잘받아 오네..?
                 }
                 else
@@ -96,6 +98,7 @@ public partial class CreatureCard : ScriptableCard
 
         else
         {
+
             if (!foundBlocker || ((FieldCard)target).isSecurity)
             {
                 //블로커가 상대 필드에 없다거나 시큐공격으로 나온 타겟카드면 이미 블록여부를 확인한것이기에 일반 공격 진행

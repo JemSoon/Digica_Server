@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Mirror;
 using System.Collections.Generic;
-using System.Collections;
+
 
 //Useful for UI. Whether the player is, well, a player or an enemy.
 public enum PlayerType { PLAYER, ENEMY };
@@ -544,6 +544,70 @@ public class Player : Entity
                 Player.gameManager.pickUpUIImage[j].gameObject.SetActive(true);
             }
         }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdSetActiveBuffPanel(Entity attacker, Player owner, bool active)
+    {
+        RpcSetActiveBuffPanel(attacker, owner, active);
+    }
+    [ClientRpc]
+    public void RpcSetActiveBuffPanel(Entity attacker, Player owner, bool active)
+    {
+        Player.gameManager.CmdSyncCaster(attacker);
+
+        for (int i = 0; i < 8; ++i)
+        {
+            Player.gameManager.buffUIImage[i].gameObject.SetActive(false);
+        }
+
+        if (owner == Player.localPlayer)
+        {
+            Player.gameManager.buffPanel.SetActive(active);
+            UICardsList.Clear();
+            //UICardInfoList.Clear();
+
+            int cardCount = Player.gameManager.playerField.content.childCount;
+            for (int i = 0; i < cardCount; ++i)
+            {
+                FieldCard card = Player.gameManager.playerField.content.GetChild(i).GetComponent<FieldCard>();
+
+                if (card.card.data.cardName == "한소라")
+                {
+                    UICardsList.Add(card);
+                    //UICardInfoList.Add(card.card);
+
+                    for (int j = UICardsList.Count; j < Player.gameManager.buffButtonImage.Count; ++j)
+                    {
+                        //사용하지 않는 버튼 비활성화
+                        Player.gameManager.buffButtonImage[j].gameObject.SetActive(false);
+                    }
+
+                    for (int j = 0; j < UICardsList.Count; ++j)
+                    {
+                        //사용하는 버튼 활성화
+                        Player.gameManager.buffButtonImage[j].sprite = card.card.data.image;
+                        Player.gameManager.buffButtonImage[j].gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+        //else
+        //{
+        //    //상대가 보는 패널
+        //    Player.gameManager.buffPanel.SetActive(active);
+        //    for (int i = 0; i < 8; ++i)
+        //    {
+        //        //구경꾼은 버튼을 전부 끈다
+        //        Player.gameManager.buffButtonImage[i].gameObject.SetActive(false);
+        //    }
+
+        //    for (int j = 0; j < UICardInfoList.Count; ++j)
+        //    {
+        //        Player.gameManager.buffUIImage[j].sprite = UICardInfoList[j].image;
+        //        Player.gameManager.buffUIImage[j].gameObject.SetActive(true);
+        //    }
+        //}
     }
 
     [Command(requiresAuthority = false)]

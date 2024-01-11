@@ -1,5 +1,8 @@
 using UnityEngine;
 using Mirror;
+using System.Collections;
+using static UnityEngine.GraphicsBuffer;
+using UnityEditor.Experimental.GraphView;
 
 public class Combat : NetworkBehaviour
 {
@@ -97,6 +100,31 @@ public class Combat : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
+    public void RpcTamerCardAttackCast(Entity attacker, Player player, Entity target)
+    {
+        if(player == Player.localPlayer)
+        {
+            PlayerField playerField = Player.gameManager.playerField;
+
+            for(int i =0; i<playerField.content.childCount; ++i)
+            {
+                FieldCard TamerCard = playerField.content.transform.GetChild(i).GetComponent<FieldCard>();
+
+                if(TamerCard.card.data is SpellCard spellCard && spellCard != null && spellCard.isTamer && !TamerCard.attacked)
+                {
+                    //테이머카드이고 테이머카드가 레스트 상태가 아니라면
+                    //테이머 버프 패널 발동
+                    Player.gameManager.CmdSyncCaster(attacker);
+                    attacker.CmdSyncTargeting(player, true);
+                    spellCard.AttackPlayerSpellCardCast(attacker, player);
+                    Debug.Log("테이머 버프 부여 패널을 킵니다");
+                }
+            }
+            StartCoroutine(DelayBattle(attacker, target));
+        }
+    }
+
     [Command(requiresAuthority = false)]
     public void CmdBattle(Entity attacker, Entity target)
     {
@@ -109,11 +137,14 @@ public class Combat : NetworkBehaviour
 
         if (target is Player)
         {
+            //상대 플레이어 공격시 발동되는 테이머카드 발동
+            RpcTamerCardAttackCast(attacker, attacker.GetComponent<FieldCard>().player, target);
+
             //★이거 주석하면 안됨!! CmdPlaySecurityCard를 여기서 스폰시켜야 참가자클라가 안꼬임!★
-            if (((Player)target).deck.securityCard.Count > 0)
-            {
-                ((Player)target).deck.CmdPlaySecurityCard(((Player)target).deck.securityCard[0], ((Player)target), attacker);
-            }
+            //if (((Player)target).deck.securityCard.Count > 0)
+            //{
+            //    ((Player)target).deck.CmdPlaySecurityCard(((Player)target).deck.securityCard[0], ((Player)target), attacker);
+            //}
         }
         else
         {
@@ -343,6 +374,20 @@ public class Combat : NetworkBehaviour
         {
             CreatureCard creature = (CreatureCard)attacker.GetComponent<FieldCard>().card.data;
             creature.Attack(attacker, target);
+        }
+    }
+
+    public IEnumerator DelayBattle(Entity attacker, Entity target)
+    {
+        //yield return new WaitForSeconds(1.0f);
+        yield return null;
+
+        while (attacker.GetComponent<FieldCard>().player.isTargeting)
+        { yield return null; }
+
+        if (!attacker.GetComponent<FieldCard>().player.isTargeting && ((Player)target).deck.securityCard.Count > 0)
+        {
+            ((Player)target).deck.CmdPlaySecurityCard(((Player)target).deck.securityCard[0], ((Player)target), attacker);
         }
     }
 }

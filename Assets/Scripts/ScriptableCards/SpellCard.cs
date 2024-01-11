@@ -353,23 +353,16 @@ public partial class SpellCard : ScriptableCard
         }
     }
 
-    //public void AttackCastSpellCard(Player owner)
-    //{
-    //    if (type == SpellType.DP)
-    //    {
-    //        switch (cardName)
-    //        {
-    //            case "한소라":
-    //                //손에 이 카드 추가
-    //                CardInfo cardInfo = new CardInfo();
-    //                cardInfo.cardID = CardID;
-    //                //cardInfo.data = ScriptableCard.Cache[cardInfo.cardID];
-    //                cardInfo.amount = 1;
-    //                owner.CmdDrawSpecificCard(cardInfo, owner);
-    //                break;
-    //        }
-    //    }
-    //}
+    public void AttackPlayerSpellCardCast(Entity attacker, Player owner)
+    {
+        switch (cardName)
+        {
+            case "한소라":
+                Debug.Log("한소라 있읍 얍얍");
+                owner.CmdSetActiveBuffPanel(attacker, owner,true);
+                break;
+        }
+    }
 
     public void EndTurnEffect(Player owner)
     {

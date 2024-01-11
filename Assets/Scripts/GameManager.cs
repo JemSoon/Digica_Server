@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
-public enum PanelType : byte { Revive, PickUp, }
+public enum PanelType : byte { Revive, PickUp, Buff}
 
 public class GameManager : NetworkBehaviour
 {
@@ -61,6 +61,11 @@ public class GameManager : NetworkBehaviour
     public GameObject pickUpPanel;
     public List<Image> pickUpButtonImage;
     public List<Image> pickUpUIImage;
+
+    [Header("Buff")]
+    public GameObject buffPanel;
+    public List<Image> buffButtonImage;
+    public List<Image> buffUIImage;
 
     // isHovering is only set to true on the Client that called the OnCardHover function.
     // We only want the hovering to appear on the enemy's Client, so we must exclude the OnCardHover caller from the Rpc call.
@@ -361,6 +366,36 @@ public class GameManager : NetworkBehaviour
             CmdSetSelectedCardImage(pickCard, PanelType.PickUp, false);
             StartCoroutine(WaitForSec(owner, 1.5f, PanelType.PickUp));
         }
+    }
+
+    public void OnBuffButtonClick(int index)
+    {
+        Player owner = caster.GetComponent<FieldCard>().player;
+        Player.localPlayer.UICardsList[index].CmdChangeAttacked(true);
+        Player.localPlayer.UICardsList[index].combat.CmdIncreaseWaitTurn(); //대기시간 추가
+        Player.localPlayer.UICardsList[index].CmdRotation(Player.localPlayer.UICardsList[index], Quaternion.Euler(0, 0, -90));//레스트로 돌린다
+
+        SpellCard spellCard;
+        CreatureCard creatureCrad;
+
+        if (Player.localPlayer.UICardsList[index].card.data is  CreatureCard creature)
+        {
+            creatureCrad = creature;
+            caster.GetComponent<FieldCard>().CmdAddBuff(creatureCrad.buff);
+        }
+        else if(Player.localPlayer.UICardsList[index].card.data is SpellCard spell)
+        {
+            spellCard = spell;
+            caster.GetComponent<FieldCard>().CmdAddBuff(spellCard.buff);
+
+            Debug.Log("버프 받을 카드 이름 : "+caster.GetComponent<FieldCard>().card.data.name);
+            caster.GetComponent<FieldCard>().CmdChangeSomeThing(spellCard.buff, true);
+        }
+
+        owner.CmdSetActiveBuffPanel(null, owner, false);
+
+        Player.localPlayer.CmdSyncTargeting(Player.localPlayer, false);
+        CmdSyncTarget(null);
     }
 
     private bool DemandReviveButtonClick(CardInfo card)

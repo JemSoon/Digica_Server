@@ -74,9 +74,6 @@ public partial class CreatureCard : ScriptableCard
 
         if (target is Player user)
         {
-            //여기에 스타트? 코루틴으로 한소라 효과체크
-            //attacker.combat.StartCoroutine(attacker.combat.DelayBattle(attacker, target));
-
             if(!foundBlocker)
             {
                 //공격대상이 플레이어라면 세큐리티 카드[0]스폰 및 그것과 전투

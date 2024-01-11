@@ -116,6 +116,7 @@ public class Combat : NetworkBehaviour
                     //테이머카드이고 테이머카드가 레스트 상태가 아니라면
                     //테이머 버프 패널 발동
                     Player.gameManager.CmdSyncCaster(attacker);
+                    Player.gameManager.CmdSyncTarget(target); //타겟을 저장해 놔야함
                     attacker.CmdSyncTargeting(player, true);
                     spellCard.AttackPlayerSpellCardCast(attacker, player);
                     Debug.Log("테이머 버프 부여 패널을 킵니다");
@@ -379,8 +380,8 @@ public class Combat : NetworkBehaviour
 
     public IEnumerator DelayBattle(Entity attacker, Entity target)
     {
-        //yield return new WaitForSeconds(1.0f);
-        yield return null;
+        yield return new WaitForSeconds(0.2f);
+        //yield return null;
 
         while (attacker.GetComponent<FieldCard>().player.isTargeting)
         { yield return null; }

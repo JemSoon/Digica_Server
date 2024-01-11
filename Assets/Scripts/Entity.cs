@@ -91,6 +91,7 @@ public abstract partial class Entity : NetworkBehaviour
 
         CheckBuff(player);
         RpcOffBlockPanel(player);
+        RpcOffBuffPanel(player);
     }
 
     [ClientRpc]
@@ -119,5 +120,15 @@ public abstract partial class Entity : NetworkBehaviour
             Player.gameManager.CmdSyncTarget(null);
         }
     }
-
+    [ClientRpc]
+    public void RpcOffBuffPanel(Player player)
+    {
+        //얘는 꺼지면 알아서 자동 전투 (세큐리티 오픈)한다..추가로 오픈 시키면 안됨
+        if (player == Player.localPlayer && Player.gameManager.buffPanel.activeSelf)
+        {
+            Player.gameManager.buffPanel.SetActive(false);
+            Player.gameManager.CmdSyncCaster(null);
+            Player.gameManager.CmdSyncTarget(null);
+        }
+    }
 }

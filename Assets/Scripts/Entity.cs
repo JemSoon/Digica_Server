@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using Mirror;
-using System.Collections;
 
 [Serializable]
 public abstract partial class Entity : NetworkBehaviour

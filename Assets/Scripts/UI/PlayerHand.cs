@@ -1,6 +1,4 @@
 using UnityEngine;
-using Mirror;
-using Mirror.Examples.MultipleMatch;
 
 public class PlayerHand : MonoBehaviour
 {

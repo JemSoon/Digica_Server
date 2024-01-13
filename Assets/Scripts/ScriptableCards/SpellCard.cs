@@ -59,13 +59,16 @@ public partial class SpellCard : ScriptableCard
             switch (cardName)
             {
                 case "뉴클리어 레이저":
-                    owner.CmdDrawDeck(2);
+                    //owner.CmdDrawDeck(2);
+                    owner.CmdDrawDeckNotMyTurn(2, owner);
                     break;
                 case "보링 스톰":
-                    owner.CmdDrawDeck(1);
+                    //owner.CmdDrawDeck(1);
+                    owner.CmdDrawDeckNotMyTurn(1, owner);
                     break;
                 case "홀리 에스파다":
-                    owner.CmdDrawDeck(owner.deck.securityCard.Count / 2);//세큐리티2장마다 드로우
+                    //owner.CmdDrawDeck(owner.deck.securityCard.Count / 2);//세큐리티2장마다 드로우
+                    owner.CmdDrawDeckNotMyTurn(owner.deck.securityCard.Count / 2, owner);
                     break;
             }
         }

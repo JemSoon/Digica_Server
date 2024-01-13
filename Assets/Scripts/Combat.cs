@@ -1,8 +1,6 @@
 using UnityEngine;
 using Mirror;
 using System.Collections;
-using static UnityEngine.GraphicsBuffer;
-using UnityEditor.Experimental.GraphView;
 
 public class Combat : NetworkBehaviour
 {

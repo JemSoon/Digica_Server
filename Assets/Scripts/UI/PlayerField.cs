@@ -1,5 +1,6 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEditor.UIElements;
 
 
 public class PlayerField : MonoBehaviour, IDropHandler
@@ -96,7 +97,24 @@ public class PlayerField : MonoBehaviour, IDropHandler
             int index = card.handIndex;
             CardInfo cardInfo = player.deck.hand[index];
             // Debug.LogError(index + " / " + cardInfo.name);
-            
+
+            if (cardInfo.data is SpellCard spellCard && spellCard.isTamer == false)
+            {
+                if(content.childCount == 0) { return; } //아무것도 없는 필드에서 옵션카드 낼 수 없다
+
+                for (int i = 0; i < content.childCount; i++)
+                {
+                    FieldCard myCard = content.GetChild(i).gameObject.GetComponent<FieldCard>();
+
+                    if (myCard == null || (myCard.card.data.color1 != spellCard.color1 && myCard.card.data.color1 != spellCard.color2 && myCard.card.data.color2 != spellCard.color1 && myCard.card.data.color2 != spellCard.color2))
+                    {
+                        Debug.Log("카드 생성 반환");
+                        //테이머가 아닌 옵션카드가 필드에 나가려는데 필드에 카드가없거나 다른 같은색 카드가 없다면 사용 불가
+                        return;
+                    }
+                }
+            }
+            Debug.Log("카드 생성");
             Player.gameManager.isSpawning = true;
             Player.gameManager.isHovering = false;
             //Player.gameManager.CmdOnCardHover(0, index);

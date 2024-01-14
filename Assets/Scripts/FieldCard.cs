@@ -402,9 +402,9 @@ public class FieldCard : Entity
     {
         isSecurity = Tof;
     }
-    [Command(requiresAuthority = false)]
-    public void CmdIsAttacking(bool Tof)
-    {
-        isAttacking = Tof;
-    }
+    //[Command(requiresAuthority = false)]
+    //public void CmdIsAttacking(bool Tof)
+    //{
+    //    isAttacking = Tof;
+    //}
 }

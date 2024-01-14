@@ -356,13 +356,18 @@ public partial class SpellCard : ScriptableCard
         }
     }
 
-    public void AttackPlayerSpellCardCast(Entity attacker, Player owner)
+    public void AttackPlayerSpellCardCast(Entity attacker, Entity target, Player owner)
     {
         switch (cardName)
         {
             case "ÇÑ¼Ò¶ó":
                 Debug.Log("ÇÑ¼Ò¶ó ÀÖÀ¾ ¾å¾å");
+                Player.gameManager.CmdSyncCaster(attacker);
+                Player.gameManager.CmdSyncTarget(target); //Å¸°ÙÀ» ÀúÀåÇØ ³ö¾ßÇÔ
+                attacker.CmdSyncTargeting(owner, true);
                 owner.CmdSetActiveBuffPanel(attacker, owner,true);
+                break;
+            default:
                 break;
         }
     }

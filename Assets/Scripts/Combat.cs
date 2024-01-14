@@ -113,10 +113,10 @@ public class Combat : NetworkBehaviour
                 {
                     //테이머카드이고 테이머카드가 레스트 상태가 아니라면
                     //테이머 버프 패널 발동
-                    Player.gameManager.CmdSyncCaster(attacker);
-                    Player.gameManager.CmdSyncTarget(target); //타겟을 저장해 놔야함
-                    attacker.CmdSyncTargeting(player, true);
-                    spellCard.AttackPlayerSpellCardCast(attacker, player);
+                    //Player.gameManager.CmdSyncCaster(attacker);
+                    //Player.gameManager.CmdSyncTarget(target); //타겟을 저장해 놔야함
+                    //attacker.CmdSyncTargeting(player, true);
+                    spellCard.AttackPlayerSpellCardCast(attacker, target, player);
                     Debug.Log("테이머 버프 부여 패널을 킵니다");
                 }
             }
@@ -181,7 +181,7 @@ public class Combat : NetworkBehaviour
         {
             if (spellCard.isTamer && ((FieldCard)target).isSecurity==false)
             {
-                //테이머+세큐가 아닌 카드는 소멸 안되게끔
+                //테이머+세큐가 아닌 카드는 소멸 안되게끔(이미 시큐로 나와도 isTamer를 false처리 먼저 하고 들어옴)
                 return;
             }
 
@@ -199,6 +199,9 @@ public class Combat : NetworkBehaviour
                 attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
                 if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
                 {
+                    //attacker.GetComponent<FieldCard>().CmdIsAttacking(false);
+                    //피치못한 사정으로 나중에 주는효과(예:메탈그레이몬(청))메모리 빼기..
+                    //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
                     attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
                 }
                 //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).Attack(attacker, ((FieldCard)target).player);
@@ -226,6 +229,9 @@ public class Combat : NetworkBehaviour
                         attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
                         if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
                         {
+                            //attacker.GetComponent<FieldCard>().CmdIsAttacking(false);
+                            //피치못한 사정으로 나중에 주는효과(예:메탈그레이몬(청))메모리 빼기..
+                            //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
                             attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
                         }
                         //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).Attack(attacker, ((FieldCard)target).player);

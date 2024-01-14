@@ -76,6 +76,7 @@ public partial class CreatureCard : ScriptableCard
         {
             if(!foundBlocker)
             {
+                //attacker.GetComponent<FieldCard>().CmdIsAttacking(true);
                 //공격대상이 플레이어라면 세큐리티 카드[0]스폰 및 그것과 전투
                 Debug.Log("세큐리티 카드 오픈");
                 if (user.deck.securityCard.Count > 0)
@@ -96,7 +97,7 @@ public partial class CreatureCard : ScriptableCard
 
         else
         {
-
+            AttackDigimonCast(attacker.GetComponent<FieldCard>(), null);
             if (!foundBlocker || ((FieldCard)target).isSecurity)
             {
                 //블로커가 상대 필드에 없다거나 시큐공격으로 나온 타겟카드면 이미 블록여부를 확인한것이기에 일반 공격 진행
@@ -341,7 +342,7 @@ public partial class CreatureCard : ScriptableCard
                     if (target.buffs.Any(buff => buff.cardname == evolutionBuff.cardname))
                     {
                         {
-                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                            Debug.Log("up카드 없으면 리턴시켰는데 왜 들어오니");
                             target.CmdChangeSomeThing(evolutionBuff, false);
                             target.CmdRemoveBuff(evolutionBuff.cardname);
                             
@@ -762,7 +763,10 @@ public partial class CreatureCard : ScriptableCard
 
     public void DigimonCast(FieldCard caster)
     {
-        switch(cardName)
+        if (caster.isUpperMostCard == false)
+        { return; }
+
+        switch (cardName)
         {
             case "볼케닉드라몬":
                 if (caster.player.IsOurTurn())
@@ -786,18 +790,50 @@ public partial class CreatureCard : ScriptableCard
             case "메탈그레이몬(청)":
                 if (caster.player.IsOurTurn())
                 {
-                    caster.CmdChangeSomeThing(buff, true);
-                    caster.CmdAddBuff(buff);
+                    if (!caster.buffs.Any(bufff => bufff.cardname == buff.cardname))
+                    {
+                        caster.CmdChangeSomeThing(buff, true);
+                        caster.CmdAddBuff(buff);
+                    }
                 }
                 else
                 {
                     if (caster.buffs.Count > 0)
                     {
-                        {
-                            //내 턴이 아닌동안 그레이몬 버프 찾아 제거
-                            caster.CmdChangeSomeThing(buff, false);
-                            caster.CmdRemoveBuff(buff.cardname);
-                        }
+                        //내 턴이 아닌동안 그레이몬 버프 찾아 제거
+                        caster.CmdChangeSomeThing(buff, false);
+                        caster.CmdRemoveBuff(buff.cardname);
+                    }
+                }
+                break;
+        }
+    }
+
+    public void AttackEndDigimonCasts(FieldCard caster)
+    {
+        //디지몬이 피치못한(..)사정으로 버프 제거 못했을때 쓰는 함수
+        //ex)메탈그레이몬(청) -> 공격시 메모리 까서 상대턴으로 넘어갔는데
+        //세큐리티 어택일시 여분 세큐리티 공격까지 완수해야해서 버프 제거 못함
+        //그런 경우를 위해 만든 함수
+
+        //근데 얘가 먼저 죽으면 어떡함?ㅁㄴㅇㄹ
+        switch (cardName)
+        {
+            case "메탈그레이몬(청)":
+                if (caster.player.isServer)
+                {
+                    if (caster.player.IsOurTurn() && caster.isMyTurnDigimonCastingActive == false)
+                    {
+                        MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory - 5);
+                        caster.isMyTurnDigimonCastingActive = true;
+                    }
+                }
+                else
+                {
+                    if (caster.player.IsOurTurn() && caster.isMyTurnDigimonCastingActive == false)
+                    {
+                        MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory + 5);
+                        caster.isMyTurnDigimonCastingActive = true;
                     }
                 }
                 break;

@@ -203,10 +203,26 @@ public class GameManager : NetworkBehaviour
     public void RpcSetPass()
     {
         if(Player.localPlayer.firstPlayer && isOurTurn)
-        { MemoryChecker.Inst.CmdChangeMemory(-3 - (MemoryChecker.Inst.buffMemory)); }
+        {
+            Debug.Log("빠져야 할 버프 메모리 : " + MemoryChecker.Inst.buffMemory);
+            MemoryChecker.Inst.CmdChangeMemory(-3 - (MemoryChecker.Inst.buffMemory));
+            
+            if (MemoryChecker.Inst.memory < -10)
+            { MemoryChecker.Inst.CmdChangeMemory(-10); }
+            else if (MemoryChecker.Inst.memory > 10)
+            { MemoryChecker.Inst.CmdChangeMemory(10); }
+        }
         
         else if(!Player.localPlayer.firstPlayer && isOurTurn)
-        { MemoryChecker.Inst.CmdChangeMemory(3 - (MemoryChecker.Inst.buffMemory)); }
+        {
+            Debug.Log("빠져야 할 버프 메모리 : " + MemoryChecker.Inst.buffMemory);
+            MemoryChecker.Inst.CmdChangeMemory(3 - (MemoryChecker.Inst.buffMemory));
+            
+            if (MemoryChecker.Inst.memory < -10)
+            { MemoryChecker.Inst.CmdChangeMemory(-10); }
+            else if (MemoryChecker.Inst.memory > 10)
+            { MemoryChecker.Inst.CmdChangeMemory(10); }
+        }
 
         // If isOurTurn was true, set it false. If it was false, set it true.
         isOurTurn = !isOurTurn;

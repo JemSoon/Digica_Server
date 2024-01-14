@@ -88,6 +88,7 @@ public partial class CreatureCard : ScriptableCard
                 else
                 {
                     //게임 종료 attacker의 승리
+                    Player.gameManager.CmdEndGame(attacker);
                     Debug.Log("게임 종료 " + attacker.GetComponentInParent<FieldCard>().player.username + "의 승리!");
                 }
             }

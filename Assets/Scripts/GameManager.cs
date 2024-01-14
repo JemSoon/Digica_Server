@@ -67,13 +67,19 @@ public class GameManager : NetworkBehaviour
     public List<Image> buffButtonImage;
     public List<Image> buffUIImage;
 
+    [Header("GameEnd")]
+    public GameObject WinPanel;
+    public GameObject LosePanel;
+
     // isHovering is only set to true on the Client that called the OnCardHover function.
     // We only want the hovering to appear on the enemy's Client, so we must exclude the OnCardHover caller from the Rpc call.
     [HideInInspector] public bool isHovering = false;
     [HideInInspector] public bool isHoveringField = false;
     [HideInInspector] public bool isSpawning = false;
 
-    /*[HideInInspector]*/ public Entity caster; // 타게팅 애로우 지우기용도 + attacker저장
+    [Header("Caster(Attacker)/Target")]
+    /*[HideInInspector]*/
+    public Entity caster; // 타게팅 애로우 지우기용도 + attacker저장
     public Entity target; // target을 저장해두기
 
     //public SyncListPlayerInfo players = new SyncListPlayerInfo(); // Information of all players online. One is player, other is opponent.
@@ -521,5 +527,23 @@ public class GameManager : NetworkBehaviour
                 break;
         }
         
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdEndGame(Entity attacker)
+    {
+        RpcEndGame(attacker);
+    }
+    [ClientRpc]
+    public void RpcEndGame(Entity attacker)
+    {
+        if(attacker.GetComponent<FieldCard>().player==Player.localPlayer)
+        {
+            WinPanel.SetActive(true);
+        }
+        else
+        {
+            LosePanel.SetActive(true);
+        }
     }
 }

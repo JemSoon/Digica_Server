@@ -279,6 +279,7 @@ public class Combat : NetworkBehaviour
         else
         {
             CreatureCard attackerCreatureCard = ((CreatureCard)((FieldCard)attacker).card.data);
+            int EnemySecurityCount = ((FieldCard)target).player.deck.securityCard.Count;//target이 죽으면 정보를 못받아서 미리받기
 
             if (attacker.strength < target.strength)
             {
@@ -395,7 +396,7 @@ public class Combat : NetworkBehaviour
                     //공격자가 세큐리티 어택을 해서 살아남았고 추가 세큐리티 체크가 있다면 또 세큐리티 어택
                     attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
 
-                    if(attacker.GetComponent<FieldCard>().tempBuff.securityAttack==0 || ((FieldCard)target).player.deck.securityCard.Count == 0)
+                    if(attacker.GetComponent<FieldCard>().tempBuff.securityAttack==0 || EnemySecurityCount == 0)
                     {
                         attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
                         
@@ -430,7 +431,7 @@ public class Combat : NetworkBehaviour
                     {
                         //공격자가 세큐리티 어택을 해서 살아남았고 추가 세큐리티 체크가 있다면 또 세큐리티 어택
                         attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
-                        if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
+                        if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0 || EnemySecurityCount == 0)
                         {
                             //시큐어택 끝났으니까 공격 직후 뱉어야 할 메모리 뱉기
                             MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);

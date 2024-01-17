@@ -53,6 +53,7 @@ public class FieldCard : Entity
     public FieldCardHover cardDragHover;
     [Header("Status")]
     [SyncVar] public bool blocked = false; //블록 "당했는가"?
+    [SyncVar] public bool isSecurityAttack = false; //시큐어택 인가?
     //[SyncVar] public bool isAttacking = false; //공격 중인가? 어택시 메모리-@으로 시큐 추가공격중 끊기는 문제 해결용
     // Update is called once per frame
     public override void Update()
@@ -113,6 +114,8 @@ public class FieldCard : Entity
     [Command(requiresAuthority = false)]
     public void CmdUpdateWaitTurn()
     {
+        //새 턴 시작할떄 초기화 할것들
+        CmdChangeIsSecurityAttack(false);
         CmdChangeAttacked(false);
         CmdRotation(this, Quaternion.identity);
         //Debug.LogError("Here");
@@ -407,4 +410,9 @@ public class FieldCard : Entity
     //{
     //    isAttacking = Tof;
     //}
+    [Command(requiresAuthority = false)]
+    public void CmdChangeIsSecurityAttack(bool Tof)
+    {
+        isSecurityAttack = Tof;
+    }
 }

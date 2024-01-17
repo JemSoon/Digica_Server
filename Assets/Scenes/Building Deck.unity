@@ -15717,7 +15717,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : Special Boost1.0_Red0.1'
+  m_Text: 'Version : Special Boost1.0_Red0.1_fix_Memory'
 --- !u!222 &2109007654
 CanvasRenderer:
   m_ObjectHideFlags: 0

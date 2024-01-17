@@ -85,10 +85,13 @@ public partial class CreatureCard : ScriptableCard
                     AttackDigimonCast(attacker.GetComponent<FieldCard>(),null);//1월7일 테스트
                     //Debug.Log("디지몬 효과 돈 후(AttckDigimonCast지난 후) 상대 시큐카드 개수 : " + user.deck.securityCard.Count);
                     attacker.combat.CmdBattle(attacker, target);//이건 잘받아 오네..?
+
+                    //1월17일test
+                    attacker.GetComponent<FieldCard>().CmdChangeIsSecurityAttack(true);
                 }
-                else
+                else if(user.deck.securityCard.Count == 0 && attacker.GetComponent<FieldCard>().isSecurityAttack==false)
                 {
-                    //게임 종료 attacker의 승리
+                    //게임 종료 attacker의 승리(막타를 쳐야함 세큐어택 아닌걸로)
                     Player.gameManager.CmdEndGame(attacker);
                     Debug.Log("게임 종료 " + attacker.GetComponentInParent<FieldCard>().player.username + "의 승리!");
                 }

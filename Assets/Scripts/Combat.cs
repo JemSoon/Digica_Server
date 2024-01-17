@@ -153,7 +153,7 @@ public class Combat : NetworkBehaviour
                 target = target.GetComponent<FieldCard>().upperCard;
             }
             #endregion
-            Debug.Log("실제 전투 상대 : "+target.GetComponent<FieldCard>().card.data.cardName);
+            //Debug.Log("실제 전투 상대 : "+target.GetComponent<FieldCard>().card.data.cardName);
             #region 어태커의 진화원 효과 검색
             RpcBattleCast(attacker, target, ((FieldCard)attacker).player);//그라우몬..
             #endregion
@@ -186,6 +186,45 @@ public class Combat : NetworkBehaviour
             if (spellCard.isTamer && ((FieldCard)target).isSecurity==false)
             {
                 //테이머+세큐가 아닌 카드는 소멸 안되게끔(이미 시큐로 나와도 isTamer를 false처리 먼저 하고 들어옴)
+
+                if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack > 0 && attacker.GetComponent<FieldCard>().isSecurityAttack)
+                {
+                    //공격자가 세큐리티 어택을 해서 살아남았고 추가 세큐리티 체크가 있다면 또 세큐리티 어택
+                    attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
+
+                    if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
+                    {
+                        //시큐리티 어택이 0이 되었다면
+                        attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
+
+                        MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+                        MemoryChecker.Inst.CmdChangeInstantMemory(0);
+                        if (MemoryChecker.Inst.memory < 0 && owner.firstPlayer)
+                        {
+                            Player.gameManager.CmdEndTurn();
+                        }
+                        else if (MemoryChecker.Inst.memory > 0 && !owner.firstPlayer)
+                        {
+                            Player.gameManager.CmdEndTurn();
+                        }
+                    }
+                    else if (attacker.GetComponent<FieldCard>().IsDead || ((FieldCard)target).player.deck.securityCard.Count==0)
+                    {
+                        //시큐리티 스펠효과로 만약 죽거나 상대 세큐리티가 더는 없다면
+                        MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+                        MemoryChecker.Inst.CmdChangeInstantMemory(0);
+                        if (MemoryChecker.Inst.memory < 0 && owner.firstPlayer)
+                        {
+                            Player.gameManager.CmdEndTurn();
+                        }
+                        else if (MemoryChecker.Inst.memory > 0 && !owner.firstPlayer)
+                        {
+                            Player.gameManager.CmdEndTurn();
+                        }
+                    }
+                    //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).Attack(attacker, ((FieldCard)target).player);
+                    RpcAfterBattle(attacker, ((FieldCard)target).player);
+                }
                 return;
             }
 
@@ -197,21 +236,40 @@ public class Combat : NetworkBehaviour
             target.IsDead = true;
             Destroy(target.gameObject);
 
-            if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack > 0 && target.GetComponent<FieldCard>().isSecurity)
+            if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack > 0 && attacker.GetComponent<FieldCard>().isSecurityAttack)
             {
                 //공격자가 세큐리티 어택을 해서 살아남았고 추가 세큐리티 체크가 있다면 또 세큐리티 어택
                 attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
+
                 if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
                 {
-                    //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
-                    RpcAttackEndCast(fieldCard, owner);
+                    //시큐리티 어택이 0이 되었다면
                     attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
+                    
+                    MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+                    MemoryChecker.Inst.CmdChangeInstantMemory(0);
+                    if (MemoryChecker.Inst.memory < 0 && owner.firstPlayer)
+                    {
+                        Player.gameManager.CmdEndTurn();
+                    }
+                    else if (MemoryChecker.Inst.memory > 0 && !owner.firstPlayer)
+                    {
+                        Player.gameManager.CmdEndTurn();
+                    }
                 }
-                else if(attacker.GetComponent<FieldCard>().IsDead)
+                else if (attacker.GetComponent<FieldCard>().IsDead || ((FieldCard)target).player.deck.securityCard.Count == 0)
                 {
-                    //세큐 0되기 전에 죽었다면?
-                    //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
-                    RpcAttackEndCast(fieldCard, owner);
+                    //시큐리티 스펠효과로 만약 죽는다면
+                    MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+                    MemoryChecker.Inst.CmdChangeInstantMemory(0);
+                    if (MemoryChecker.Inst.memory < 0 && owner.firstPlayer)
+                    {
+                        Player.gameManager.CmdEndTurn();
+                    }
+                    else if (MemoryChecker.Inst.memory > 0 && !owner.firstPlayer)
+                    {
+                        Player.gameManager.CmdEndTurn();
+                    }
                 }
                 //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).Attack(attacker, ((FieldCard)target).player);
                 RpcAfterBattle(attacker, ((FieldCard)target).player);
@@ -232,17 +290,26 @@ public class Combat : NetworkBehaviour
                     Destroy(target.gameObject);
 
                     //재밍 어태커 추가 세큐체크 있으면 실행
-                    if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack > 0 && target.GetComponent<FieldCard>().isSecurity)
+                    if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack > 0 && attacker.GetComponent<FieldCard>().isSecurityAttack)
                     {
                         //공격자가 세큐리티 어택을 해서 살아남았고 추가 세큐리티 체크가 있다면 또 세큐리티 어택
                         attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
-                        if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
+                        if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0 || ((FieldCard)target).player.deck.securityCard.Count==0)
                         {
-                            //피치못한 사정으로 나중에 주는효과(예:메탈그레이몬(청))메모리 빼기..
-                            //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
-                            RpcAttackEndCast(fieldCard, owner);
+                            //세큐리티 다 썻거나 상대 세큐리티 남은게 0개면 메탈(청) 공격시 메모리 뱉기 효과 발동
+                            MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+                            MemoryChecker.Inst.CmdChangeInstantMemory(0);
+                            if (MemoryChecker.Inst.memory < 0 && owner.firstPlayer)
+                            {
+                                Player.gameManager.CmdEndTurn();
+                            }
+                            else if (MemoryChecker.Inst.memory > 0 && !owner.firstPlayer)
+                            {
+                                Player.gameManager.CmdEndTurn();
+                            }
                             attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
                         }
+
                         //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).Attack(attacker, ((FieldCard)target).player);
                         RpcAfterBattle(attacker, ((FieldCard)target).player);
                     }
@@ -250,9 +317,17 @@ public class Combat : NetworkBehaviour
                     return;
                 }
 
-                // 메탈그레이몬(청)같이 피치못한 공격 직후 캐스팅 구현
-                //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
-                RpcAttackEndCast(fieldCard, owner);
+                //바로 죽으니 공격직후 뺄 메모리 제거
+                MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+                MemoryChecker.Inst.CmdChangeInstantMemory(0);
+                if (MemoryChecker.Inst.memory < 0 && owner.firstPlayer)
+                {
+                    Player.gameManager.CmdEndTurn();
+                }
+                else if (MemoryChecker.Inst.memory > 0 && !owner.firstPlayer)
+                {
+                    Player.gameManager.CmdEndTurn();
+                }
 
                 // 마지막 카드 전까지 모든 카드 삭제
                 while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
@@ -298,26 +373,43 @@ public class Combat : NetworkBehaviour
                 if (attackerCreatureCard.hasSpear && !((FieldCard)target).isSecurity)
                 {
                     //세큐리티 추가 공격
-                    //attackerCreatureCard.Attack(attacker, ((FieldCard)target).player);
                     RpcAfterBattle(attacker, ((FieldCard)target).player);
                 }
-                if(target.GetComponent<FieldCard>().isSecurity==false)
+                if(attacker.GetComponent<FieldCard>().isSecurityAttack==false)
                 {
-                    // 대상이 세큐리티가 아니라면 바로 공격끝이니 공격끝 실행
-                    //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
-                    RpcAttackEndCast(fieldCard, owner);
+                    //시큐리티 어택이 아닌 일반 디지몬 공격이였으니 바로 공격직후 메모리 제거
+                    MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+                    MemoryChecker.Inst.CmdChangeInstantMemory(0);
+                    if (MemoryChecker.Inst.memory < 0 && owner.firstPlayer)
+                    {
+                        Player.gameManager.CmdEndTurn();
+                    }
+                    else if (MemoryChecker.Inst.memory > 0 && !owner.firstPlayer)
+                    {
+                        Player.gameManager.CmdEndTurn();
+                    }
                 }
 
-                if(attacker.GetComponent<FieldCard>().tempBuff.securityAttack > 0 && target.GetComponent<FieldCard>().isSecurity)
+                if(attacker.GetComponent<FieldCard>().tempBuff.securityAttack > 0 && attacker.GetComponent<FieldCard>().isSecurityAttack)
                 {
                     //공격자가 세큐리티 어택을 해서 살아남았고 추가 세큐리티 체크가 있다면 또 세큐리티 어택
                     attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
-                    if(attacker.GetComponent<FieldCard>().tempBuff.securityAttack==0)
+
+                    if(attacker.GetComponent<FieldCard>().tempBuff.securityAttack==0 || ((FieldCard)target).player.deck.securityCard.Count == 0)
                     {
                         attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
+                        
                         // 메탈그레이몬(청)같이 피치못한 공격 직후 캐스팅 구현
-                        //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
-                        RpcAttackEndCast(fieldCard, owner);
+                        MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+                        MemoryChecker.Inst.CmdChangeInstantMemory(0);
+                        if (MemoryChecker.Inst.memory < 0 && owner.firstPlayer)
+                        {
+                            Player.gameManager.CmdEndTurn();
+                        }
+                        else if (MemoryChecker.Inst.memory > 0 && !owner.firstPlayer)
+                        {
+                            Player.gameManager.CmdEndTurn();
+                        }
                     }
                     //attackerCreatureCard.Attack(attacker, ((FieldCard)target).player);
                     RpcAfterBattle(attacker, ((FieldCard)target).player);
@@ -340,8 +432,18 @@ public class Combat : NetworkBehaviour
                         attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
                         if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
                         {
-                            //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
-                            RpcAttackEndCast(fieldCard, owner);
+                            //시큐어택 끝났으니까 공격 직후 뱉어야 할 메모리 뱉기
+                            MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+                            MemoryChecker.Inst.CmdChangeInstantMemory(0);
+                            if (MemoryChecker.Inst.memory < 0 && owner.firstPlayer)
+                            {
+                                Player.gameManager.CmdEndTurn();
+                            }
+                            else if (MemoryChecker.Inst.memory > 0 && !owner.firstPlayer)
+                            {
+                                Player.gameManager.CmdEndTurn();
+                            }
+
                             attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
                         }
                         //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).Attack(attacker, ((FieldCard)target).player);
@@ -351,8 +453,17 @@ public class Combat : NetworkBehaviour
                     return;
                 }
 
-                //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
-                RpcAttackEndCast(fieldCard, owner);
+                //죽으니까 메모리 땡긴것 빼주고 초기화하고 턴 확인
+                MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+                MemoryChecker.Inst.CmdChangeInstantMemory(0);
+                if (MemoryChecker.Inst.memory < 0 && owner.firstPlayer)
+                {
+                    Player.gameManager.CmdEndTurn();
+                }
+                else if (MemoryChecker.Inst.memory > 0 && !owner.firstPlayer)
+                {
+                    Player.gameManager.CmdEndTurn();
+                }
 
                 while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
                 {
@@ -370,6 +481,8 @@ public class Combat : NetworkBehaviour
                 attacker.IsDead = true;
                 attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
                 Destroy(attacker.gameObject);
+
+                //StartCoroutine(DelayDestroy(attacker));
 
                 while (target.GetComponent<FieldCard>().isUnderMostCard == false)
                 {
@@ -414,16 +527,17 @@ public class Combat : NetworkBehaviour
         //creature.AttackEndDigimonCasts(player);
         if(player==Player.localPlayer)
         {
+            Debug.Log("공격 마무리 직전 인스턴트 메모리 : " + MemoryChecker.Inst.instantMemory);
             MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
-            if(MemoryChecker.Inst.memory<0 && player.isServer)
-            {
-                Player.gameManager.CmdEndTurn();
-            }
-            else if(MemoryChecker.Inst.memory>0 && !player.isServer)
-            {
-                Player.gameManager.CmdEndTurn();
-            }
             MemoryChecker.Inst.CmdChangeInstantMemory(0);
+            if (MemoryChecker.Inst.memory<0 && player.firstPlayer)
+            {
+                Player.gameManager.CmdEndTurn();
+            }
+            else if(MemoryChecker.Inst.memory<0 && !player.firstPlayer)
+            {
+                Player.gameManager.CmdEndTurn();
+            }
         }
     }
 
@@ -439,6 +553,65 @@ public class Combat : NetworkBehaviour
         {
             ((Player)target).deck.CmdPlaySecurityCard(((Player)target).deck.securityCard[0], ((Player)target), attacker);
         }
+    }
+
+    public IEnumerator DelayDestroy(Entity attacker)
+    {
+        while(MemoryChecker.Inst.instantMemory != 0)
+        {
+            yield return null;
+        }
+
+        CmdDelayDestroyAttacker(attacker);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdDelayDestroyAttacker(Entity attacker)
+    {
+        //RpcDelayDestroyAttacker(attacker);
+        if (attacker.GetComponent<FieldCard>().player == Player.localPlayer)
+        {
+            while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
+            {
+                attacker.IsDead = true;
+                //죽은 공격카드 무덤 리스트 정보에 저장
+                attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+
+                //Battle(attacker, target);
+                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                Destroy(attacker.gameObject);
+
+                attacker = attacker.GetComponent<FieldCard>().underCard;
+                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+            }
+            attacker.IsDead = true;
+            attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+            Destroy(attacker.gameObject);
+        }
+    }
+    [ClientRpc]
+    public void RpcDelayDestroyAttacker(Entity attacker)
+    {
+        if(attacker.GetComponent<FieldCard>().player==Player.localPlayer)
+        {
+            while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
+            {
+                attacker.IsDead = true;
+                //죽은 공격카드 무덤 리스트 정보에 저장
+                attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+
+                //Battle(attacker, target);
+                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제전 카드");
+                Destroy(attacker.gameObject);
+
+                attacker = attacker.GetComponent<FieldCard>().underCard;
+                Debug.Log(attacker.GetComponent<FieldCard>().card.name + " 삭제후 카드");
+            }
+            attacker.IsDead = true;
+            attacker.GetComponent<FieldCard>().player.deck.graveyard.Add(attacker.GetComponent<FieldCard>().card);
+            Destroy(attacker.gameObject);
+        }
+        
     }
 }
 

@@ -200,6 +200,12 @@ public partial class SpellCard : ScriptableCard
                     {
                         FindTamerTarget(Player.gameManager.playerField.content);
                     }
+
+                    //등장시 턴이넘어오면(메탈그레이몬(청)같은 효과로) 바로 메모리 보정시키기
+                    if(owner.IsOurTurn())
+                    {
+                        StartTamerCast(owner);
+                    }
                     break;
 
                 case "한소라":
@@ -438,11 +444,11 @@ public partial class SpellCard : ScriptableCard
     {
         if(cardName=="신태일")
         {
-            if(player.firstPlayer && MemoryChecker.Inst.memory <=2)
+            if(player.firstPlayer && MemoryChecker.Inst.memory <=2 && MemoryChecker.Inst.memory >= 1)
             {
                 MemoryChecker.Inst.CmdChangeMemory(3);
             }
-            else if(!player.firstPlayer && MemoryChecker.Inst.memory>=-2)
+            else if(!player.firstPlayer && MemoryChecker.Inst.memory>=-2 && MemoryChecker.Inst.memory <= -1)
             {
                 MemoryChecker.Inst.CmdChangeMemory(-3);
             }

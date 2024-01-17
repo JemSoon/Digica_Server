@@ -206,15 +206,45 @@ public class MemoryChecker : NetworkBehaviour
         }
     }
 
-    public void OnMemoryClick()
+    public void OnMemoryPlusClick()
     {
         if(Player.localPlayer.isServer)
         {
-            CmdChangeMemory(10);
+            CmdChangeMemory(Inst.memory + 1);
+
+            if (MemoryChecker.Inst.memory >=10 )
+            {
+                CmdChangeMemory(10);
+            }
         }
         else
         {
-            CmdChangeMemory(-10);
+            CmdChangeMemory(Inst.memory - 1);
+
+            if (MemoryChecker.Inst.memory <= -10)
+            {
+                CmdChangeMemory(-10);
+            }
+        }
+    }
+    public void OnMemoryMinusClick()
+    {
+        if (Player.localPlayer.isServer)
+        {
+            CmdChangeMemory(Inst.memory - 1);
+            if (MemoryChecker.Inst.memory < 0)
+            {
+                Player.gameManager.CmdEndTurn();
+            }
+        }
+        else
+        {
+            CmdChangeMemory(Inst.memory + 1);
+            Debug.Log(Inst.memory);
+            if (MemoryChecker.Inst.memory > 0)
+            {
+                Player.gameManager.CmdEndTurn();
+            }
         }
     }
 

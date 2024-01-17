@@ -11,6 +11,8 @@ public class MemoryChecker : NetworkBehaviour
 
     [SyncVar]
     public int buffMemory;
+    [SyncVar]
+    public int instantMemory;
 
     public void memoryCheckerPos()
     {
@@ -219,5 +221,10 @@ public class MemoryChecker : NetworkBehaviour
     private void Update()
     {
         //Debug.Log(memory);
+    }
+    [Command(requiresAuthority =false)]
+    public void CmdChangeInstantMemory(int value)
+    {
+        instantMemory += value;
     }
 }

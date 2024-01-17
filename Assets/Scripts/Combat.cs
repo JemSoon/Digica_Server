@@ -175,6 +175,10 @@ public class Combat : NetworkBehaviour
         }
         #endregion
 
+        FieldCard fieldCard = attacker.GetComponent<FieldCard>();
+        CreatureCard creature = ((CreatureCard)attacker.GetComponent<FieldCard>().card.data);
+        Player owner = attacker.GetComponent<FieldCard>().player;
+
         ((FieldCard)attacker).CmdRotation(((FieldCard)attacker), Quaternion.Euler(0, 0, -90));
 
         if (((FieldCard)target).card.data is SpellCard spellCard)
@@ -199,10 +203,15 @@ public class Combat : NetworkBehaviour
                 attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
                 if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
                 {
-                    //attacker.GetComponent<FieldCard>().CmdIsAttacking(false);
-                    //피치못한 사정으로 나중에 주는효과(예:메탈그레이몬(청))메모리 빼기..
                     //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
+                    RpcAttackEndCast(fieldCard, owner);
                     attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
+                }
+                else if(attacker.GetComponent<FieldCard>().IsDead)
+                {
+                    //세큐 0되기 전에 죽었다면?
+                    //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
+                    RpcAttackEndCast(fieldCard, owner);
                 }
                 //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).Attack(attacker, ((FieldCard)target).player);
                 RpcAfterBattle(attacker, ((FieldCard)target).player);
@@ -229,9 +238,9 @@ public class Combat : NetworkBehaviour
                         attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
                         if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
                         {
-                            //attacker.GetComponent<FieldCard>().CmdIsAttacking(false);
                             //피치못한 사정으로 나중에 주는효과(예:메탈그레이몬(청))메모리 빼기..
                             //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
+                            RpcAttackEndCast(fieldCard, owner);
                             attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
                         }
                         //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).Attack(attacker, ((FieldCard)target).player);
@@ -241,6 +250,9 @@ public class Combat : NetworkBehaviour
                     return;
                 }
 
+                // 메탈그레이몬(청)같이 피치못한 공격 직후 캐스팅 구현
+                //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
+                RpcAttackEndCast(fieldCard, owner);
 
                 // 마지막 카드 전까지 모든 카드 삭제
                 while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
@@ -289,6 +301,12 @@ public class Combat : NetworkBehaviour
                     //attackerCreatureCard.Attack(attacker, ((FieldCard)target).player);
                     RpcAfterBattle(attacker, ((FieldCard)target).player);
                 }
+                if(target.GetComponent<FieldCard>().isSecurity==false)
+                {
+                    // 대상이 세큐리티가 아니라면 바로 공격끝이니 공격끝 실행
+                    //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
+                    RpcAttackEndCast(fieldCard, owner);
+                }
 
                 if(attacker.GetComponent<FieldCard>().tempBuff.securityAttack > 0 && target.GetComponent<FieldCard>().isSecurity)
                 {
@@ -297,6 +315,9 @@ public class Combat : NetworkBehaviour
                     if(attacker.GetComponent<FieldCard>().tempBuff.securityAttack==0)
                     {
                         attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
+                        // 메탈그레이몬(청)같이 피치못한 공격 직후 캐스팅 구현
+                        //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
+                        RpcAttackEndCast(fieldCard, owner);
                     }
                     //attackerCreatureCard.Attack(attacker, ((FieldCard)target).player);
                     RpcAfterBattle(attacker, ((FieldCard)target).player);
@@ -319,6 +340,8 @@ public class Combat : NetworkBehaviour
                         attacker.GetComponent<FieldCard>().tempBuff.securityAttack -= 1;
                         if (attacker.GetComponent<FieldCard>().tempBuff.securityAttack == 0)
                         {
+                            //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
+                            RpcAttackEndCast(fieldCard, owner);
                             attacker.GetComponent<FieldCard>().SecurityCheckText.gameObject.SetActive(false);
                         }
                         //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).Attack(attacker, ((FieldCard)target).player);
@@ -327,6 +350,9 @@ public class Combat : NetworkBehaviour
 
                     return;
                 }
+
+                //((CreatureCard)attacker.GetComponent<FieldCard>().card.data).AttackEndDigimonCasts(attacker.GetComponent<FieldCard>());
+                RpcAttackEndCast(fieldCard, owner);
 
                 while (attacker.GetComponent<FieldCard>().isUnderMostCard == false)
                 {
@@ -379,6 +405,25 @@ public class Combat : NetworkBehaviour
         {
             CreatureCard creature = (CreatureCard)attacker.GetComponent<FieldCard>().card.data;
             creature.Attack(attacker, target);
+        }
+    }
+    [ClientRpc]
+    public void RpcAttackEndCast(FieldCard fieldCard, Player player)
+    {
+        //CreatureCard creature = ((CreatureCard)fieldCard.card.data);
+        //creature.AttackEndDigimonCasts(player);
+        if(player==Player.localPlayer)
+        {
+            MemoryChecker.Inst.CmdChangeMemory(MemoryChecker.Inst.memory + MemoryChecker.Inst.instantMemory);
+            if(MemoryChecker.Inst.memory<0 && player.isServer)
+            {
+                Player.gameManager.CmdEndTurn();
+            }
+            else if(MemoryChecker.Inst.memory>0 && !player.isServer)
+            {
+                Player.gameManager.CmdEndTurn();
+            }
+            MemoryChecker.Inst.CmdChangeInstantMemory(0);
         }
     }
 

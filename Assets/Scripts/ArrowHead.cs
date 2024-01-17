@@ -48,7 +48,7 @@ public class ArrowHead : MonoBehaviour
                 else
                 {
                     //필드카드라면 레스트 상태인 적만 공격
-                    canTarget = (target.casterType.CanTarget(card.acceptableTargets) && target.GetComponent<FieldCard>().attacked);
+                    canTarget = (target.casterType.CanTarget(card.acceptableTargets) /*&& target.GetComponent<FieldCard>().attacked*/);
                 }
                 //Debug.Log(((FieldCard)caster).isSecurity + ((FieldCard)caster).card.name);
             }

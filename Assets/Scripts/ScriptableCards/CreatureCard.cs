@@ -245,7 +245,8 @@ public partial class CreatureCard : ScriptableCard
                 {
                     if (caster.player.IsOurTurn() && caster.isMyTurnDigimonCastingActive == false)
                     {
-                        MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory - 5);
+                        //MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory - 5);
+                        MemoryChecker.Inst.CmdChangeInstantMemory(-5);
                         caster.isMyTurnDigimonCastingActive = true;
                     }
                 }
@@ -253,7 +254,8 @@ public partial class CreatureCard : ScriptableCard
                 {
                     if (caster.player.IsOurTurn() && caster.isMyTurnDigimonCastingActive == false)
                     {
-                        MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory + 5);
+                        //MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory + 5);
+                        MemoryChecker.Inst.CmdChangeInstantMemory(5);
                         caster.isMyTurnDigimonCastingActive = true;
                     }
                 }
@@ -809,7 +811,7 @@ public partial class CreatureCard : ScriptableCard
         }
     }
 
-    public void AttackEndDigimonCasts(FieldCard caster)
+    public void AttackEndDigimonCasts(Player owner)
     {
         //디지몬이 피치못한(..)사정으로 버프 제거 못했을때 쓰는 함수
         //ex)메탈그레이몬(청) -> 공격시 메모리 까서 상대턴으로 넘어갔는데
@@ -817,26 +819,21 @@ public partial class CreatureCard : ScriptableCard
         //그런 경우를 위해 만든 함수
 
         //근데 얘가 먼저 죽으면 어떡함?ㅁㄴㅇㄹ
-        switch (cardName)
+        if(owner == Player.localPlayer)
         {
-            case "메탈그레이몬(청)":
-                if (caster.player.isServer)
-                {
-                    if (caster.player.IsOurTurn() && caster.isMyTurnDigimonCastingActive == false)
+            switch (cardName)
+            {
+                case "메탈그레이몬(청)":
+                    if (owner.isServer)
                     {
                         MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory - 5);
-                        caster.isMyTurnDigimonCastingActive = true;
                     }
-                }
-                else
-                {
-                    if (caster.player.IsOurTurn() && caster.isMyTurnDigimonCastingActive == false)
+                    else
                     {
                         MemoryChecker.Inst.CmdChangeMemorySameSync(MemoryChecker.Inst.memory + 5);
-                        caster.isMyTurnDigimonCastingActive = true;
                     }
-                }
-                break;
+                    break;
+            }
         }
     }
 }

@@ -135,6 +135,7 @@ public class GameManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdEndTurn()
     {
+        MemoryChecker.Inst.instantMemory = 0;
         RpcSetEndTurn();
     }
 
